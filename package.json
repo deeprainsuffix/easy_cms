@@ -1,0 +1,30 @@
+{
+  "name": "manage_platform_generator",
+  "version": "1.0.0",
+  "description": "drag to create manage platform",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack serve --open",
+    "build": "webpack"
+  },
+  "keywords": [
+    "js",
+    "ts"
+  ],
+  "author": "me",
+  "license": "ISC",
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "html-webpack-plugin": "^5.6.0",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.4.5",
+    "webpack": "^5.92.1",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.0.4"
+  }
+}
