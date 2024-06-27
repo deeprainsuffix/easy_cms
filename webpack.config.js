@@ -2,8 +2,11 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
+    // entry: {
+    //     index: './client/index.jsx',
+    // },
     entry: {
-        index: './client/index.jsx',
+        index: './engine/NodeTree/main.ts',
     },
     output: {
         filename: '[name].[contenthash].js',

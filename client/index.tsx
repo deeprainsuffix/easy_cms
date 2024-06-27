@@ -16,4 +16,7 @@ rootDom.setAttribute('id', 'root');
 document.body.appendChild(rootDom);
 
 const rootReact = createRoot(rootDom);
-rootReact.render(<App />);
+
+export function testRender() { // todelete
+    rootReact.render(<App />);
+}
