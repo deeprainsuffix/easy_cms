@@ -12,7 +12,6 @@ const rootReact = createRoot(rootDom);
 export function testRender(cNode: CNode) { // todelete
     console.log('节点树', cNode);
     rootReact.render(
-        // <App cNode={cNode} />
         <TreePlanting cNode={cNode} />
     );
 }
