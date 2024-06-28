@@ -8,29 +8,40 @@ export interface I_CNode {
     children: CNode[];
 }
 
-export enum componentCategory {
+/**
+ * *********************************************************************************************************
+ * *********************************************************************************************************
+ */
+
+export enum E_componentCategory {
+    root = 'root',
     layout = 'layout',
     form = 'form',
 }
+export type T_componentCategory = keyof typeof E_componentCategory;
 
-interface I_componentCategory {
-    layout: 'layout',
-    form: 'form',
+
+export enum E_componentName_root {
+    root = 'root',
 }
-export type T_componentCategory = keyof I_componentCategory;
-
-
-
-
-export enum componentName_layout {
+export enum E_componentName_layout {
     container = 'container',
-    container_half = 'container_half',
+    // container_half = 'container_half',
 }
-export enum componentName_form {
+export enum E_componentName_form {
     input = 'input',
-    select = 'select',
+    // select = 'select',
 }
-export type T_ComponentName = {
-    [componentCategory.layout]: 'container' | 'container_half';
-    [componentCategory.form]: 'input' | 'select';
-}
+export const componentName = Object.assign(
+    {},
+    E_componentName_root,
+    E_componentName_layout,
+    E_componentName_form,
+);
+export type T_ComponentName = keyof typeof componentName;
+
+
+/**
+ * *********************************************************************************************************
+ * *********************************************************************************************************
+ */
