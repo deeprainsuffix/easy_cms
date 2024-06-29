@@ -30,7 +30,7 @@
     * 添加兄弟节点 done
     * 调换两个节点 todo (需要吗？好像没有场景需要调换任意两个节点，像move分成删除和添加就好了)
     * 删除一个节点 done
-  * CNodeTree与CNode的类，CNode与对应React组件相关联(begin: 06.27)
+  * CNodeTree与CNode的类，CNode与对应React组件相关联(b: 06.27, e: 06.28)
     * id发生器 todo
 
 ### 前端
@@ -47,6 +47,6 @@
 |              bottom                |
  ————————————————————————————————————
 
-*
+* 搭个页面大体框架，以备开发Right和Action(b: 06.29, e: 06.29)
 
 ### 后端
