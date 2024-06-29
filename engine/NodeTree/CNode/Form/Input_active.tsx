@@ -7,7 +7,7 @@ export function Input_active(props: I_Props) {
     const { cNode } = props;
     return (
         <div id={String(cNode.id)}>
-            我是容器{cNode.id}
+            我是input{cNode.id}
         </div>
     )
 }

@@ -20,7 +20,10 @@ export interface I_CNode {
 
     // meta
     componentCategory: T_componentCategory; // 组件类别 todo 可能没用
-    componentName: T_ComponentName; // 组件名称
+    componentName: T_ComponentName; // 组件标识符
+    title: string; // 组件名称
+
+    // 交互相关
     isDraggable: boolean; // 是否可拖拽
     isDroppable: boolean; // 是否可作为drop容器
 

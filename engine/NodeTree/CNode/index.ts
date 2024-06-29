@@ -9,6 +9,7 @@ export class CNode implements I_CNode {
     constructor(
         public parent: CNode | null, public next: CNode | null, public children: CNode[],
         public componentCategory: T_componentCategory, public componentName: T_ComponentName,
+        public title: string,
         public isDraggable: boolean, public isDroppable: boolean,
         public props: I_CNode_props, public cssStyle: I_CNode_cssStyle,
     ) {
@@ -22,12 +23,14 @@ export class ComponentCategory extends CNode {
     constructor(
         parent: CNode | null, next: CNode | null, children: CNode[],
         componentCategory: T_componentCategory, componentName: T_ComponentName,
+        title: string,
         isDraggable: boolean, isDroppable: boolean,
         props: I_CNode_props, cssStyle: I_CNode_cssStyle,
     ) {
         super(
             parent, next, children,
             componentCategory, componentName,
+            title,
             isDraggable, isDroppable,
             props, cssStyle,
         );

@@ -1,15 +1,13 @@
 import React from 'react';
-import type { E_componentCategory, E_componentName_form } from '../type';
+import { Input_cNode_meta } from './Input_cNode';
 
-interface I_Props {
-    componentCategory: E_componentCategory.layout;
-    componentName: E_componentName_form.input;
+function Input_activeBefore() {
+    return (
+        <div>我是容器左侧</div>
+    )
 }
 
-export function closure(preset: I_Props) {
-    return function Input_activeBefore() {
-        return (
-            <div>我是容器左侧</div>
-        )
-    }
+export default {
+    ...Input_cNode_meta,
+    ReactComponentFuncBefore: Input_activeBefore,
 }
