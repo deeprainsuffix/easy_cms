@@ -7,7 +7,15 @@ export class Container_cNode extends Category_Layout {
     constructor(
         parent: CNode | null, next: CNode | null, children: CNode[],
     ) {
-        super(parent, next, children, E_componentName_layout.container);
+        const isDraggable = true;
+        const isDroppable = true;
+        const props = {};
+        const cssStyle = {};
+        super(
+            parent, next, children, E_componentName_layout.container,
+            isDraggable, isDroppable,
+            props, cssStyle,
+        );
     }
 }
 

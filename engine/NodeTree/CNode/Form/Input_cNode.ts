@@ -7,7 +7,15 @@ export class Input_cNode extends Category_Form {
     constructor(
         parent: CNode | null, next: CNode | null, children: CNode[],
     ) {
-        super(parent, next, children, E_componentName_form.input);
+        const isDraggable = true;
+        const isDroppable = false;
+        const props = {};
+        const cssStyle = {};
+        super(
+            parent, next, children, E_componentName_form.input,
+            isDraggable, isDroppable,
+            props, cssStyle,
+        );
     }
 }
 

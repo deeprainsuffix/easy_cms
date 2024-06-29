@@ -7,7 +7,15 @@ export class Root_cNode extends Category_Root {
     constructor(
         parent: CNode | null, next: CNode | null, children: CNode[],
     ) {
-        super(parent, next, children, E_componentName_root.root);
+        const isDraggable = false;
+        const isDroppable = true;
+        const props = {};
+        const cssStyle = {};
+        super(
+            parent, next, children, E_componentName_root.root,
+            isDraggable, isDroppable,
+            props, cssStyle,
+        );
     }
 }
 

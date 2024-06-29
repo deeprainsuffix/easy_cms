@@ -24,6 +24,7 @@
 
 * CNode
   * 需要实现get、set吗？
+  * 尽量完整定义schema(b: 06.29, e: )
 * CNodeTree
   * alter_ + 函数名，都是引起NodeTree节点变动的操作，返回变动后的最高层节点，以备渲染视图，react diff会确保定点更新
     * 添加子节点 done

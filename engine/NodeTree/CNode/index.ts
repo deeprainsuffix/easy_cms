@@ -1,4 +1,4 @@
-import type { I_CNode, T_componentCategory, T_ComponentName } from './type'
+import type { I_CNode, I_CNode_cssStyle, I_CNode_props, T_componentCategory, T_ComponentName } from './type'
 
 let id = 0; // id发生器 todo
 
@@ -9,6 +9,8 @@ export class CNode implements I_CNode {
     constructor(
         public parent: CNode | null, public next: CNode | null, public children: CNode[],
         public componentCategory: T_componentCategory, public componentName: T_ComponentName,
+        public isDraggable: boolean, public isDroppable: boolean,
+        public props: I_CNode_props, public cssStyle: I_CNode_cssStyle,
     ) {
         this.id = ++id;
     }
@@ -18,15 +20,16 @@ export class CNode implements I_CNode {
 // 这个类后续考虑要不要去掉
 export class ComponentCategory extends CNode {
     constructor(
-        parent: CNode | null,
-        next: CNode | null,
-        children: CNode[],
-        componentCategory: T_componentCategory,
-        componentName: T_ComponentName,
+        parent: CNode | null, next: CNode | null, children: CNode[],
+        componentCategory: T_componentCategory, componentName: T_ComponentName,
+        isDraggable: boolean, isDroppable: boolean,
+        props: I_CNode_props, cssStyle: I_CNode_cssStyle,
     ) {
         super(
             parent, next, children,
             componentCategory, componentName,
+            isDraggable, isDroppable,
+            props, cssStyle,
         );
     }
 }

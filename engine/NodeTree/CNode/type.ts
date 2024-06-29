@@ -1,11 +1,34 @@
+import type { CSSProperties } from "react";
 import { CNode } from ".";
 
-// 和React fiber树节点结构一样
+export interface I_CNode_props {
+
+}
+
+export interface I_CNode_cssStyle extends CSSProperties {
+
+};
+
 export interface I_CNode {
+    // cNode唯一id
     id: number;
+
+    // cNode指针结构 和React fiber树节点结构一样 todo 好像因为children的关系next没用了
     parent: CNode | null;
     next: CNode | null;
     children: CNode[];
+
+    // meta
+    componentCategory: T_componentCategory; // 组件类别 todo 可能没用
+    componentName: T_ComponentName; // 组件名称
+    isDraggable: boolean; // 是否可拖拽
+    isDroppable: boolean; // 是否可作为drop容器
+
+    // 属性
+    props: I_CNode_props;
+
+    // 样式
+    cssStyle: I_CNode_cssStyle; // todo
 }
 
 /**
