@@ -3,7 +3,7 @@ import type { I_CNode, I_CNode_cssStyle, I_CNode_props, T_componentCategory, T_C
 let id = 0; // id发生器 todo
 
 export class CNode implements I_CNode {
-    readonly id: number;
+    readonly id: string;
     ReactComponentFunc: any; // React的函数组件 todo，这里的定义其实是错的，因为这个属性在具体CNode类的原型上，但最终使用的一定是具体的cNode
 
     constructor(
@@ -13,7 +13,7 @@ export class CNode implements I_CNode {
         public isDraggable: boolean, public isDroppable: boolean,
         public props: I_CNode_props, public cssStyle: I_CNode_cssStyle,
     ) {
-        this.id = ++id;
+        this.id = String(++id);
     }
 }
 

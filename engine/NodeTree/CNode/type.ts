@@ -11,7 +11,7 @@ export interface I_CNode_cssStyle extends CSSProperties {
 
 export interface I_CNode {
     // cNode唯一id
-    id: number;
+    id: string;
 
     // cNode指针结构 和React fiber树节点结构一样 todo 好像因为children的关系next没用了
     parent: CNode | null;
