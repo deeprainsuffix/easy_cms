@@ -1,6 +1,6 @@
 import React from 'react';
 import "./index.less"
-import cNode_activeBefore_collection from '../../../engine/NodeTree/CNode/cNode_activeBefore_collection'
+import cNode_activeBefore_collection from '../../../engine/CNodeTree/CNode/cNode_activeBefore_collection'
 
 export default function MPG_Left() {
     return (

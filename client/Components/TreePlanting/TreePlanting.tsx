@@ -1,5 +1,5 @@
 import React from 'react';
-import type { CNode } from '../../../engine/NodeTree/CNode';
+import type { CNode } from '../../../engine/CNodeTree/CNode';
 
 export default function TreePlanting({ cNodeRoot }: { cNodeRoot: CNode }) {
     const ReactComponentFunc = cNodeRoot.ReactComponentFunc;

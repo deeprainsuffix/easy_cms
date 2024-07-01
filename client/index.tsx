@@ -1,6 +1,6 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import type { CNode } from '../engine/NodeTree/CNode';
+import type { CNode } from '../engine/CNodeTree/CNode';
 import PageIndex from './Pages/PageIndex';
 import { Ctx } from './Ctx/ctx';
 import './common.less';

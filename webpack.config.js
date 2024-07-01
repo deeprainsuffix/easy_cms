@@ -6,7 +6,7 @@ module.exports = {
     //     index: './client/index.jsx',
     // },
     entry: {
-        index: './engine/NodeTree/index.ts',
+        index: './engine/CNodeTree/index.ts',
     },
     output: {
         filename: '[name].[contenthash].js',

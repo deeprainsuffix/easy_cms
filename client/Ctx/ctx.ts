@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { CNode } from '../../engine/NodeTree/CNode';
+import { CNode } from '../../engine/CNodeTree/CNode';
 
 interface I_Ctx {
     cNodeRoot: CNode;
