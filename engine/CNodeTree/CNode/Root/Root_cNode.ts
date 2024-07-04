@@ -11,7 +11,7 @@ export const Root_cNode_meta = {
 
 export class Root_cNode extends Category_Root {
     constructor(
-        parent: CNode | null, next: CNode | null, children: CNode[],
+        id: string, parent: CNode | null, next: CNode | null, children: CNode[],
     ) {
         const componentCategory = Category_Root_meta.componentCategory, componentName = E_componentName_root.root;
         const title = Root_cNode_meta.title;
@@ -19,7 +19,7 @@ export class Root_cNode extends Category_Root {
         const props = {};
         const cssStyle = {};
         super(
-            parent, next, children,
+            id, parent, next, children,
             componentCategory, componentName,
             title,
             isDraggable, isDroppable,

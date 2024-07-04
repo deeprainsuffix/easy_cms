@@ -8,14 +8,14 @@ export const Category_Root_meta = {
 
 export class Category_Root extends ComponentCategory {
     constructor(
-        parent: CNode | null, next: CNode | null, children: CNode[],
+        id: string, parent: CNode | null, next: CNode | null, children: CNode[],
         componentCategory: keyof typeof E_componentCategory, componentName: keyof typeof E_componentName_root,
         title: string,
         isDraggable: boolean, isDroppable: boolean,
         props: I_CNode_props, cssStyle: I_CNode_cssStyle,
     ) {
         super(
-            parent, next, children,
+            id, parent, next, children,
             componentCategory, componentName,
             title,
             isDraggable, isDroppable,

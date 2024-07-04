@@ -11,7 +11,7 @@ export const Input_cNode_meta = {
 
 export class Input_cNode extends Category_Form {
     constructor(
-        parent: CNode | null, next: CNode | null, children: CNode[],
+        id: string, parent: CNode | null, next: CNode | null, children: CNode[],
     ) {
         const componentCategory = Category_Form_meta.componentCategory, componentName = E_componentName_form.input;
         const title = Input_cNode_meta.title;
@@ -19,7 +19,7 @@ export class Input_cNode extends Category_Form {
         const props = {};
         const cssStyle = {};
         super(
-            parent, next, children,
+            id, parent, next, children,
             componentCategory, componentName,
             title,
             isDraggable, isDroppable,

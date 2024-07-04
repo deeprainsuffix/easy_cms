@@ -92,6 +92,8 @@ class CNodeTreeBase {
     }
 }
 
+let testId = 0;
+
 /**
  * 1 接受Action
  * 2.1 生产CNode
@@ -100,6 +102,7 @@ class CNodeTreeBase {
  */
 class CNodeTree extends CNodeTreeBase {
     static cNodes = cNode_collection;
+
     root: CNode | null;
     constructor() {
         super();
@@ -118,7 +121,7 @@ class CNodeTree extends CNodeTreeBase {
     ) {
         const classFunc = CNodeTree.cNodes[componentName];
         const cNode_real = new classFunc(
-            null, null, [],
+            String(++testId), null, null, [],
         );
         return cNode_real
     }

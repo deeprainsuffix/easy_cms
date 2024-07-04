@@ -22,10 +22,11 @@
 
 ## 06.21
 
-* CNode
-  * 需要实现get、set吗？
-  * 尽量完整定义schema(b: 06.29, e: )
 * CNodeTree
+  * CNode
+    * 需要实现get、set吗？
+    * 尽量完整定义schema(b: 06.29, e: 完整不了，先开发组件)
+    * next指针可以删除，改为顺序pos(action_delete)，
   * alter_ + 函数名，都是引起NodeTree节点变动的操作，返回变动后的最高层节点，以备渲染视图，react diff会确保定点更新
     * 添加子节点 done
     * 添加兄弟节点 done
@@ -33,6 +34,11 @@
     * 删除一个节点 done
   * CNodeTree与CNode的类，CNode与对应React组件相关联(b: 06.27, e: 06.28)
     * id发生器 todo
+* Action(b: 07.01, e: )
+  * 一次性提交多个命令 todo
+  * redo/undo 反命令 todo
+  * ActionCNode_update_props参与时间旅行，可能需要不参与时间旅行的action，则I_CNode_props要拆分 todo
+  * ActionController(b: 07.02, e: )
 
 ### 前端
 
