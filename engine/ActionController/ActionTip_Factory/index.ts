@@ -3,11 +3,11 @@ import { ActionTip_collection } from '../ActiocTip/ActionTip_collection';
 import { ActionTip_type_select } from "../ActiocTip";
 
 
-interface I_ActionTip_Factoty {
+interface I_ActionTip_Factory {
     createActionTip: (actionProps: T_ActionTip_Props) => T_ActionTip;
 }
 
-export class ActionTip_Factoty implements I_ActionTip_Factoty {
+export class ActionTip_Factory implements I_ActionTip_Factory {
     constructor() {
 
     }
@@ -19,11 +19,11 @@ export class ActionTip_Factoty implements I_ActionTip_Factoty {
                 result = new ActionTip_collection[actionProps.type](actionProps.id);
                 break;
             default:
-                throw '没有这样的ActionTip_type'
+                throw 'createActionTip失败'
         }
 
         return result
     };
 }
 
-export const actionTip_Factoty = new ActionTip_Factoty();
+export const actionTip_Factory = new ActionTip_Factory();

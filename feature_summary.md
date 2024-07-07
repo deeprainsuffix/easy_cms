@@ -34,9 +34,10 @@
     * 删除一个节点 done
   * CNodeTree与CNode的类，CNode与对应React组件相关联(b: 06.27, e: 06.28)
     * id发生器 todo
+  * 考虑删除掉ComponentCategory类，将category及其扩展属性单独添加，或使用生成器构造CNode todo
 * Action(b: 07.01, e: )
   * 一次性提交多个命令 todo
-  * redo/undo 反命令 todo
+  * redo/undo 反命令 todo(b: 07.04, e: )
   * ActionCNode_update_props参与时间旅行，可能需要不参与时间旅行的action，则I_CNode_props要拆分 todo
   * ActionController(b: 07.02, e: )
 

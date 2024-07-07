@@ -1,5 +1,5 @@
-import type { ActionCNode_add, ActionCNode_copy, ActionCNode_delete, ActionCNode_move, ActionCNode_update_cssStyle, ActionCNode_update_props } from "."
-import type { I_ActionCNode_add, I_ActionCNode_copy, I_ActionCNode_delete, I_ActionCNode_move, I_ActionCNode_update_cssStyle, I_ActionCNode_update_props } from ".";
+import type { ActionCNode_add, ActionCNode_re_add, ActionCNode_copy, ActionCNode_delete, ActionCNode_move, ActionCNode_update_cssStyle, ActionCNode_update_props } from "."
+import type { I_ActionCNode_add, I_ActionCNode_re_add, I_ActionCNode_copy, I_ActionCNode_delete, I_ActionCNode_move, I_ActionCNode_update_cssStyle, I_ActionCNode_update_props } from ".";
 
 type I_ActionCNode_add_props = {
     [prop in keyof I_ActionCNode_add as Exclude<prop, 'id'>]: I_ActionCNode_add[prop];
@@ -10,6 +10,7 @@ type I_ActionCNode_copy_props = {
 
 export type T_ActionCNode_Props =
     I_ActionCNode_add_props |
+    // I_ActionCNode_re_add | // 不需要添加
     I_ActionCNode_copy_props |
     I_ActionCNode_move |
     I_ActionCNode_delete |
@@ -19,6 +20,7 @@ export type T_ActionCNode_Props =
 
 export type T_ActionCNode =
     ActionCNode_add |
+    ActionCNode_re_add |
     ActionCNode_copy |
     ActionCNode_move |
     ActionCNode_delete |

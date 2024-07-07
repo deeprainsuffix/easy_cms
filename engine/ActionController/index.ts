@@ -2,8 +2,8 @@ import { ActionCNode_collection } from "./ActiocCNode/ActionCNode_collection";
 import { ActionTip_collection } from "./ActiocTip/ActionTip_collection";
 import type { T_ActionCNode, T_ActionCNode_Props } from "./ActiocCNode/type";
 import type { T_ActionTip, T_ActionTip_Props } from "./ActiocTip/type";
-import { actionCNode_Factoty } from "./ActionCNode_Factoty";
-import { actionTip_Factoty } from "./ActionTip_Factory";
+import { actionCNode_Factory } from "./ActionCNode_Factory";
+import { actionTip_Factory } from "./ActionTip_Factory";
 
 // export const
 //     source_TimeTravel = 'TimeTravel',
@@ -17,8 +17,8 @@ interface T_options { // todo
 }
 
 interface I_ActionController {
-    dispatchAction: (actionProps: T_ActionCNode_Props | T_ActionTip_Props, options: T_options) => T_ActionCNode | T_ActionTip;
-    transformAction: () => void; // todo
+    dispatchAction: (actionProps: T_ActionCNode_Props | T_ActionTip_Props, options: T_options) => void;
+    transferAction: (action: T_ActionCNode | T_ActionTip) => void; // todo
 }
 
 export class ActionController implements I_ActionController {
@@ -30,15 +30,16 @@ export class ActionController implements I_ActionController {
         let result = {} as T_ActionCNode | T_ActionTip;
 
         if (isActionCNodeProps(actionProps)) {
-            result = actionCNode_Factoty.createActionCNode(actionProps);
+            result = actionCNode_Factory.do(actionProps);
         } else {
-            result = actionTip_Factoty.createActionTip(actionProps);
+            result = actionTip_Factory.createActionTip(actionProps);
         }
 
-        return result
+        this.transferAction(result);
+        return
     }
 
-    transformAction() { }
+    transferAction(action: T_ActionCNode | T_ActionTip) { }
 }
 
 function isActionCNodeProps(props: T_ActionCNode_Props | T_ActionTip_Props): props is T_ActionCNode_Props {
