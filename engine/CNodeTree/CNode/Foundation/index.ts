@@ -1,15 +1,15 @@
-import { CNode } from '..'
+import { CNode } from '../index'
 import { E_componentCategory } from '../type';
-import type { E_componentName_form, I_CNode_cssStyle, I_CNode_props } from '../type';
+import type { E_componentName_foundation, I_CNode_cssStyle, I_CNode_props } from '../type';
 
-export const Category_Form_meta = {
-    componentCategory: E_componentCategory.form,
+export const Category_Foundation_meta = {
+    componentCategory: E_componentCategory.foundation,
 } as const;
 
-export class Category_Form extends CNode {
+export class Category_Foundation extends CNode {
     constructor(
         id: string, parent: CNode | null, pos: number, children: (CNode | null)[],
-        componentCategory: E_componentCategory.form, componentName: keyof typeof E_componentName_form,
+        componentCategory: E_componentCategory.foundation, componentName: keyof typeof E_componentName_foundation,
         title: string,
         isDraggable: boolean, isDroppable: boolean,
         props: I_CNode_props, cssStyle: I_CNode_cssStyle,

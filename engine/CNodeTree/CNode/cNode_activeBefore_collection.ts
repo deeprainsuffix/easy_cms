@@ -1,12 +1,12 @@
-import { Root_cNode_meta } from "./Root/Root_cNode";
-import { Root_activeBefore } from "./Root/Root_activeBefore";
+import { Root_cNode_meta } from "./Foundation/Root_cNode";
+import { Root_activeBefore } from "./Foundation/Root_activeBefore";
 import { Container_cNode_meta } from "./Layout/container_cNode";
 import { Container_activeBefore } from "./Layout/Container_activeBefore";
 import { Input_cNode_meta } from "./Form/Input_cNode";
 import { Input_activeBefore } from "./Form/Input_activeBefore";
 
 const cNode_activeBefore_collection = {
-    // 根类
+    // 地基类
     [Root_cNode_meta.componentName]: {
         ...Root_cNode_meta,
         ReactComponentFuncBefore: Root_activeBefore,

@@ -1,7 +1,7 @@
 import { CNode } from './CNode/index'
 import { testRender } from '../../client'
 import cNode_collection from './CNode/cNode_collection';
-import type { T_ComponentName, T_componentCategory } from './CNode/type';
+import type { T_ComponentName } from './CNode/type';
 
 class CNodeTreeBase {
     constructor() {
@@ -9,90 +9,59 @@ class CNodeTreeBase {
     }
 
     /**
-     * 将CNode添加到parent成为其最后一个子节点，返回parent
+     * 将cNode添加到parent，根据cNode的的pos
      * @param cNode CNode
      * @param parent CNode
      * @returns parent
      */
-    protected alter_appendAsChild_last(cNode: CNode, parent: CNode) {
-        const prev = parent.children[parent.children.length - 1];
-        if (prev) {
-            prev.next = cNode;
-        }
-        parent.children.push(cNode);
+    protected alter_appendAsChild(cNode: CNode, parent: CNode, pos: number = cNode.pos) {
         cNode.parent = parent;
-
-        return parent
-    }
-
-    // 将CNode添加到parent成为其第一个子节点，返回parent
-    protected alter_appendAsChild_first(cNode: CNode, parent: CNode) {
-        const next = parent.children[0];
-        if (next) {
-            cNode.next = next;
+        if (pos < 0) {
+            parent.children.push(cNode);
+            cNode.pos = parent.children.length;
+        } else {
+            if (parent.children[pos]) {
+                parent.children.splice(pos, 0, cNode);
+            } else {
+                parent.children[pos] = cNode;
+            }
         }
-        parent.children.unshift(cNode);
-        cNode.parent = parent;
 
         return parent
     }
 
     /**
-     * 将CNode添加成为refCNode的下一个兄弟节点，返回parent
+     * 将cNode添加成为refCNode的下一个兄弟节点，返回parent
      * @param cNode CNode
      * @param refCNode CNode
      * @returns parent
      */
     protected alter_appendAsNext(cNode: CNode, refCNode: CNode) {
         const parent = refCNode.parent as CNode;
-        if (!refCNode.next) {
-            return this.alter_appendAsChild_last(cNode, parent);
-        }
-
-        const index = parent.children.indexOf(refCNode);
-        parent.children.splice(index + 1, 0, cNode);
-        cNode.parent = parent;
-        cNode.next = refCNode.next;
-        refCNode.next = cNode;
-
-        return parent
+        return this.alter_appendAsChild(cNode, parent, refCNode.pos + 1);
     }
 
-    // 将CNode添加成为refCNode的上一个兄弟节点，返回parent
+    // 将cNode添加成为refCNode的上一个兄弟节点，返回parent
     protected alter_appendAsPrev(cNode: CNode, refCNode: CNode) {
         const parent = refCNode.parent as CNode;
-        const index = parent.children.indexOf(refCNode);
-        if (index === 0) {
-            return this.alter_appendAsChild_first(cNode, parent);
-        }
-
-        parent.children.splice(index, 0, cNode);
-        cNode.parent = parent;
-        cNode.next = refCNode;
-        parent.children[index - 1].next = cNode;
-
-        return parent
+        return this.alter_appendAsChild(cNode, parent, refCNode.pos);
     }
 
     /**
-     * 删除CNode，返回parent，不需要删除CNode与其子节点的联系，
+     * 删除cNode，返回parent， todo 是否可以改为: 不需要删除CNode与其子节点的联系，
      * @param cNode CNode
      */
     protected alter_delete(cNode: CNode) {
         const parent = cNode.parent as CNode;
-        const index = parent.children.indexOf(cNode);
-        parent.children.splice(index, 1);
+        parent.children[cNode.pos] = null;
         cNode.parent = null;
-        if (index !== 0) {
-            parent.children[index - 1].next = cNode.next;
-        }
-        cNode.next = null;
+        cNode.pos = -1;
 
         return parent
     }
 }
 
-let testId = 0;
+let testId = 0; // todelete
 
 /**
  * 1 接受Action
@@ -111,27 +80,27 @@ class CNodeTree extends CNodeTreeBase {
     }
 
     // 暴露，接收Action
-    receive() {
+    public receive() {
 
     }
 
     // 生产一个具体的cNode节点 todo
-    produce(
-        ComponentCategory: T_componentCategory, componentName: T_ComponentName,
+    private produce(
+        componentName: T_ComponentName,
     ) {
         const classFunc = CNodeTree.cNodes[componentName];
         const cNode_real = new classFunc(
-            String(++testId), null, null, [],
+            String(++testId), null, -1, [],
         );
         return cNode_real
     }
 
     createRoot_fortest() { // todelete
-        this.root = this.produce('root', 'root');
-        const container = this.produce('layout', 'container');
-        this.alter_appendAsChild_last(container, this.root);
+        this.root = this.produce('root');
+        const container = this.produce('container');
+        this.alter_appendAsChild(container, this.root);
     }
-    bootstrap() {
+    public bootstrap() {
         this.createRoot_fortest();
         testRender(this.root as CNode);
     }

@@ -1,9 +1,9 @@
-import { Root_cNode_meta, Root_cNode } from "./Root/Root_cNode";
+import { Root_cNode_meta, Root_cNode } from "./Foundation/Root_cNode";
 import { Container_cNode_meta, Container_cNode } from "./Layout/container_cNode";
 import { Input_cNode_meta, Input_cNode } from "./Form/Input_cNode";
 
 const cNode_collection = {
-    // 根类
+    // 地基类
     [Root_cNode_meta.componentName]: Root_cNode,
 
     // 布局类

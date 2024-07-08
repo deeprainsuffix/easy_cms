@@ -7,11 +7,11 @@ export const Container_cNode_meta = {
     componentCategory: Category_Layout_meta.componentCategory,
     componentName: E_componentName_layout.container,
     title: '容器',
-};
+} as const;
 
 export class Container_cNode extends Category_Layout {
     constructor(
-        id: string, parent: CNode | null, next: CNode | null, children: CNode[],
+        id: string, parent: CNode | null, pos: number, children: (CNode | null)[],
     ) {
         const componentCategory = Category_Layout_meta.componentCategory, componentName = E_componentName_layout.container;
         const title = Container_cNode_meta.title;
@@ -19,7 +19,7 @@ export class Container_cNode extends Category_Layout {
         const props = {};
         const cssStyle = {};
         super(
-            id, parent, next, children,
+            id, parent, pos, children,
             componentCategory, componentName,
             title,
             isDraggable, isDroppable,

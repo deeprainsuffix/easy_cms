@@ -15,8 +15,8 @@ export interface I_CNode {
 
     // cNode指针结构 和React fiber树节点结构一样 todo 好像因为children的关系next没用了
     parent: CNode | null;
-    next: CNode | null;
-    children: CNode[];
+    pos: number;
+    children: (CNode | null)[];  // CNode | null[];
 
     // meta
     componentCategory: T_componentCategory; // 组件类别 todo 可能没用
@@ -40,14 +40,16 @@ export interface I_CNode {
  */
 
 export enum E_componentCategory {
-    root = 'root',
-    layout = 'layout',
-    form = 'form',
+    foundation = 'foundation',  // 地基类
+    layout = 'layout',  // 布局类
+    form = 'form',  //表单类
 }
 export type T_componentCategory = keyof typeof E_componentCategory;
 
 
-export enum E_componentName_root {
+
+
+export enum E_componentName_foundation {
     root = 'root',
 }
 export enum E_componentName_layout {
@@ -60,7 +62,7 @@ export enum E_componentName_form {
 }
 export const componentName = Object.assign(
     {},
-    E_componentName_root,
+    E_componentName_foundation,
     E_componentName_layout,
     E_componentName_form,
 );

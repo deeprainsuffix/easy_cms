@@ -6,7 +6,7 @@ export default function TreePlanting({ cNodeRoot }: { cNodeRoot: CNode }) {
     return (
         <ReactComponentFunc
             cNode={cNodeRoot}
-            children={cNodeRoot.children.map(cNode_child => <TreePlanting key={cNode_child.id} cNodeRoot={cNode_child} />)}
+            children={cNodeRoot.children.map(cNode_child => cNode_child && <TreePlanting key={cNode_child.id} cNodeRoot={cNode_child} />)}
         />
     )
 }

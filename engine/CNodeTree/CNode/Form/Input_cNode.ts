@@ -7,11 +7,11 @@ export const Input_cNode_meta = {
     componentCategory: Category_Form_meta.componentCategory,
     componentName: E_componentName_form.input,
     title: '输入框',
-};
+} as const;
 
 export class Input_cNode extends Category_Form {
     constructor(
-        id: string, parent: CNode | null, next: CNode | null, children: CNode[],
+        id: string, parent: CNode | null, pos: number, children: (CNode | null)[],
     ) {
         const componentCategory = Category_Form_meta.componentCategory, componentName = E_componentName_form.input;
         const title = Input_cNode_meta.title;
@@ -19,7 +19,7 @@ export class Input_cNode extends Category_Form {
         const props = {};
         const cssStyle = {};
         super(
-            id, parent, next, children,
+            id, parent, pos, children,
             componentCategory, componentName,
             title,
             isDraggable, isDroppable,
