@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import "./index.less"
 import TreePlanting from '../../Components/TreePlanting/TreePlanting';
 import { Ctx } from '../../Ctx/ctx';
 

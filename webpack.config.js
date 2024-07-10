@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+// const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
     // entry: {
@@ -22,17 +23,26 @@ module.exports = {
     },
     resolve: {
         extensions: [".ts", ".tsx", ".js", ".jsx", '...'],
+        alias: {
+            "@/components": path.resolve(__dirname, 'components'),
+            "@/lib": path.resolve(__dirname, 'lib'),
+        },
     },
     module: {
         rules: [
             { test: /\.(ts|tsx)$/, loader: "ts-loader", exclude: /node_modules/ },
-            { test: /\.(less)$/, use: ["style-loader", "css-loader", "less-loader"] },
+            // { test: /\.(less)$/, use: ["style-loader", "css-loader", 'postcss-loader', "less-loader"] },
+            { test: /\.(css)$/, use: ["style-loader", "css-loader", 'postcss-loader'] },
+            // { test: /\.(css)$/, use: [MiniCssExtractPlugin.loader, , "css-loader", 'postcss-loader'] },
+
+
         ]
     },
     plugins: [
         new HtmlWebpackPlugin({
             title: 'Output Management',
         }),
+        // new MiniCssExtractPlugin(),
     ],
     optimization: {
         runtimeChunk: 'single',
