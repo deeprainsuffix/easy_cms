@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import type { CNode } from '../../../engine/CNodeTree/CNode';
 
-export default function TreePlanting({ cNodeRoot }: { cNodeRoot: CNode }) {
-    const ReactComponentFunc = cNodeRoot.ReactComponentFunc;
+export default function TreePlanting({ cNode }: { cNode: CNode }) {
+    const ReactComponentFuncActive = cNode.ReactComponentFuncActive;
+
+    const [_, setState] = useState(0);
+    useEffect(() => {
+        cNode.render = () => setState(_ => _ + 1);
+    }, []);
+
     return (
-        <ReactComponentFunc
-            cNode={cNodeRoot}
-            children={cNodeRoot.children.map(cNode_child => cNode_child && <TreePlanting key={cNode_child.id} cNodeRoot={cNode_child} />)}
-        />
+        <ReactComponentFuncActive cNode={cNode}>
+            {cNode.children.map(cNode_child => cNode_child && <TreePlanting key={cNode_child.id} cNode={cNode_child} />)}
+        </ReactComponentFuncActive>
     )
 }

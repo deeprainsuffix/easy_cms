@@ -26,6 +26,7 @@ module.exports = {
         alias: {
             "@/components": path.resolve(__dirname, 'components'),
             "@/lib": path.resolve(__dirname, 'lib'),
+            "@/engine": path.resolve(__dirname, 'engine'),
         },
     },
     module: {

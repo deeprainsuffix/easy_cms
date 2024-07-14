@@ -27,3 +27,4 @@ export class ActionTip_Factory implements I_ActionTip_Factory {
 }
 
 export const actionTip_Factory = new ActionTip_Factory();
+// window.actionTip_Factory = new ActionTip_Factory(); // todo

@@ -4,6 +4,7 @@ import type { T_ActionCNode, T_ActionCNode_Props } from "./ActiocCNode/type";
 import type { T_ActionTip, T_ActionTip_Props } from "./ActiocTip/type";
 import { actionCNode_Factory } from "./ActionCNode_Factory";
 import { actionTip_Factory } from "./ActionTip_Factory";
+import { cNodeTree } from "../CNodeTree";
 
 // export const
 //     source_TimeTravel = 'TimeTravel',
@@ -18,7 +19,8 @@ interface T_options { // todo
 
 interface I_ActionController {
     dispatchAction: (actionProps: T_ActionCNode_Props | T_ActionTip_Props, options: T_options) => void;
-    transferAction: (action: T_ActionCNode | T_ActionTip) => void; // todo
+    transferActionCNode: (action: T_ActionCNode) => void; // todo
+    transferActionTip: (action: T_ActionTip) => void; // todo
 }
 
 export class ActionController implements I_ActionController {
@@ -26,20 +28,28 @@ export class ActionController implements I_ActionController {
 
     }
 
-    dispatchAction(actionProps: T_ActionCNode_Props | T_ActionTip_Props, options: T_options) {
+    dispatchAction(actionProps: T_ActionCNode_Props | T_ActionTip_Props, options?: T_options) {
         let result = {} as T_ActionCNode | T_ActionTip;
 
         if (isActionCNodeProps(actionProps)) {
             result = actionCNode_Factory.do(actionProps);
+            this.transferActionCNode(result);
         } else {
             result = actionTip_Factory.createActionTip(actionProps);
+            this.transferActionTip(result);
         }
 
-        this.transferAction(result);
+
         return
     }
 
-    transferAction(action: T_ActionCNode | T_ActionTip) { }
+    transferActionCNode(action: T_ActionCNode) {
+        cNodeTree.receiveActionCNode(action);
+    }
+
+    transferActionTip(action: T_ActionTip) {
+
+    }
 }
 
 function isActionCNodeProps(props: T_ActionCNode_Props | T_ActionTip_Props): props is T_ActionCNode_Props {
@@ -57,3 +67,6 @@ function isActionTipProps(props: T_ActionCNode_Props | T_ActionTip_Props): props
 
     return false
 }
+
+export const actionController = new ActionController();
+// window.actionController = new ActionController(); // todo

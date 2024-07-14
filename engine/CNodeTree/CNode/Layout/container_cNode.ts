@@ -28,4 +28,4 @@ export class Container_cNode extends Category_Layout {
     }
 }
 
-Container_cNode.prototype.ReactComponentFunc = Container_active;
+Container_cNode.prototype.ReactComponentFuncActive = Container_active;

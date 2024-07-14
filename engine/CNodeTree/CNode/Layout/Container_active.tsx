@@ -1,16 +1,23 @@
-import React from 'react';
+import React, { type ReactNode } from 'react';
 import type { Container_cNode } from './container_cNode';
-import { Input } from "@/components/ui/input"
+import { Container } from '@/components/ui/container';
+import { ActiveDrag } from '../ActiveWrap/ActiveDrag';
+import { ActiveDropAsChild } from '../ActiveWrap/ActiveDropAsChild';
 
-interface I_Props {
+interface I_Container_active {
     cNode: Container_cNode;
+    children: React.ReactNode[];
 }
-export function Container_active(props: I_Props) {
-    const { cNode } = props;
+export function Container_active(props: I_Container_active) {
+    const { cNode, children } = props;
+
     return (
-        <div id={String(cNode.id)}>
-            我是容器{cNode.id}
-            <Input />
-        </div>
+        <ActiveDropAsChild cNode={cNode}>
+            <ActiveDrag cNode={cNode}>
+                <div id={cNode.id}>
+                    <Container children={children.length ? children : null} />
+                </div>
+            </ActiveDrag>
+        </ActiveDropAsChild >
     )
 }

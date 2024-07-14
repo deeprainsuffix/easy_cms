@@ -3,7 +3,6 @@
 ## 参考页面
 
 * [大纲树](https://lowcode-engine.cn/demo/demo-general/index.html)
-* <https://fyl080801.github.io/vjdesign/example/antd/>
 
 ## 产品功能(大方向)
 
@@ -24,22 +23,24 @@
 
 * CNodeTree
   * CNode
-    * 需要实现get、set吗？
-    * 尽量完整定义schema(b: 06.29, e: 完整不了，先开发组件)
+    * 需要实现get、set吗？[todo]
+    * 尽量完整定义schema [todo]
     * next指针可以删除，改为顺序pos(action_delete)
+    * ActiveDropAsSibling中rectRef.current是否可优化? [todo]
+    * move的左右指示tip [todo]
   * alter_ + 函数名，都是引起NodeTree节点变动的操作，返回变动后的最高层节点，以备渲染视图，react diff会确保定点更新
     * 添加子节点 done
     * 添加兄弟节点 done
-    * 调换两个节点 todo (需要吗？好像没有场景需要调换任意两个节点，像move分成删除和添加就好了)
+    * 调换两个节点 [todo] (需要吗？好像没有场景需要调换任意两个节点，像move分成删除和添加就好了)
     * 删除一个节点 done
-  * CNodeTree与CNode的类，CNode与对应React组件相关联(b: 06.27, e: 06.28)
-    * id发生器 todo
-  * 考虑删除掉ComponentCategory类，将category及其扩展属性单独添加，或使用生成器构造CNode todo
-* Action(b: 07.01, e: )
-  * 一次性提交多个命令 todo
-  * redo/undo 反命令 todo(b: 07.04, e: )
-  * ActionCNode_update_props参与时间旅行，可能需要不参与时间旅行的action，则I_CNode_props要拆分 todo
-  * ActionController(b: 07.02, e: )
+  * CNodeTree与CNode的类，CNode与对应React组件相关联
+    * id发生器 [todo]
+  * 考虑删除掉ComponentCategory类，将category及其扩展属性单独添加，或使用生成器构造CNode [todo]
+* Action
+  * 一次性提交多个命令 [todo]
+  * redo/undo 反命令 [todo]
+  * ActionCNode_update_props参与时间旅行，可能需要不参与时间旅行的action，则I_CNode_props要拆分 [todo]
+  * ActionController
 
 ### 前端
 
@@ -55,6 +56,6 @@
 |              bottom                |
  ————————————————————————————————————
 
-* 搭个页面大体框架，以备开发Right和Action(b: 06.29, e: 06.29)
+* 搭个页面大体框架，以备开发Right和Action
 
 ### 后端

@@ -104,7 +104,7 @@
   }
 
   #mpg-page-index #mpg-body #mpg-left {
-    @apply mpg-basis-72 mpg-grow-0 mpg-shrink-0 mpg-bg-blue-500;
+    @apply mpg-basis-72 mpg-grow-0 mpg-shrink-0 mpg-bg-zinc-200;
   }
 
   #mpg-page-index #mpg-body #mpg-center {

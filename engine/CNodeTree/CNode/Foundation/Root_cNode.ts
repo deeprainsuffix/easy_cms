@@ -28,4 +28,4 @@ export class Root_cNode extends Category_Foundation {
     }
 }
 
-Root_cNode.prototype.ReactComponentFunc = Root_active;
+Root_cNode.prototype.ReactComponentFuncActive = Root_active;

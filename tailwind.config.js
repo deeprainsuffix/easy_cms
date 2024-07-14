@@ -3,9 +3,10 @@ module.exports = {
   darkMode: ["class"],
   content: [
     './components/**/*.{ts,tsx}',
-    '.client/pages/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
+    './client/Pages/**/*.{ts,tsx}',
+    './client/Parts/**/*.{ts,tsx}',
+    './engine/CNodeTree/**/*.{ts,tsx}',
+    // 'client/Parts/MPG_Left/index.tsx',
   ],
   prefix: "mpg-",
   theme: {

@@ -20,13 +20,13 @@ class ActionCNode_Factory implements I_ActionCNode_Factory {
         let result;
         switch (actionProps.type) {
             case ActionCNode_type_add:
-                result = new ActionCNode_collection[actionProps.type](actionProps.parentId, actionProps.componentName);
+                result = new ActionCNode_collection[actionProps.type](actionProps.parentId, actionProps.componentName, actionProps.pos);
                 break;
             case ActionCNode_type_copy:
                 result = new ActionCNode_collection[actionProps.type](actionProps.copyedId, actionProps.parentId);
                 break;
             case ActionCNode_type_move:
-                result = new ActionCNode_collection[actionProps.type](actionProps.id, actionProps.moveFromParentId, actionProps.moveToParentId);
+                result = new ActionCNode_collection[actionProps.type](actionProps.id, actionProps.moveFromParentId, actionProps.moveFromPos, actionProps.moveToParentId, actionProps.moveToPos);
                 break;
             case ActionCNode_type_delete:
                 result = new ActionCNode_collection[actionProps.type](actionProps.id, actionProps.prevParentId);
@@ -58,7 +58,7 @@ class ActionCNode_Factory implements I_ActionCNode_Factory {
                 result = new ActionCNode_collection[ActionCNode_type_delete](actionCNode.id, actionCNode.parentId);
                 break;
             case ActionCNode_type_move:
-                result = new ActionCNode_collection[ActionCNode_type_move](actionCNode.id, actionCNode.moveToParentId, actionCNode.moveFromParentId);
+                result = new ActionCNode_collection[ActionCNode_type_move](actionCNode.id, actionCNode.moveToParentId, actionCNode.moveToPos, actionCNode.moveFromParentId, actionCNode.moveFromPos);
                 break;
             case ActionCNode_type_delete:
                 result = new ActionCNode_collection[ActionCNode_type_re_add](actionCNode.id, actionCNode.prevParentId);
@@ -108,3 +108,4 @@ class ActionCNode_Factory implements I_ActionCNode_Factory {
 }
 
 export const actionCNode_Factory = new ActionCNode_Factory();
+// window.actionCNode_Factory = new ActionCNode_Factory(); // todo

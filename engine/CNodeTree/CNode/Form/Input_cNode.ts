@@ -28,4 +28,4 @@ export class Input_cNode extends Category_Form {
     }
 }
 
-Input_cNode.prototype.ReactComponentFunc = Input_active;
+Input_cNode.prototype.ReactComponentFuncActive = Input_active;

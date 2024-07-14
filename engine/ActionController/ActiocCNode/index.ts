@@ -11,6 +11,7 @@ export interface I_ActionCNode_add {
     id: string; // 新生成id
     parentId: string;
     componentName: T_ComponentName;
+    pos?: number;
 }
 
 export class ActionCNode_add implements I_ActionCNode_add {
@@ -19,6 +20,7 @@ export class ActionCNode_add implements I_ActionCNode_add {
     constructor(
         public parentId: string,
         public componentName: T_ComponentName,
+        public pos?: number,
     ) {
         this.type = ActionCNode_type_add;
         this.id = String(++id);
@@ -79,7 +81,9 @@ export interface I_ActionCNode_move {
     type: typeof ActionCNode_type_move;
     id: string;
     moveFromParentId: string;
+    moveFromPos: number;
     moveToParentId: string;
+    moveToPos: number;
 }
 
 export class ActionCNode_move implements I_ActionCNode_move {
@@ -87,7 +91,9 @@ export class ActionCNode_move implements I_ActionCNode_move {
     constructor(
         public id: string,
         public moveFromParentId: string,
+        public moveFromPos: number,
         public moveToParentId: string,
+        public moveToPos: number,
     ) {
         this.type = ActionCNode_type_move;
     }

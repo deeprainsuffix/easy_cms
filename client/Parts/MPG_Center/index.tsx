@@ -6,7 +6,7 @@ export default function MPG_Center() {
     const ctx = useContext(Ctx);
     return (
         <div id='mpg-center'>
-            <TreePlanting cNodeRoot={ctx.cNodeRoot}/>
+            <TreePlanting cNode={ctx.cNodeRoot} />
         </div>
     )
 }
