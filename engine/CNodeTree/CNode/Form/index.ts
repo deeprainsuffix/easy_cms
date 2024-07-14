@@ -1,25 +1,31 @@
 import { CNode } from '..'
-import { E_componentCategory } from '../type';
-import type { E_componentName_form, I_CNode_cssStyle, I_CNode_props } from '../type';
+import type { I_CNode_cssStyle, I_CNode_props } from '../type';
+import { Input_cNode_meta } from './Input_cNode';
 
 export const Category_Form_meta = {
-    componentCategory: E_componentCategory.form,
+    componentCategory: 'form',
 } as const;
 
 export class Category_Form extends CNode {
     constructor(
         id: string, parent: CNode | null, pos: number, children: (CNode | null)[],
-        componentCategory: E_componentCategory.form, componentName: keyof typeof E_componentName_form,
+        componentName: T_componentName_form,
         title: string,
         isDraggable: boolean, isDroppable: boolean,
         props: I_CNode_props, cssStyle: I_CNode_cssStyle,
     ) {
         super(
             id, parent, pos, children,
-            componentCategory, componentName,
+            Category_Form_meta.componentCategory, componentName,
             title,
             isDraggable, isDroppable,
             props, cssStyle,
         );
     }
 }
+
+export type T_componentCategory_form = typeof Category_Form_meta.componentCategory;
+
+export type T_componentName_form =
+    typeof Input_cNode_meta.componentName
+    ;

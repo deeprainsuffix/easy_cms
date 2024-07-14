@@ -1,5 +1,22 @@
 import type { CSSProperties } from "react";
 import { CNode } from ".";
+import {
+    T_componentCategory_foundation,
+    T_componentName_foundation,
+} from "./Foundation";
+import {
+    T_componentCategory_layout,
+    T_componentName_layout,
+} from "./Layout";
+import {
+    T_componentCategory_form,
+    T_componentName_form,
+} from "./Form";
+
+/**
+ * *********************************************************************************************************
+ * *********************************************************************************************************
+ */
 
 export interface I_CNode_props {
 
@@ -39,35 +56,17 @@ export interface I_CNode {
  * *********************************************************************************************************
  */
 
-export enum E_componentCategory {
-    foundation = 'foundation',  // 地基类
-    layout = 'layout',  // 布局类
-    form = 'form',  //表单类
-}
-export type T_componentCategory = keyof typeof E_componentCategory;
+export type T_componentCategory =
+    T_componentCategory_foundation | // 地基类
+    T_componentCategory_layout | // 布局类
+    T_componentCategory_form // 表单类
+    ;
 
-
-
-
-export enum E_componentName_foundation {
-    root = 'root',
-}
-export enum E_componentName_layout {
-    container = 'container',
-    // container_half = 'container_half',
-}
-export enum E_componentName_form {
-    input = 'input',
-    // select = 'select',
-}
-export const componentName = Object.assign(
-    {},
-    E_componentName_foundation,
-    E_componentName_layout,
-    E_componentName_form,
-);
-export type T_ComponentName = keyof typeof componentName;
-
+export type T_ComponentName =
+    T_componentName_foundation |
+    T_componentName_layout |
+    T_componentName_form
+    ;
 
 /**
  * *********************************************************************************************************
