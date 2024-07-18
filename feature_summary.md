@@ -1,9 +1,5 @@
 # 后台管理系统生成器
 
-## 参考页面
-
-* [大纲树](https://lowcode-engine.cn/demo/demo-general/index.html)
-
 ## 产品功能(大方向)
 
 ### 一期
@@ -26,8 +22,13 @@
     * 需要实现get、set吗？[todo]
     * 尽量完整定义schema [todo]
     * next指针可以删除，改为顺序pos(action_delete)
-    * ActiveDropAsSibling中rectRef.current是否可优化? [todo]
+    * ActiveDropAsSibling中rectRef.current，CNode尺寸信息是否可在生成时初始化？ [todo]
     * move的左右指示tip [todo]
+    * 实现copy
+      * 先实现CNodeSticker组件 [todo]
+      * 可能要实现原型模式 [todo]
+      * id发生器一定要与Action耦合，但对于操作copy的CNodeTree，copy后必须更新下一个id值 [todo]
+      * copy后更新selectedCNode，react组件更新会发生在本次同步任务之后，这边要确保更新之后进行selectedCNode的切换 [todo]
   * alter_ + 函数名，都是引起NodeTree节点变动的操作，返回变动后的最高层节点，以备渲染视图，react diff会确保定点更新
     * 添加子节点 done
     * 添加兄弟节点 done
@@ -35,12 +36,16 @@
     * 删除一个节点 done
   * CNodeTree与CNode的类，CNode与对应React组件相关联
     * id发生器 [todo]
-  * 考虑删除掉ComponentCategory类，将category及其扩展属性单独添加，或使用生成器构造CNode [todo]
+  * receiveAction的工作有点杂 [todo]
+  * 考虑删除掉ComponentCategory类，将category及其扩展属性单独添加，或使用生成器模式构造CNode [todo]
 * Action
   * 一次性提交多个命令 [todo]
   * redo/undo 反命令 [todo]
   * ActionCNode_update_props参与时间旅行，可能需要不参与时间旅行的action，则I_CNode_props要拆分 [todo]
   * ActionController
+  * action需要再加一类，ActionPeripheral，该类不引起cNodeTree的render [todo]，ActionTip_type_select(_none)可能需要移进去
+* CNodeSticker
+  * 拖拽发起时，隐藏 [todo]
 
 ### 前端
 

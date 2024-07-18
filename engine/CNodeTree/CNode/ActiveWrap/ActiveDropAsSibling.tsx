@@ -39,6 +39,7 @@ export function ActiveDropAsSibling(props: I_ActiveDropAsSibling) {
                     type,
                     componentName: componentName,
                     parentId: cNode.parent!.id,
+                    pos: dropLeftRef.current ? cNode.pos : cNode.pos + 1,
                 });
                 break;
             case ActionCNode_type_move:

@@ -1,6 +1,7 @@
-import type { T_ActionTip_Props, T_ActionTip } from "../ActiocTip/type";
-import { ActionTip_collection } from '../ActiocTip/ActionTip_collection';
-import { ActionTip_type_select } from "../ActiocTip";
+import {
+    T_ActionTip_Props, T_ActionTip, ActionTip_collection,
+    ActionTip_type_select, ActionTip_type_select_none,
+} from "../ActiocTip";
 
 
 interface I_ActionTip_Factory {
@@ -17,6 +18,9 @@ export class ActionTip_Factory implements I_ActionTip_Factory {
         switch (actionProps.type) {
             case ActionTip_type_select:
                 result = new ActionTip_collection[actionProps.type](actionProps.id);
+                break;
+            case ActionTip_type_select_none:
+                result = new ActionTip_collection[actionProps.type]();
                 break;
             default:
                 throw 'createActionTip失败'

@@ -79,14 +79,17 @@
 @layer base {
   html {
     @apply mpg-h-full;
+    @apply mpg-overflow-hidden;
   }
 
   body {
     @apply mpg-h-full;
+    @apply mpg-overflow-hidden;
   }
 
   #root {
     @apply mpg-h-full;
+    @apply mpg-overflow-hidden;
   }
 }
 

@@ -2,7 +2,7 @@ import { Root_cNode_meta, Root_cNode } from "./Foundation/Root_cNode";
 import { Container_cNode_meta, Container_cNode } from "./Layout/container_cNode";
 import { Input_cNode_meta, Input_cNode } from "./Form/Input_cNode";
 
-const cNode_collection = {
+export const cNode_collection = {
     // 地基类
     [Root_cNode_meta.componentName]: Root_cNode,
 
@@ -14,5 +14,3 @@ const cNode_collection = {
     [Input_cNode_meta.componentName]: Input_cNode,
     // [E_componentName_form.select]: P,
 };
-
-export default cNode_collection

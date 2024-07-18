@@ -1,10 +1,13 @@
+import { type RefObject } from 'react';
 import type { I_CNode, I_CNode_cssStyle, I_CNode_props, T_componentCategory, T_ComponentName } from './type'
 
-
+export const lifeCycle_afterDomMounted = 'afterDomMounted';
 
 export class CNode implements I_CNode {
-    ReactComponentFuncActive: any; // React的函数组件 todo，这里的定义是错的，这个属性在具体CNode类的原型上，但最终使用的一定是具体的cNode
-    render: any; // 组件刷新句柄 todo 这里的定义是错的，这个属性在react组件生成时添加
+    public ReactComponentFuncActive: any; // React的函数组件 todo，这里的定义是错的，这个属性在具体CNode类的prototype上，但最终使用的一定是具体的cNode
+    public ref: RefObject<HTMLDivElement> // 传递给ref，标记真实DOM，作为实例的具体属性
+    public render: any; // 组件刷新句柄 todo 这里的定义是错的，这个属性在react组件生成时添加，作为实例的具体属性
+    private afterDomMounted: Function[]; // 在组件Mount之后执行，只执行一次，队列清空，清空工作交给TreePlanting进行
 
     constructor(
         public id: string, public parent: CNode | null, public pos: number, public children: (CNode | null)[],
@@ -13,5 +16,36 @@ export class CNode implements I_CNode {
         public isDraggable: boolean, public isDroppable: boolean,
         public props: I_CNode_props, public cssStyle: I_CNode_cssStyle,
     ) {
+        this.ref = { current: null };
+        this.afterDomMounted = [];
+    }
+
+    public lifeCycleRegister(liftCycle: T_liftCycle, callback: Function, options?: {}) {
+        switch (liftCycle) {
+            case lifeCycle_afterDomMounted:
+                this.afterDomMounted.push(callback);
+                break;
+        }
+    }
+
+    // lifeCycleUnregister todo
+
+    public lifeCycleRun(liftCycle: T_liftCycle) {
+        switch (liftCycle) {
+            case lifeCycle_afterDomMounted:
+                this.afterDomMounted.forEach(cb => cb());
+                this.lifeCycleClear(liftCycle);
+                break;
+        }
+    }
+
+    public lifeCycleClear(liftCycle: T_liftCycle) {
+        switch (liftCycle) {
+            case lifeCycle_afterDomMounted:
+                this.afterDomMounted.length = 0;
+                break;
+        }
     }
 }
+
+type T_liftCycle = typeof lifeCycle_afterDomMounted;

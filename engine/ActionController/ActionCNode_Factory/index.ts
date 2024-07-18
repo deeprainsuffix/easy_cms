@@ -1,35 +1,37 @@
-import type { T_ActionCNode_Props, T_ActionCNode } from "../ActiocCNode/type";
-import { ActionCNode_collection } from '../ActiocCNode/ActionCNode_collection';
-import { ActionCNode_type_add, ActionCNode_type_re_add, ActionCNode_type_copy, ActionCNode_type_delete, ActionCNode_type_move, ActionCNode_type_update_cssStyle, ActionCNode_type_update_props } from "../ActiocCNode";
+
+import {
+    T_ActionCNode_Props, T_ActionCNode, ActionCNode_collection,
+    ActionCNode_type_add, ActionCNode_type_re_add, ActionCNode_type_copy, ActionCNode_type_delete, ActionCNode_type_move, ActionCNode_type_update_cssStyle, ActionCNode_type_update_props,
+} from "../ActiocCNode";
 
 interface I_ActionCNode_Factory {
-    createActionCNode: (actionProps: T_ActionCNode_Props) => T_ActionCNode;
-    createActionCNode_reverse: (actionCNode: T_ActionCNode) => T_ActionCNode;
-    undoStack: T_ActionCNode[]; redoStack: T_ActionCNode[];
+    // createActionCNode: (actionProps: T_ActionCNode_Props) => T_ActionCNode;
+    // createActionCNode_reverse: (actionCNode: T_ActionCNode) => T_ActionCNode;
+    // undoStack: T_ActionCNode[]; redoStack: T_ActionCNode[];
     // do、undo、redo都是同时处理单命令
     do: (actionProps: T_ActionCNode_Props) => T_ActionCNode; undo: () => T_ActionCNode | undefined; redo: () => T_ActionCNode | undefined;
 }
 
 class ActionCNode_Factory implements I_ActionCNode_Factory {
-    undoStack: T_ActionCNode[]; redoStack: T_ActionCNode[];
+    private undoStack: T_ActionCNode[]; redoStack: T_ActionCNode[];
     constructor() {
         this.undoStack = []; this.redoStack = [];
     }
 
-    createActionCNode(actionProps: T_ActionCNode_Props) {
+    private createActionCNode(actionProps: T_ActionCNode_Props) {
         let result;
         switch (actionProps.type) {
             case ActionCNode_type_add:
                 result = new ActionCNode_collection[actionProps.type](actionProps.parentId, actionProps.componentName, actionProps.pos);
                 break;
             case ActionCNode_type_copy:
-                result = new ActionCNode_collection[actionProps.type](actionProps.copyedId, actionProps.parentId);
+                result = new ActionCNode_collection[actionProps.type](actionProps.copyId, actionProps.parentId, actionProps.pos);
                 break;
             case ActionCNode_type_move:
                 result = new ActionCNode_collection[actionProps.type](actionProps.id, actionProps.moveFromParentId, actionProps.moveFromPos, actionProps.moveToParentId, actionProps.moveToPos);
                 break;
             case ActionCNode_type_delete:
-                result = new ActionCNode_collection[actionProps.type](actionProps.id, actionProps.prevParentId);
+                result = new ActionCNode_collection[actionProps.type](actionProps.id, actionProps.prevParentId, actionProps.pos);
                 break;
             case ActionCNode_type_update_props:
                 result = new ActionCNode_collection[actionProps.type](actionProps.id, actionProps.updateKey);
@@ -44,24 +46,24 @@ class ActionCNode_Factory implements I_ActionCNode_Factory {
         return result
     };
 
-    createActionCNode_reverse(actionCNode: T_ActionCNode) {
+    private createActionCNode_reverse(actionCNode: T_ActionCNode) {
         // 这里也是使用switch区分吧，有类型推断，不用再建一个collection map表
         let result;
         switch (actionCNode.type) {
             case ActionCNode_type_add:
-                result = new ActionCNode_collection[ActionCNode_type_delete](actionCNode.id, actionCNode.parentId);
+                result = new ActionCNode_collection[ActionCNode_type_delete](actionCNode.id, actionCNode.parentId, actionCNode.pos);
                 break;
             case ActionCNode_type_re_add:
-                result = new ActionCNode_collection[ActionCNode_type_delete](actionCNode.id, actionCNode.parentId);
+                result = new ActionCNode_collection[ActionCNode_type_delete](actionCNode.id, actionCNode.parentId, actionCNode.pos);
                 break;
             case ActionCNode_type_copy:
-                result = new ActionCNode_collection[ActionCNode_type_delete](actionCNode.id, actionCNode.parentId);
+                result = new ActionCNode_collection[ActionCNode_type_delete](actionCNode.id, actionCNode.parentId, actionCNode.pos);
                 break;
             case ActionCNode_type_move:
                 result = new ActionCNode_collection[ActionCNode_type_move](actionCNode.id, actionCNode.moveToParentId, actionCNode.moveToPos, actionCNode.moveFromParentId, actionCNode.moveFromPos);
                 break;
             case ActionCNode_type_delete:
-                result = new ActionCNode_collection[ActionCNode_type_re_add](actionCNode.id, actionCNode.prevParentId);
+                result = new ActionCNode_collection[ActionCNode_type_re_add](actionCNode.id, actionCNode.prevParentId, actionCNode.pos);
                 break;
             // todo
             // case ActionCNode_type_update_props:
@@ -77,14 +79,14 @@ class ActionCNode_Factory implements I_ActionCNode_Factory {
         return result
     }
 
-    do(actionProps: T_ActionCNode_Props) {
+    public do(actionProps: T_ActionCNode_Props) {
         const actionCNode = this.createActionCNode(actionProps);
         this.undoStack.push(actionCNode);
         this.redoStack.length = 0;
         return actionCNode
     }
 
-    undo() {
+    public undo() {
         if (this.undoStack.length === 0) {
             return
         }
@@ -95,7 +97,7 @@ class ActionCNode_Factory implements I_ActionCNode_Factory {
         return action_reserve
     }
 
-    redo() {
+    public redo() {
         if (this.redoStack.length === 0) {
             return
         }

@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import type { CNode } from '../../../engine/CNodeTree/CNode';
+import { lifeCycle_afterDomMounted, type CNode } from '../../../engine/CNodeTree/CNode';
 
 export default function TreePlanting({ cNode }: { cNode: CNode }) {
     const ReactComponentFuncActive = cNode.ReactComponentFuncActive;
 
-    const [_, setState] = useState(0);
+    const [renderPoint, setState] = useState(0);
     useEffect(() => {
-        cNode.render = () => setState(_ => _ + 1);
+        cNode.render = () => setState(renderPoint => renderPoint + 1);
     }, []);
+
+    useEffect(() => {
+        if (renderPoint === 0) {
+            cNode.lifeCycleRun(lifeCycle_afterDomMounted);
+        }
+    }, [renderPoint]);
 
     return (
         <ReactComponentFuncActive cNode={cNode}>

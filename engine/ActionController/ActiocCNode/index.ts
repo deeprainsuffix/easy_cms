@@ -1,6 +1,6 @@
-import type { T_ComponentName, I_CNode_props, I_CNode_cssStyle } from "../../CNodeTree/CNode/type";
 
-let id = 0; // id发生器 todo
+import type { T_ComponentName, I_CNode_props, I_CNode_cssStyle } from "../../CNodeTree/CNode/type";
+import { idGenerator } from "@/engine/IdGenerator";
 
 /**
  * 生成新节点
@@ -11,7 +11,7 @@ export interface I_ActionCNode_add {
     id: string; // 新生成id
     parentId: string;
     componentName: T_ComponentName;
-    pos?: number;
+    pos: number;
 }
 
 export class ActionCNode_add implements I_ActionCNode_add {
@@ -20,10 +20,10 @@ export class ActionCNode_add implements I_ActionCNode_add {
     constructor(
         public parentId: string,
         public componentName: T_ComponentName,
-        public pos?: number,
+        public pos: number,
     ) {
         this.type = ActionCNode_type_add;
-        this.id = String(++id);
+        this.id = String(idGenerator.gene());
     }
 }
 
@@ -36,6 +36,7 @@ export interface I_ActionCNode_re_add {
     type: typeof ActionCNode_type_re_add;
     id: string;
     parentId: string;
+    pos: number;
 }
 
 export class ActionCNode_re_add implements I_ActionCNode_re_add {
@@ -43,6 +44,7 @@ export class ActionCNode_re_add implements I_ActionCNode_re_add {
     constructor(
         public id: string,
         public parentId: string,
+        public pos: number,
     ) {
         this.type = ActionCNode_type_re_add;
     }
@@ -56,19 +58,21 @@ export const ActionCNode_type_copy = 'copy';
 export interface I_ActionCNode_copy {
     type: typeof ActionCNode_type_copy;
     id: string; // 新生成id
-    copyedId: string;
+    copyId: string;
     parentId: string; // 其实这个属性只为了Action_reverse服务
+    pos: number;
 }
 
 export class ActionCNode_copy implements I_ActionCNode_copy {
     type: typeof ActionCNode_type_copy;
     id: string;
     constructor(
-        public copyedId: string,
+        public copyId: string,
         public parentId: string,
+        public pos: number,
     ) {
         this.type = ActionCNode_type_copy;
-        this.id = String(++id);
+        this.id = String(idGenerator.gene());
     }
 }
 
@@ -108,6 +112,7 @@ export interface I_ActionCNode_delete {
     type: typeof ActionCNode_type_delete;
     id: string;
     prevParentId: string;
+    pos: number;
 }
 
 export class ActionCNode_delete implements I_ActionCNode_delete {
@@ -115,6 +120,7 @@ export class ActionCNode_delete implements I_ActionCNode_delete {
     constructor(
         public id: string,
         public prevParentId: string,
+        public pos: number,
     ) {
         this.type = ActionCNode_type_delete;
     }
@@ -167,3 +173,54 @@ export class ActionCNode_update_cssStyle implements I_ActionCNode_update_cssStyl
         this.type = ActionCNode_type_update_cssStyle;
     }
 }
+
+/**
+ * *********************************************************************************************************
+ * *********************************************************************************************************
+ */
+
+type I_ActionCNode_add_props = {
+    [prop in keyof I_ActionCNode_add as Exclude<prop, 'id'>]: I_ActionCNode_add[prop];
+}
+type I_ActionCNode_copy_props = {
+    [prop in keyof I_ActionCNode_copy as Exclude<prop, 'id'>]: I_ActionCNode_copy[prop];
+}
+
+export type T_ActionCNode_Props =
+    I_ActionCNode_add_props |
+    // I_ActionCNode_re_add | // 不需要添加
+    I_ActionCNode_copy_props |
+    I_ActionCNode_move |
+    I_ActionCNode_delete |
+    I_ActionCNode_update_props |
+    I_ActionCNode_update_cssStyle
+    ;
+
+export type T_ActionCNode =
+    ActionCNode_add |
+    ActionCNode_re_add |
+    ActionCNode_copy |
+    ActionCNode_move |
+    ActionCNode_delete |
+    ActionCNode_update_props |
+    ActionCNode_update_cssStyle
+    ;
+
+/**
+ * *********************************************************************************************************
+ * *********************************************************************************************************
+ */
+
+export const ActionCNode_collection = {
+    [ActionCNode_type_add]: ActionCNode_add,
+    [ActionCNode_type_re_add]: ActionCNode_re_add,
+    [ActionCNode_type_copy]: ActionCNode_copy,
+    [ActionCNode_type_move]: ActionCNode_move,
+    [ActionCNode_type_delete]: ActionCNode_delete,
+    [ActionCNode_type_update_props]: ActionCNode_update_props,
+    [ActionCNode_type_update_cssStyle]: ActionCNode_update_cssStyle,
+};
+
+export const ActionCNode_reverse_collection = {
+
+}; // todo

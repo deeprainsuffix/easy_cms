@@ -1,7 +1,5 @@
-import { ActionCNode_collection } from "./ActiocCNode/ActionCNode_collection";
-import { ActionTip_collection } from "./ActiocTip/ActionTip_collection";
-import type { T_ActionCNode, T_ActionCNode_Props } from "./ActiocCNode/type";
-import type { T_ActionTip, T_ActionTip_Props } from "./ActiocTip/type";
+import { ActionCNode_collection, T_ActionCNode, T_ActionCNode_Props } from "./ActiocCNode";
+import { T_ActionTip_Props, T_ActionTip, ActionTip_collection } from "./ActiocTip";
 import { actionCNode_Factory } from "./ActionCNode_Factory";
 import { actionTip_Factory } from "./ActionTip_Factory";
 import { cNodeTree } from "../CNodeTree";
@@ -19,8 +17,8 @@ interface T_options { // todo
 
 interface I_ActionController {
     dispatchAction: (actionProps: T_ActionCNode_Props | T_ActionTip_Props, options: T_options) => void;
-    transferActionCNode: (action: T_ActionCNode) => void; // todo
-    transferActionTip: (action: T_ActionTip) => void; // todo
+    // transferActionCNode: (action: T_ActionCNode) => void;
+    // transferActionTip: (action: T_ActionTip) => void;
 }
 
 export class ActionController implements I_ActionController {
@@ -28,7 +26,8 @@ export class ActionController implements I_ActionController {
 
     }
 
-    dispatchAction(actionProps: T_ActionCNode_Props | T_ActionTip_Props, options?: T_options) {
+    // 所有action入口
+    public dispatchAction(actionProps: T_ActionCNode_Props | T_ActionTip_Props, options?: T_options) {
         let result = {} as T_ActionCNode | T_ActionTip;
 
         if (isActionCNodeProps(actionProps)) {
@@ -39,19 +38,19 @@ export class ActionController implements I_ActionController {
             this.transferActionTip(result);
         }
 
-
         return
     }
 
-    transferActionCNode(action: T_ActionCNode) {
+    private transferActionCNode(action: T_ActionCNode) {
         cNodeTree.receiveActionCNode(action);
     }
 
-    transferActionTip(action: T_ActionTip) {
-
+    private transferActionTip(action: T_ActionTip) {
+        cNodeTree.receiveActionTip(action);
     }
 }
 
+// 这两个推断条件 todo
 function isActionCNodeProps(props: T_ActionCNode_Props | T_ActionTip_Props): props is T_ActionCNode_Props {
     if (props.type in ActionCNode_collection) {
         return true

@@ -26,6 +26,7 @@ export function ActiveDropAsChild(props: I_ActiveDropAsChild) {
                     type,
                     componentName: componentName,
                     parentId: cNode.id,
+                    pos: cNode.children.length,
                 });
                 break;
             case ActionCNode_type_move:

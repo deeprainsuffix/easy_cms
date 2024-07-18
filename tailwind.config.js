@@ -6,7 +6,7 @@ module.exports = {
     './client/Pages/**/*.{ts,tsx}',
     './client/Parts/**/*.{ts,tsx}',
     './engine/CNodeTree/**/*.{ts,tsx}',
-    // 'client/Parts/MPG_Left/index.tsx',
+    './engine/Operator/**/*.{ts,tsx}',
   ],
   prefix: "mpg-",
   theme: {

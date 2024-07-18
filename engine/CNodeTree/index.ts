@@ -1,10 +1,18 @@
-import { CNode } from './CNode/index'
+import { CNode, lifeCycle_afterDomMounted } from './CNode/index'
 import { testRender } from '../../client'
-import cNode_collection from './CNode/cNode_collection';
+import { cNode_collection } from './CNode/cNode_collection';
 import type { T_ComponentName } from './CNode/type';
-import { T_ActionCNode } from '../ActionController/ActiocCNode/type';
-import { T_ActionTip } from '../ActionController/ActiocTip/type';
-import { ActionCNode_type_add, ActionCNode_type_copy, ActionCNode_type_delete, ActionCNode_type_move, ActionCNode_type_re_add, ActionCNode_type_update_cssStyle, ActionCNode_type_update_props } from '../ActionController/ActiocCNode';
+import {
+    T_ActionTip,
+    ActionTip_type_select, ActionTip_type_select_none
+} from '../ActionController/ActiocTip';
+import {
+    T_ActionCNode,
+    ActionCNode_type_add, ActionCNode_type_copy, ActionCNode_type_delete, ActionCNode_type_move, ActionCNode_type_re_add, ActionCNode_type_update_cssStyle, ActionCNode_type_update_props
+} from '../ActionController/ActiocCNode';
+import { custom_eType_selectedCNodeChange } from '../Operator';
+import { deepClone } from '@/lib/utils';
+import { idGenerator } from '../IdGenerator';
 
 class CNodeTreeBase {
     constructor() {
@@ -12,7 +20,7 @@ class CNodeTreeBase {
     }
 
     /**
-     * 将cNode添加到parent，根据cNode的的pos
+     * 将cNode添加到parent，根据传入的pos或cNode的的pos
      * @param cNode CNode
      * @param parent CNode
      * @returns parent
@@ -68,8 +76,6 @@ class CNodeTreeBase {
     }
 }
 
-let testId = Number.MAX_SAFE_INTEGER; // todelete
-
 /**
  * 1 接受Action
  * 2.1 生产CNode
@@ -77,15 +83,22 @@ let testId = Number.MAX_SAFE_INTEGER; // todelete
  * 2.3 渲染视图(这一步)
  */
 class CNodeTree extends CNodeTreeBase {
-    // static cNode_collection = cNode_collection; // todo
     static cNodeMap = new Map<string, CNode>();
 
-    root: CNode | null;
-    renderNodes: CNode[];
+    root: CNode | null; // 节点数的根节点
+    renderCNodes: CNode[]; // 待render的cNode
+    selectedCNode: CNode | null; // 当前选中的节点
+    // selectedCNodeChangeCallbacks: Function[]; // todo selectedCNode更换时触发，这里后续可以再优化，目前直接使用浏览器事件机制，简单
+
     constructor() {
         super();
         this.root = null;
-        this.renderNodes = [];
+        this.renderCNodes = [];
+        this.selectedCNode = null;
+
+        // this.selectedCNodeChangeCallbacks = [];
+
+
         this.bootstrap();
     }
 
@@ -96,23 +109,40 @@ class CNodeTree extends CNodeTreeBase {
                 const { componentName, id, parentId, pos } = action;
                 const cNode = this.produce(componentName, id);
                 const parent = CNodeTree.cNodeMap.get(parentId)!;
-                this.renderNodes.push(this.alter_appendAsChild(cNode, parent, pos));
-
+                this.renderCNodes.push(this.alter_appendAsChild(cNode, parent, pos));
             }
                 break;
             case ActionCNode_type_re_add:
                 break;
-            case ActionCNode_type_copy:
+            case ActionCNode_type_copy: {
+                const { id, copyId, parentId, pos } = action;
+                const copyCNode = CNodeTree.cNodeMap.get(copyId)!,
+                    parent = CNodeTree.cNodeMap.get(parentId)!;
+                let startId = +id;
+                const copyDfs = (cNode: CNode, parent: CNode, pos: number) => {
+                    const copyedCNode = this.clone(cNode, String(startId++));
+                    this.alter_appendAsChild(copyedCNode, parent, pos);
+                    cNode.children.forEach((child, i) => {
+                        copyedCNode.children[i] = child ? copyDfs(child, copyedCNode, i) : null;
+                    });
+
+                    return copyedCNode
+                }
+                const copyedCNode = copyDfs(copyCNode, parent, pos);
+                idGenerator.update(startId);
+                // 这里是cNodeTree模拟了一个actionTip
+                copyedCNode.lifeCycleRegister(lifeCycle_afterDomMounted, () => this.receiveActionTip({ type: ActionTip_type_select, id: copyedCNode.id }));
+                this.renderCNodes.push(parent);
+            }
                 break;
             case ActionCNode_type_move: {
                 const { id, moveFromParentId, moveFromPos, moveToParentId, moveToPos } = action;
                 const cNode = CNodeTree.cNodeMap.get(id)!,
                     // parentFrom = CNodeTree.cNodeMap.get(moveFromParentId)!,
                     parentTo = CNodeTree.cNodeMap.get(moveToParentId)!;
-                this.renderNodes.push(this.alter_delete(cNode));
-                this.renderNodes.push(this.alter_appendAsChild(cNode, parentTo, moveToPos));
+                this.renderCNodes.push(this.alter_delete(cNode));
+                this.renderCNodes.push(this.alter_appendAsChild(cNode, parentTo, moveToPos));
             }
-
                 break;
             case ActionCNode_type_delete:
                 break;
@@ -128,7 +158,27 @@ class CNodeTree extends CNodeTreeBase {
     }
 
     public receiveActionTip(action: T_ActionTip) {
+        switch (action.type) {
+            case ActionTip_type_select:
+                const { id } = action;
+                this.selectedCNode = CNodeTree.cNodeMap.get(id)!;
+                this.renderCNodes.push(this.selectedCNode);
+                // todo 这里直接用浏览器的事件机制，方便
+                // 虽然这里的数据更新逻辑和视图更新逻辑没有分开，由各自组件进行 dataUpdate1 -> viewRender1 -> dataUpdate2 -> viewRender2 -> ...
+                // 但，react会将其改为 dataUpdate1 -> dataUpdate2 => ... -> viewRender1 -> viewRender2 -> ...
+                // todo 不过后续在render函数逻辑上可以顺成上述过程
+                window.dispatchEvent(new CustomEvent(custom_eType_selectedCNodeChange, { detail: { selectedCNode: this.selectedCNode } }));
+                break;
+            case ActionTip_type_select_none:
+                if (this.selectedCNode) {
+                    this.renderCNodes.push(this.selectedCNode);
+                }
+                this.selectedCNode = null;
+                window.dispatchEvent(new CustomEvent(custom_eType_selectedCNodeChange, { detail: { selectedCNode: this.selectedCNode } }));
+                break;
+        }
 
+        this.render();
     }
 
     // 生产一个具体的cNode节点 todo
@@ -140,25 +190,49 @@ class CNodeTree extends CNodeTreeBase {
         const cNode = new CNodeClassFunc(
             id, null, -1, [],
         );
-        CNodeTree.cNodeMap.set(id, cNode);
+        CNodeTree.cNodeMap.set(id, cNode); // 其实这里不属于produce的任务
 
         return cNode
     }
 
+    /**
+     * 可能会加一个options选项，确定clone项是否要把生命周期之类的克隆 todo
+     * clone的属性包括: 
+     * componentCategory componentName
+     * title
+     * isDraggable isDroppable
+     * props cssStyle
+     * @param cNode 
+     * @returns 
+     */
+    private clone(cNode: CNode, id: string) {
+        const clonedCNode = this.produce(cNode.componentName, id);
+        Object.assign(clonedCNode, {
+            componentCategory: cNode.componentCategory, componentName: cNode.componentName,
+            title: cNode.title,
+            isDraggable: cNode.isDraggable, isDroppable: cNode.isDroppable,
+            props: deepClone(cNode.props),
+            cssStyle: deepClone(cNode.cssStyle),
+        });
+
+        return clonedCNode
+    }
+
     private render() {
-        this.renderNodes.forEach(renderNode => {
+        this.renderCNodes.forEach(renderNode => {
             renderNode.render();
         });
-        this.renderNodes.length = 0;
+        this.renderCNodes.length = 0;
     }
 
     createRoot_fortest() { // todelete
-        this.root = this.produce('root', String(testId--));
-        const container = this.produce('container', String(testId--));
+        this.root = this.produce('root', String(idGenerator.gene()));
+        const container = this.produce('container', String(idGenerator.gene()));
         this.alter_appendAsChild(container, this.root);
-        const container2 = this.produce('container', String(testId--));
+        const container2 = this.produce('container', String(idGenerator.gene()));
         this.alter_appendAsChild(container2, this.root);
     }
+
     public bootstrap() {
         this.createRoot_fortest();
         testRender(this.root as CNode);
