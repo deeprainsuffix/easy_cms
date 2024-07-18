@@ -10,7 +10,6 @@ interface I_ActiveMouse extends React.InputHTMLAttributes<HTMLDivElement> {
 export function ActiveMouse(props: I_ActiveMouse) {
     const { cNode, children, className } = props;
     const onClick = useCallback<MouseEventHandler>((e) => {
-        console.log('>??');
         e.stopPropagation();
         e.preventDefault();
         actionController.dispatchAction({

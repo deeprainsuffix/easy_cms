@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { cNodeSticker } from '.';
 import { actionController } from '@/engine/ActionController';
-import { ActionCNode_type_copy } from '@/engine/ActionController/ActiocCNode';
+import { ActionCNode_type_copy, ActionCNode_type_delete } from '@/engine/ActionController/ActiocCNode';
 import { ActionTip_type_select } from '@/engine/ActionController/ActiocTip';
 
 interface I_CNodeSticker_UI extends React.HTMLAttributes<HTMLDivElement> {
@@ -41,7 +41,16 @@ export function CNodeSticker_UI(props: I_CNodeSticker_UI) {
     }, [selectedCNode]);
 
     const onDelete = useCallback(() => {
+        if (!selectedCNode) {
+            return
+        }
 
+        actionController.dispatchAction({
+            type: ActionCNode_type_delete,
+            id: selectedCNode.id,
+            prevParentId: selectedCNode.parent!.id,
+            pos: selectedCNode.pos,
+        });
     }, [selectedCNode]);
 
     if (!selectedCNode) {

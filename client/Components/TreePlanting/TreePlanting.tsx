@@ -17,7 +17,7 @@ export default function TreePlanting({ cNode }: { cNode: CNode }) {
 
     return (
         <ReactComponentFuncActive cNode={cNode}>
-            {cNode.children.map(cNode_child => cNode_child && <TreePlanting key={cNode_child.id} cNode={cNode_child} />)}
+            {cNode.children.filter((c): c is CNode => c !== null).map(cNode_child => <TreePlanting key={cNode_child.id} cNode={cNode_child} />)}
         </ReactComponentFuncActive>
     )
 }

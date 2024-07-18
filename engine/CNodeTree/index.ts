@@ -63,7 +63,7 @@ class CNodeTreeBase {
     }
 
     /**
-     * 删除cNode，返回parent， todo 是否可以改为: 不需要删除CNode与其子节点的联系，
+     * 删除cNode，返回parent，不需要删除cNode与其子节点的联系
      * @param cNode CNode
      */
     protected alter_delete(cNode: CNode) {
@@ -73,6 +73,24 @@ class CNodeTreeBase {
         cNode.pos = -1;
 
         return parent
+    }
+
+    /**
+     * 判断cNodeA是否是cNodeB的祖先(包括相等的情况)
+     * @param cNodeA 
+     * @param cNodeB 
+     */
+    protected get_isAncestor(cNodeA: CNode, cNodeB: CNode) {
+        let topCNode: CNode | null = cNodeB;
+        while (topCNode) {
+            if (topCNode === cNodeA) {
+                return true
+            }
+
+            topCNode = topCNode.parent;
+        }
+
+        return false
     }
 }
 
@@ -140,11 +158,19 @@ class CNodeTree extends CNodeTreeBase {
                 const cNode = CNodeTree.cNodeMap.get(id)!,
                     // parentFrom = CNodeTree.cNodeMap.get(moveFromParentId)!,
                     parentTo = CNodeTree.cNodeMap.get(moveToParentId)!;
+                if (this.get_isAncestor(cNode, parentTo)) {
+                    return
+                }
+
                 this.renderCNodes.push(this.alter_delete(cNode));
                 this.renderCNodes.push(this.alter_appendAsChild(cNode, parentTo, moveToPos));
             }
                 break;
             case ActionCNode_type_delete:
+                const { id, prevParentId, pos } = action;
+                const cNode = CNodeTree.cNodeMap.get(id)!;
+                this.renderCNodes.push(this.alter_delete(cNode));
+                this.receiveActionTip({ type: ActionTip_type_select_none });
                 break;
             case ActionCNode_type_update_props:
                 break;
