@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { cNodeSticker } from '.';
 import { actionController } from '@/engine/ActionController';
 import { ActionCNode_type_copy } from '@/engine/ActionController/ActiocCNode';
+import { ActionTip_type_select } from '@/engine/ActionController/ActiocTip';
 
 interface I_CNodeSticker_UI extends React.HTMLAttributes<HTMLDivElement> {
 
@@ -16,7 +17,14 @@ export function CNodeSticker_UI(props: I_CNodeSticker_UI) {
     const { selectedCNode, domRect } = cNodeSticker;
 
     const onUpLevel = useCallback(() => {
+        if (!selectedCNode) {
+            return
+        }
 
+        actionController.dispatchAction({
+            type: ActionTip_type_select,
+            id: selectedCNode.parent!.id,
+        });
     }, [selectedCNode]);
 
     const onCopy = useCallback(() => {
