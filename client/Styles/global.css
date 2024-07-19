@@ -92,29 +92,3 @@
     @apply mpg-overflow-hidden;
   }
 }
-
-@layer components {
-  #mpg-page-index {
-    @apply mpg-h-full mpg-flex mpg-flex-col;
-  }
-
-  #mpg-page-index #mpg-header {
-    @apply mpg-h-12 mpg-grow-0 mpg-shrink-0 mpg-bg-orange-500;
-  }
-
-  #mpg-page-index #mpg-body {
-    @apply mpg-h-full mpg-flex;
-  }
-
-  #mpg-page-index #mpg-body #mpg-left {
-    @apply mpg-basis-72 mpg-grow-0 mpg-shrink-0 mpg-bg-zinc-200;
-  }
-
-  #mpg-page-index #mpg-body #mpg-center {
-    @apply mpg-grow mpg-shrink;
-  }
-
-  #mpg-page-index #mpg-body #mpg-right {
-    @apply mpg-basis-72 mpg-grow-0 mpg-shrink-0 mpg-bg-rose-700;
-  }
-}

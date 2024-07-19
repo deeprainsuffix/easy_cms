@@ -166,15 +166,20 @@ class CNodeTree extends CNodeTreeBase {
                 this.renderCNodes.push(this.alter_appendAsChild(cNode, parentTo, moveToPos));
             }
                 break;
-            case ActionCNode_type_delete:
+            case ActionCNode_type_delete: {
                 const { id, prevParentId, pos } = action;
                 const cNode = CNodeTree.cNodeMap.get(id)!;
                 this.renderCNodes.push(this.alter_delete(cNode));
                 this.receiveActionTip({ type: ActionTip_type_select_none });
+            }
                 break;
-            case ActionCNode_type_update_props:
+            case ActionCNode_type_update_props: {
+
+            }
                 break;
-            case ActionCNode_type_update_cssStyle:
+            case ActionCNode_type_update_cssStyle: {
+
+            }
                 break;
             default:
                 throw 'receiveActionCNode失败';

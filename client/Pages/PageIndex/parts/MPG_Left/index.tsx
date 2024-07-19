@@ -1,9 +1,13 @@
 import React from 'react';
-import cNode_activeBefore_collection from '../../../engine/CNodeTree/CNode/cNode_activeBefore_collection'
+import cNode_activeBefore_collection from '../../../../../engine/CNodeTree/CNode/cNode_activeBefore_collection'
+import { cn } from '@/lib/utils';
 
 export default function MPG_Left() {
     return (
-        <div id='mpg-left'>
+        <div
+            id='mpg-left'
+            className={cn('mpg-basis-72 mpg-grow-0 mpg-shrink-0 mpg-bg-zinc-200')}
+        >
             <Simple />
         </div>
     )
