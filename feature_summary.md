@@ -38,15 +38,24 @@
     * id发生器 [todo]
   * receiveAction的工作有点杂 [todo]
   * 考虑删除掉ComponentCategory类，将category及其扩展属性单独添加，或使用生成器模式构造CNode [todo]
+  * 实际上，CNodeTree变动后，很多通知其他相关组件更新的逻辑，都要在确定CNodeTree render完成之后进行
 * Action
   * 一次性提交多个命令 [todo]
-  * redo/undo 反命令 [todo]
+  * undo/redo 反命令 [todo]
   * ActionCNode_update_props参与时间旅行，可能需要不参与时间旅行的action，则I_CNode_props要拆分 [todo]
   * ActionController
   * action需要再加一类，ActionPeripheral，该类不引起cNodeTree的render [todo]，ActionTip_type_select(_none)可能需要移进去
 * CNodeSticker
-  * 拖拽发起时，隐藏 [todo]
   * 解决CNodeSticker遮挡cNodetree [todo]
+* undo/redo [todo]
+  * 测试项:
+    * add -> delete(undo) -> readd(redo) -> delete(undo) -> newAction -> (again) [done]
+    * copy -> delete(undo) -> readd(redo) -> delete(undo) -> newAction -> (again) [done]
+    * move -> move(undo) -> move(redo) -> move(undo) -> newAction -> (again) [done]
+    * delete -> readd(undo) -> delete(redo) -> readd(undo) -> newAction -> (again) [done]
+    * props 后续 [todo]
+    * cssStyle 后续 [todo]
+    * [todo]
 
 ### 前端
 

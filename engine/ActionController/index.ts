@@ -3,6 +3,7 @@ import { T_ActionTip_Props, T_ActionTip, ActionTip_collection } from "./ActiocTi
 import { actionCNode_Factory } from "./ActionCNode_Factory";
 import { actionTip_Factory } from "./ActionTip_Factory";
 import { cNodeTree } from "../CNodeTree";
+import { timeTravel } from "../TimeTravel";
 
 // export const
 //     source_TimeTravel = 'TimeTravel',
@@ -21,32 +22,58 @@ interface I_ActionController {
     // transferActionTip: (action: T_ActionTip) => void;
 }
 
+/**
+ * ActionController与TImeTravel是强耦合的
+ */
 export class ActionController implements I_ActionController {
     constructor() {
 
     }
 
-    // 所有action入口
+    private transferActionCNode(action: T_ActionCNode) {
+        cNodeTree.receiveActionCNode(action);
+        this.notifyTimeTravel();
+    }
+
+    private transferActionTip(action: T_ActionTip) {
+        cNodeTree.receiveActionTip(action);
+    }
+
+    private notifyTimeTravel() {
+        timeTravel.notify(actionCNode_Factory.getUndoStackSize(), actionCNode_Factory.getRedoStackSize());
+    }
+
+    // 除undo、redo，所有action入口
     public dispatchAction(actionProps: T_ActionCNode_Props | T_ActionTip_Props, options?: T_options) {
-        let result = {} as T_ActionCNode | T_ActionTip;
+        let action = {} as T_ActionCNode | T_ActionTip;
 
         if (isActionCNodeProps(actionProps)) {
-            result = actionCNode_Factory.do(actionProps);
-            this.transferActionCNode(result);
+            action = actionCNode_Factory.do(actionProps);
+            this.transferActionCNode(action);
         } else {
-            result = actionTip_Factory.createActionTip(actionProps);
-            this.transferActionTip(result);
+            action = actionTip_Factory.createActionTip(actionProps);
+            this.transferActionTip(action);
         }
 
         return
     }
 
-    private transferActionCNode(action: T_ActionCNode) {
-        cNodeTree.receiveActionCNode(action);
+    public dispatchUndo() {
+        const action = actionCNode_Factory.undo();
+        if (!action) {
+            return
+        }
+
+        this.transferActionCNode(action);
     }
 
-    private transferActionTip(action: T_ActionTip) {
-        cNodeTree.receiveActionTip(action);
+    public dispatchRedo() {
+        const action = actionCNode_Factory.redo();
+        if (!action) {
+            return
+        }
+
+        this.transferActionCNode(action);
     }
 }
 

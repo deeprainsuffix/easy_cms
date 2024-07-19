@@ -101,7 +101,14 @@ class CNodeTreeBase {
  * 2.3 渲染视图(这一步)
  */
 class CNodeTree extends CNodeTreeBase {
-    static cNodeMap = new Map<string, CNode>();
+    static cNodeMap = new Map<string, CNode>(); // 这里挂静态属性还是实例属性没啥区别
+    static getCNode(id: string) {
+        // 程序逻辑保证这个调用一定返回CNode
+        return this.cNodeMap.get(id)!
+    }
+    static setCNode(id: string, cNode: CNode) {
+        this.cNodeMap.set(id, cNode)
+    }
 
     root: CNode | null; // 节点数的根节点
     renderCNodes: CNode[]; // 待render的cNode
@@ -126,16 +133,21 @@ class CNodeTree extends CNodeTreeBase {
             case ActionCNode_type_add: {
                 const { componentName, id, parentId, pos } = action;
                 const cNode = this.produce(componentName, id);
-                const parent = CNodeTree.cNodeMap.get(parentId)!;
+                const parent = CNodeTree.getCNode(parentId);
                 this.renderCNodes.push(this.alter_appendAsChild(cNode, parent, pos));
             }
                 break;
-            case ActionCNode_type_re_add:
+            case ActionCNode_type_re_add: {
+                const { id, parentId, pos } = action;
+                const cNode = CNodeTree.getCNode(id),
+                    parent = CNodeTree.getCNode(parentId);
+                this.renderCNodes.push(this.alter_appendAsChild(cNode, parent, pos));
+            }
                 break;
             case ActionCNode_type_copy: {
                 const { id, copyId, parentId, pos } = action;
-                const copyCNode = CNodeTree.cNodeMap.get(copyId)!,
-                    parent = CNodeTree.cNodeMap.get(parentId)!;
+                const copyCNode = CNodeTree.getCNode(copyId),
+                    parent = CNodeTree.getCNode(parentId);
                 let startId = +id;
                 const copyDfs = (cNode: CNode, parent: CNode, pos: number) => {
                     const copyedCNode = this.clone(cNode, String(startId++));
@@ -147,7 +159,7 @@ class CNodeTree extends CNodeTreeBase {
                     return copyedCNode
                 }
                 const copyedCNode = copyDfs(copyCNode, parent, pos);
-                idGenerator.update(startId);
+                idGenerator.update(startId - 1);
                 // 这里是cNodeTree模拟了一个actionTip
                 copyedCNode.lifeCycleRegister(lifeCycle_afterDomMounted, () => this.receiveActionTip({ type: ActionTip_type_select, id: copyedCNode.id }));
                 this.renderCNodes.push(parent);
@@ -155,9 +167,9 @@ class CNodeTree extends CNodeTreeBase {
                 break;
             case ActionCNode_type_move: {
                 const { id, moveFromParentId, moveFromPos, moveToParentId, moveToPos } = action;
-                const cNode = CNodeTree.cNodeMap.get(id)!,
-                    // parentFrom = CNodeTree.cNodeMap.get(moveFromParentId)!,
-                    parentTo = CNodeTree.cNodeMap.get(moveToParentId)!;
+                const cNode = CNodeTree.getCNode(id),
+                    // parentFrom = CNodeTree.getCNode(moveFromParentId),
+                    parentTo = CNodeTree.getCNode(moveToParentId);
                 if (this.get_isAncestor(cNode, parentTo)) {
                     return
                 }
@@ -168,7 +180,7 @@ class CNodeTree extends CNodeTreeBase {
                 break;
             case ActionCNode_type_delete: {
                 const { id, prevParentId, pos } = action;
-                const cNode = CNodeTree.cNodeMap.get(id)!;
+                const cNode = CNodeTree.getCNode(id);
                 this.renderCNodes.push(this.alter_delete(cNode));
                 this.receiveActionTip({ type: ActionTip_type_select_none });
             }
@@ -192,7 +204,7 @@ class CNodeTree extends CNodeTreeBase {
         switch (action.type) {
             case ActionTip_type_select:
                 const { id } = action;
-                this.selectedCNode = CNodeTree.cNodeMap.get(id)!;
+                this.selectedCNode = CNodeTree.getCNode(id);
                 this.renderCNodes.push(this.selectedCNode);
                 // todo 这里直接用浏览器的事件机制，方便
                 // 虽然这里的数据更新逻辑和视图更新逻辑没有分开，由各自组件进行 dataUpdate1 -> viewRender1 -> dataUpdate2 -> viewRender2 -> ...
@@ -221,7 +233,7 @@ class CNodeTree extends CNodeTreeBase {
         const cNode = new CNodeClassFunc(
             id, null, -1, [],
         );
-        CNodeTree.cNodeMap.set(id, cNode); // 其实这里不属于produce的任务
+        CNodeTree.setCNode(id, cNode); // 其实这里不属于produce的任务
 
         return cNode
     }

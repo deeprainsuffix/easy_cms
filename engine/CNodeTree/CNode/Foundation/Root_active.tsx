@@ -14,10 +14,9 @@ export function Root_active(props: I_Root_active) {
         <div
             id={cNode.id} ref={cNode.ref}
             className='mpg-h-full mpg-border-8 mpg-border-solid mpg-border-orange-500'
-            onClick={() => console.log('??')}
         >
             <ActiveMouse cNode={cNode} className='mpg-h-full'>
-                <ActiveDropAsChild cNode={cNode}>
+                <ActiveDropAsChild cNode={cNode} className='mpg-h-full'>
                     {children}
                 </ActiveDropAsChild>
             </ActiveMouse>

@@ -9,11 +9,11 @@ interface I_ActionCNode_Factory {
     // createActionCNode_reverse: (actionCNode: T_ActionCNode) => T_ActionCNode;
     // undoStack: T_ActionCNode[]; redoStack: T_ActionCNode[];
     // do、undo、redo都是同时处理单命令
-    do: (actionProps: T_ActionCNode_Props) => T_ActionCNode; undo: () => T_ActionCNode | undefined; redo: () => T_ActionCNode | undefined;
+    do: (actionProps: T_ActionCNode_Props) => T_ActionCNode; undo: () => T_ActionCNode | null; redo: () => T_ActionCNode | null;
 }
 
 class ActionCNode_Factory implements I_ActionCNode_Factory {
-    private undoStack: T_ActionCNode[]; redoStack: T_ActionCNode[];
+    private undoStack: T_ActionCNode[]; private redoStack: T_ActionCNode[];
     constructor() {
         this.undoStack = []; this.redoStack = [];
     }
@@ -86,9 +86,17 @@ class ActionCNode_Factory implements I_ActionCNode_Factory {
         return actionCNode
     }
 
+    public getUndoStackSize() {
+        return this.undoStack.length
+    }
+
+    public getRedoStackSize() {
+        return this.redoStack.length
+    }
+
     public undo() {
         if (this.undoStack.length === 0) {
-            return
+            return null
         }
 
         const actionCNode = this.undoStack.pop() as T_ActionCNode;
@@ -99,7 +107,7 @@ class ActionCNode_Factory implements I_ActionCNode_Factory {
 
     public redo() {
         if (this.redoStack.length === 0) {
-            return
+            return null
         }
 
         const actionCNode = this.redoStack.pop() as T_ActionCNode;

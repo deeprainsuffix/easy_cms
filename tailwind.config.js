@@ -4,9 +4,7 @@ module.exports = {
   content: [
     './components/**/*.{ts,tsx}',
     './client/Pages/**/*.{ts,tsx}',
-    './client/Parts/**/*.{ts,tsx}',
-    './engine/CNodeTree/**/*.{ts,tsx}',
-    './engine/Operator/**/*.{ts,tsx}',
+    './engine/**/*.{ts,tsx}',
   ],
   prefix: "mpg-",
   theme: {
