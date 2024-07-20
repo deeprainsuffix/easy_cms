@@ -1,25 +1,18 @@
 import { type CNode } from "@/engine/CNodeTree/CNode";
-import { custom_eType_selectedCNodeChange, I_Detail_SelectedCNodeChange } from "..";
+import { DependOnSelectedCNode, type I_Detail_SelectedCNodeChange } from "../dependOnSelectedCNode";
 
-interface I_CNodeSticker {
-    selectedCNode: CNode | null;
-}
-
-class CNodeSticker implements I_CNodeSticker {
+class CNodeSticker extends DependOnSelectedCNode {
     render: any;
-    selectedCNode: CNode | null;
     domRect: DOMRect | null;
 
     constructor() {
-        this.selectedCNode = null;
+        super();
         this.domRect = null;
-
-        window.addEventListener(custom_eType_selectedCNodeChange, { handleEvent: this.notify.bind(this) });
     }
 
     public notify(e: CustomEvent<I_Detail_SelectedCNodeChange>) {
         const { selectedCNode } = e.detail;
-        console.log('selectedCNode:', selectedCNode);
+        this.update_selectedCNode(selectedCNode);
         if (selectedCNode) {
             this.update(selectedCNode);
         } else {
@@ -30,17 +23,11 @@ class CNodeSticker implements I_CNodeSticker {
     }
 
     private update(selectedCNode: CNode) {
-        this.selectedCNode = selectedCNode
-        this.domRect = this.selectedCNode.ref.current!.getBoundingClientRect();
+        this.domRect = selectedCNode.ref.current!.getBoundingClientRect();
     }
 
     private reset() {
-        this.selectedCNode = null;
         this.domRect = null;
-    }
-
-    private display() {
-        this.render();
     }
 }
 

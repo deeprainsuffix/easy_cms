@@ -1,5 +1,6 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
+import { SettingRight_UI } from '@/engine/Operator/SettingRight/UI';
 
 export default function MPG_Right() {
     return (
@@ -7,7 +8,7 @@ export default function MPG_Right() {
             id='mpg-right'
             className={cn('mpg-basis-72 mpg-grow-0 mpg-shrink-0 mpg-bg-rose-700')}
         >
-            我是右边
+            <SettingRight_UI />
         </div>
     )
 }

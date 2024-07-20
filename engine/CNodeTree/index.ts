@@ -10,7 +10,7 @@ import {
     T_ActionCNode,
     ActionCNode_type_add, ActionCNode_type_copy, ActionCNode_type_delete, ActionCNode_type_move, ActionCNode_type_re_add, ActionCNode_type_update_cssStyle, ActionCNode_type_update_props
 } from '../ActionController/ActiocCNode';
-import { custom_eType_selectedCNodeChange } from '../Operator';
+import { custom_eType_selectedCNodeChange } from '../Operator/dependOnSelectedCNode';
 import { deepClone } from '@/lib/utils';
 import { idGenerator } from '../IdGenerator';
 
