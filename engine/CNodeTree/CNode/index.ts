@@ -3,18 +3,21 @@ import type { I_CNode, I_CNode_cssStyle, I_CNode_props, T_componentCategory, T_C
 
 export const lifeCycle_afterDomMounted = 'afterDomMounted';
 
-export class CNode implements I_CNode {
-    public ReactComponentFuncActive: any; // React的函数组件 todo，这里的定义是错的，这个属性在具体CNode类的prototype上，但最终使用的一定是具体的cNode
+export abstract class CNode implements I_CNode {
+    public CNode_UI: any; // React的函数组件 todo，这里的定义是错的，这个属性在具体CNode类的prototype上，但最终使用的一定是具体的cNode
     public ref: RefObject<HTMLDivElement> // 传递给ref，标记真实DOM，作为实例的具体属性
     public render: any; // 组件刷新句柄 todo 这里的定义是错的，这个属性在react组件生成时添加，作为实例的具体属性
     private afterDomMounted: Function[]; // 在组件Mount之后执行，只执行一次，队列清空，清空工作交给TreePlanting进行
 
+    abstract componentCategory: T_componentCategory;
+    abstract componentName: T_ComponentName;
+    abstract title: string;
+    abstract props: I_CNode_props;
+    abstract cssStyle: I_CNode_cssStyle;
+
     constructor(
         public id: string, public parent: CNode | null, public pos: number, public children: (CNode | null)[],
-        public componentCategory: T_componentCategory, public componentName: T_ComponentName,
-        public title: string,
         public isDraggable: boolean, public isDroppable: boolean,
-        public props: I_CNode_props, public cssStyle: I_CNode_cssStyle,
     ) {
         this.ref = { current: null };
         this.afterDomMounted = [];

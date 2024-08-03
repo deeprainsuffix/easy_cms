@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { lifeCycle_afterDomMounted, type CNode } from '../../../engine/CNodeTree/CNode';
 
 export default function TreePlanting({ cNode }: { cNode: CNode }) {
-    const ReactComponentFuncActive = cNode.ReactComponentFuncActive;
+    const CNode_UI = cNode.CNode_UI;
 
     const [renderPoint, setState] = useState(0);
     useEffect(() => {
@@ -16,8 +16,8 @@ export default function TreePlanting({ cNode }: { cNode: CNode }) {
     }, [renderPoint]);
 
     return (
-        <ReactComponentFuncActive cNode={cNode}>
+        <CNode_UI cNode={cNode}>
             {cNode.children.filter((c): c is CNode => c !== null).map(cNode_child => <TreePlanting key={cNode_child.id} cNode={cNode_child} />)}
-        </ReactComponentFuncActive>
+        </CNode_UI>
     )
 }

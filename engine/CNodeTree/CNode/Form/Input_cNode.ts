@@ -1,29 +1,49 @@
 import { Category_Form } from ".";
 import { CNode } from "..";
-import { Input_active } from "./Input_active";
+import type { I_CNode_Concrete } from "../type";
+import { Input_CNode_UI } from "./Input_CNode_UI";
 
 export const Input_cNode_meta = {
     componentName: 'input',
     title: '输入框',
 } as const;
 
-export class Input_cNode extends Category_Form {
+interface I_props_Input_cNode {
+    field: string;
+    fieldKey: string;
+    fieldValue: string;
+}
+
+export interface I_Input_CNode extends I_CNode_Concrete {
+    componentName: typeof Input_cNode_meta['componentName'];
+    title: typeof Input_cNode_meta['title'];
+    props: I_props_Input_cNode;
+}
+
+export class Input_CNode extends Category_Form implements I_Input_CNode {
+    componentName: I_Input_CNode['componentName'];
+    title: I_Input_CNode['title'];
+    props: I_Input_CNode['props'];
+    cssStyle: I_Input_CNode['cssStyle'];
+
     constructor(
         id: string, parent: CNode | null, pos: number, children: (CNode | null)[],
     ) {
-        const componentName = Input_cNode_meta.componentName,
-            title = Input_cNode_meta.title,
-            isDraggable = true, isDroppable = true,
-            props = {},
-            cssStyle = {};
+        const isDraggable = true, isDroppable = true;
         super(
             id, parent, pos, children,
-            componentName,
-            title,
             isDraggable, isDroppable,
-            props, cssStyle,
-        )
+        );
+
+        this.componentName = Input_cNode_meta.componentName;
+        this.title = Input_cNode_meta.title;
+        this.props = {
+            field: `field-${id}`,
+            fieldKey: `字段-${id}`,
+            fieldValue: `值-${id}`,
+        };
+        this.cssStyle = {};
     }
 }
 
-Input_cNode.prototype.ReactComponentFuncActive = Input_active;
+Input_CNode.prototype.CNode_UI = Input_CNode_UI;

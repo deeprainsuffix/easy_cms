@@ -2,11 +2,11 @@ import React, { type DragEventHandler, useCallback } from 'react';
 import { type T_ComponentName } from '../type';
 import { ActionCNode_type_add } from '@/engine/ActionController/ActiocCNode';
 
-interface I_ActiveBeforeDrag extends React.InputHTMLAttributes<HTMLDivElement> {
+interface I_CNode_UI_Left_Drag extends React.InputHTMLAttributes<HTMLDivElement> {
     componentName: T_ComponentName;
 }
 
-export function ActiveBeforeDrag(props: I_ActiveBeforeDrag) {
+export function CNode_UI_Left_Drag(props: I_CNode_UI_Left_Drag) {
     const { componentName, children, className } = props;
     const onDragStart = useCallback<DragEventHandler>((e) => {
         e.dataTransfer.setData('type', ActionCNode_type_add);

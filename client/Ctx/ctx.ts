@@ -2,7 +2,7 @@ import { createContext } from 'react';
 import { CNode } from '../../engine/CNodeTree/CNode';
 
 interface I_Ctx {
-    cNodeRoot: CNode;
+    cNodeRoot: CNode; // todo 改成根类
 }
 
 export const Ctx = createContext<I_Ctx>({

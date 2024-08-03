@@ -1,19 +1,32 @@
 import { actionController } from '@/engine/ActionController';
 import { ActionCNode_type_add, ActionCNode_type_move } from '@/engine/ActionController/ActiocCNode';
-import React, { DragEventHandler, useCallback } from 'react';
+import React, { DragEventHandler, useCallback, useRef } from 'react';
 import { type T_ComponentName } from '../type';
 import { type CNode } from '..';
 
-interface I_ActiveDropAsChild extends React.InputHTMLAttributes<HTMLDivElement> {
+interface I_CNode_UI_DropAsSibling extends React.InputHTMLAttributes<HTMLDivElement> {
     cNode: CNode;
 }
 
-export function ActiveDropAsChild(props: I_ActiveDropAsChild) {
+export function CNode_UI_DropAsSibling(props: I_CNode_UI_DropAsSibling) {
     const { cNode, children, className } = props;
 
+    const rectRef = useRef<DOMRect>();
+    const dropLeftRef = useRef<boolean>(true); // isDropIn = false时使用
+
+    const onDragEnter = useCallback<DragEventHandler>((e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        // todo
+        rectRef.current = e.currentTarget.getBoundingClientRect();
+    }, []);
     const onDragOver = useCallback<DragEventHandler>((e) => {
         e.stopPropagation();
         e.preventDefault();
+        const { clientX, clientY } = e;
+        const { height, width, left, bottom } = rectRef.current!;
+        const dropLeft = clientY <= (-height / width) * (clientX - left) + bottom;
+        dropLeftRef.current = dropLeft;
     }, []);
 
     const onDrop = useCallback<DragEventHandler>((e) => {
@@ -25,8 +38,8 @@ export function ActiveDropAsChild(props: I_ActiveDropAsChild) {
                 actionController.dispatchAction({
                     type,
                     componentName: componentName,
-                    parentId: cNode.id,
-                    pos: cNode.children.length,
+                    parentId: cNode.parent!.id,
+                    pos: dropLeftRef.current ? cNode.pos : cNode.pos + 1,
                 });
                 break;
             case ActionCNode_type_move:
@@ -38,19 +51,19 @@ export function ActiveDropAsChild(props: I_ActiveDropAsChild) {
                     id,
                     moveFromParentId,
                     moveFromPos,
-                    moveToParentId: cNode.id,
-                    moveToPos: cNode.children.length,
+                    moveToParentId: cNode.parent!.id,
+                    moveToPos: dropLeftRef.current ? cNode.pos : cNode.pos + 1,
                 });
                 break;
             default:
-                console.error('ActiveDrop中未处理的action type:', type);
+                console.error('CNode_UI_DropAsSibling中未处理的action type:', type);
         }
 
         e.preventDefault();
     }, []);
 
     return (
-        <div className={className} onDragOver={onDragOver} onDrop={onDrop}>
+        <div className={className} onDragEnter={onDragEnter} onDragOver={onDragOver} onDrop={onDrop}>
             {children}
         </div>
     )

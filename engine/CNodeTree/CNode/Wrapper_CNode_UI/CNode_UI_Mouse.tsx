@@ -3,11 +3,11 @@ import { CNode } from '..';
 import { actionController } from '@/engine/ActionController';
 import { ActionTip_type_select } from '@/engine/ActionController/ActiocTip';
 
-interface I_ActiveMouse extends React.InputHTMLAttributes<HTMLDivElement> {
+interface I_CNode_UI_Mouse extends React.InputHTMLAttributes<HTMLDivElement> {
     cNode: CNode;
 }
 
-export function ActiveMouse(props: I_ActiveMouse) {
+export function CNode_UI_Mouse(props: I_CNode_UI_Mouse) {
     const { cNode, children, className } = props;
     const onClick = useCallback<MouseEventHandler>((e) => {
         e.stopPropagation();

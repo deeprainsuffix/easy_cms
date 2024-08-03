@@ -10,10 +10,10 @@ export function SettingProps_UI() {
     const { selectedCNode } = settingProps;
 
     return (
-        <div
-            id='mpg-settingProps'
-        >
-            属性设置器
-        </div>
+        selectedCNode
+            ?
+            <div id='mpg-settingProps'>属性设置器</div>
+            :
+            null
     )
 }

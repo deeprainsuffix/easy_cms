@@ -10,8 +10,6 @@ class SettingCssStyle extends DependOnSelectedCNode {
     public notify(e: CustomEvent<I_Detail_SelectedCNodeChange>) {
         const { selectedCNode } = e.detail;
         this.update_selectedCNode(selectedCNode);
-
-        this.display();
     }
 }
 

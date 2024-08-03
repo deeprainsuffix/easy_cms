@@ -1,6 +1,6 @@
 import { CNode, lifeCycle_afterDomMounted } from './CNode/index'
 import { testRender } from '../../client'
-import { cNode_collection } from './CNode/cNode_collection';
+import { CNode_collection } from './CNode/CNode_collection';
 import type { T_ComponentName } from './CNode/type';
 import {
     T_ActionTip,
@@ -229,7 +229,7 @@ class CNodeTree extends CNodeTreeBase {
         componentName: T_ComponentName,
         id: string,
     ) {
-        const CNodeClassFunc = cNode_collection[componentName];
+        const CNodeClassFunc = CNode_collection[componentName];
         const cNode = new CNodeClassFunc(
             id, null, -1, [],
         );

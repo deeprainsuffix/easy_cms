@@ -22,7 +22,7 @@
     * 需要实现get、set吗？[todo]
     * 尽量完整定义schema [todo]
     * next指针可以删除，改为顺序pos(action_delete)
-    * ActiveDropAsSibling中rectRef.current，CNode尺寸信息是否可在生成时初始化？ [todo]
+    * CNode_UI_DropAsSibling中rectRef.current，CNode尺寸信息是否可在生成时初始化？ [todo]
     * move的左右指示tip [todo]
     * 实现copy
       * 先实现CNodeSticker组件 [todo]
