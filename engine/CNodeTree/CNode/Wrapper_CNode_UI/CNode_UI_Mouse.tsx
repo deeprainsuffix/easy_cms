@@ -1,7 +1,7 @@
 import React, { type MouseEventHandler, useCallback } from 'react';
 import { CNode } from '..';
 import { actionController } from '@/engine/ActionController';
-import { ActionTip_type_select } from '@/engine/ActionController/ActiocTip';
+import { ActionTip_type_select } from '@/engine/ActionController/ActionTip';
 
 interface I_CNode_UI_Mouse extends React.InputHTMLAttributes<HTMLDivElement> {
     cNode: CNode;

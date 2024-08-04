@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { cNodeSticker } from '.';
 import { actionController } from '@/engine/ActionController';
-import { ActionCNode_type_copy, ActionCNode_type_delete } from '@/engine/ActionController/ActiocCNode';
-import { ActionTip_type_select } from '@/engine/ActionController/ActiocTip';
+import { ActionCNode_type_copy, ActionCNode_type_delete } from '@/engine/ActionController/ActionCNode';
+import { ActionTip_type_select } from '@/engine/ActionController/ActionTip';
 
 interface I_CNodeSticker_UI extends React.HTMLAttributes<HTMLDivElement> {
 

@@ -1,15 +1,15 @@
 
 import {
-    T_ActionCNode_Props, T_ActionCNode, ActionCNode_collection,
-    ActionCNode_type_add, ActionCNode_type_re_add, ActionCNode_type_copy, ActionCNode_type_delete, ActionCNode_type_move, ActionCNode_type_update_cssStyle, ActionCNode_type_update_props,
-} from "../ActiocCNode";
+    T_ActionCNode_Required, T_ActionCNode, ActionCNode_collection,
+    ActionCNode_type_add, ActionCNode_type_re_add, ActionCNode_type_copy, ActionCNode_type_delete, ActionCNode_type_move,
+} from ".";
 
 interface I_ActionCNode_Factory {
-    // createActionCNode: (actionProps: T_ActionCNode_Props) => T_ActionCNode;
+    // createActionCNode: (actionRequired: T_ActionCNode_Required) => T_ActionCNode;
     // createActionCNode_reverse: (actionCNode: T_ActionCNode) => T_ActionCNode;
     // undoStack: T_ActionCNode[]; redoStack: T_ActionCNode[];
     // do、undo、redo都是同时处理单命令
-    do: (actionProps: T_ActionCNode_Props) => T_ActionCNode; undo: () => T_ActionCNode | null; redo: () => T_ActionCNode | null;
+    do: (actionRequired: T_ActionCNode_Required) => T_ActionCNode; undo: () => T_ActionCNode | null; redo: () => T_ActionCNode | null;
 }
 
 class ActionCNode_Factory implements I_ActionCNode_Factory {
@@ -18,26 +18,20 @@ class ActionCNode_Factory implements I_ActionCNode_Factory {
         this.undoStack = []; this.redoStack = [];
     }
 
-    private createActionCNode(actionProps: T_ActionCNode_Props) {
+    private createActionCNode(actionRequired: T_ActionCNode_Required) {
         let result;
-        switch (actionProps.type) {
+        switch (actionRequired.type) {
             case ActionCNode_type_add:
-                result = new ActionCNode_collection[actionProps.type](actionProps.parentId, actionProps.componentName, actionProps.pos);
+                result = new ActionCNode_collection[actionRequired.type](actionRequired.parentId, actionRequired.componentName, actionRequired.pos);
                 break;
             case ActionCNode_type_copy:
-                result = new ActionCNode_collection[actionProps.type](actionProps.copyId, actionProps.parentId, actionProps.pos);
+                result = new ActionCNode_collection[actionRequired.type](actionRequired.copyId, actionRequired.parentId, actionRequired.pos);
                 break;
             case ActionCNode_type_move:
-                result = new ActionCNode_collection[actionProps.type](actionProps.id, actionProps.moveFromParentId, actionProps.moveFromPos, actionProps.moveToParentId, actionProps.moveToPos);
+                result = new ActionCNode_collection[actionRequired.type](actionRequired.id, actionRequired.moveFromParentId, actionRequired.moveFromPos, actionRequired.moveToParentId, actionRequired.moveToPos);
                 break;
             case ActionCNode_type_delete:
-                result = new ActionCNode_collection[actionProps.type](actionProps.id, actionProps.prevParentId, actionProps.pos);
-                break;
-            case ActionCNode_type_update_props:
-                result = new ActionCNode_collection[actionProps.type](actionProps.id, actionProps.updateKey);
-                break;
-            case ActionCNode_type_update_cssStyle:
-                result = new ActionCNode_collection[actionProps.type](actionProps.id, actionProps.updateKey);
+                result = new ActionCNode_collection[actionRequired.type](actionRequired.id, actionRequired.prevParentId, actionRequired.pos);
                 break;
             default:
                 throw 'createActionCNode失败';
@@ -65,13 +59,6 @@ class ActionCNode_Factory implements I_ActionCNode_Factory {
             case ActionCNode_type_delete:
                 result = new ActionCNode_collection[ActionCNode_type_re_add](actionCNode.id, actionCNode.prevParentId, actionCNode.pos);
                 break;
-            // todo
-            // case ActionCNode_type_update_props:
-            //     result = new ActionCNode_collection[actionCNode.type](actionCNode.id, actionCNode.updateKey);
-            //     break;
-            // case ActionCNode_type_update_cssStyle:
-            //     result = new ActionCNode_collection[actionCNode.type](actionCNode.id, actionCNode.updateKey);
-            //     break;
             default:
                 throw 'createActionCNode_reverse失败';
         }
@@ -79,8 +66,8 @@ class ActionCNode_Factory implements I_ActionCNode_Factory {
         return result
     }
 
-    public do(actionProps: T_ActionCNode_Props) {
-        const actionCNode = this.createActionCNode(actionProps);
+    public do(actionRequired: T_ActionCNode_Required) {
+        const actionCNode = this.createActionCNode(actionRequired);
         this.undoStack.push(actionCNode);
         this.redoStack.length = 0;
         return actionCNode

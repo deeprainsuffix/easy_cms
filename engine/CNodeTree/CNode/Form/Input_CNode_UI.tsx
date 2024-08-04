@@ -9,15 +9,21 @@ interface I_Input_CNode_UI {
     cNode: Input_CNode;
 }
 
-export function Input_CNode_UI(props: I_Input_CNode_UI) {
-    const { cNode } = props;
+export function Input_CNode_UI({ cNode }: I_Input_CNode_UI) {
+    const props = cNode.props;
+    const { fieldLabel, fieldPlaceholder } = props;
 
     return (
         <div id={cNode.id} ref={cNode.ref}>
             <CNode_UI_Mouse cNode={cNode}>
                 <CNode_UI_DropAsSibling cNode={cNode}>
                     <CNode_UI_Drag cNode={cNode}>
-                        <Input placeholder={`输入框${cNode.id}`} />
+                        <div className='mpg-flex'>
+                            <div className='mpg-flex-grow-0 mpg-flex-shrink-0 mpg-w-24 mpg-flex mpg-justify-center mpg-items-center'>{fieldLabel}</div>
+                            <div className='mpg-flex-grow-0 mpg-flex-shrink-0 mpg-w-48'>
+                                <Input placeholder={fieldPlaceholder} />
+                            </div>
+                        </div>
                     </CNode_UI_Drag>
                 </CNode_UI_DropAsSibling>
             </CNode_UI_Mouse>

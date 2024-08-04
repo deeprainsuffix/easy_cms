@@ -23,4 +23,18 @@ export abstract class Category_Form extends CNode implements I_Category_Form {
 
         this.componentCategory = Category_Form_meta.componentCategory;
     }
+
+}
+
+export const props_Form_CNode_base = {
+    fieldKey: 'fieldKey',
+    fieldLabel: 'fieldLabel',
+    fieldPlaceholder: 'fieldPlaceholder',
+    // fieldValue: any; // 类型由fieldValueType决定
+    // fieldValueType: 'undefined' | 'null' | 'string' | 'number' | 'boolean' | 'array' | 'object';
+} as const;
+export interface I_props_Form_CNode_base {
+    [props_Form_CNode_base.fieldKey]: string;
+    [props_Form_CNode_base.fieldLabel]: string;
+    [props_Form_CNode_base.fieldPlaceholder]: string;
 }

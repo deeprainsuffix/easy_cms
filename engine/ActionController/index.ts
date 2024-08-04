@@ -1,7 +1,9 @@
-import { ActionCNode_collection, T_ActionCNode, T_ActionCNode_Props } from "./ActiocCNode";
-import { T_ActionTip_Props, T_ActionTip, ActionTip_collection } from "./ActiocTip";
-import { actionCNode_Factory } from "./ActionCNode_Factory";
-import { actionTip_Factory } from "./ActionTip_Factory";
+import { ActionCNode_collection, T_ActionCNode, T_ActionCNode_Required } from "./ActionCNode";
+import { actionCNode_Factory } from "./ActionCNode/factory";
+import { ActionTip_collection, T_ActionTip, T_ActionTip_Required } from "./ActionTip";
+import { actionTip_Factory } from "./ActionTip/factory";
+import { ActionCNodeProps_collection, T_ActionCNodeProps, T_ActionCNodeProps_Required } from "./ActionCNodeProps";
+import { actionCNodeProps_Factory } from "./ActionCNodeProps/factory";
 import { cNodeTree } from "../CNodeTree";
 import { timeTravel } from "../TimeTravel";
 
@@ -12,14 +14,18 @@ import { timeTravel } from "../TimeTravel";
 //     source_Updater_Right = 'Updater_Right',
 //     source_CNode_Sticker = 'CNode_Sticker';
 
+type T_actionRequired =
+    T_ActionCNode_Required
+    | T_ActionTip_Required |
+    T_ActionCNodeProps_Required
+    ;
+
 interface T_options { // todo
     // source: 
 }
 
 interface I_ActionController {
-    dispatchAction: (actionProps: T_ActionCNode_Props | T_ActionTip_Props, options: T_options) => void;
-    // transferActionCNode: (action: T_ActionCNode) => void;
-    // transferActionTip: (action: T_ActionTip) => void;
+    dispatchAction: (actionRequired: T_actionRequired, options: T_options) => void;
 }
 
 /**
@@ -39,20 +45,33 @@ export class ActionController implements I_ActionController {
         cNodeTree.receiveActionTip(action);
     }
 
+    private transferActionCNodeProps(action: T_ActionCNodeProps) {
+        cNodeTree.receiveActionCNodeProps(action);
+    }
+
     private notifyTimeTravel() {
         timeTravel.notify(actionCNode_Factory.getUndoStackSize(), actionCNode_Factory.getRedoStackSize());
     }
 
     // 除undo、redo，所有action入口
-    public dispatchAction(actionProps: T_ActionCNode_Props | T_ActionTip_Props, options?: T_options) {
-        let action = {} as T_ActionCNode | T_ActionTip;
+    public dispatchAction(
+        actionRequired:
+            T_ActionCNode_Required |
+            T_ActionTip_Required |
+            T_ActionCNodeProps_Required,
+        options?: T_options
+    ) {
+        let action = {} as T_ActionCNode | T_ActionTip | T_ActionCNodeProps;
 
-        if (isActionCNodeProps(actionProps)) {
-            action = actionCNode_Factory.do(actionProps);
+        if (isActionCNodeRequired(actionRequired)) {
+            action = actionCNode_Factory.do(actionRequired);
             this.transferActionCNode(action);
-        } else {
-            action = actionTip_Factory.createActionTip(actionProps);
+        } else if (isActionTipRequired(actionRequired)) {
+            action = actionTip_Factory.createActionTip(actionRequired);
             this.transferActionTip(action);
+        } else if (isActionCNodePropsRequired(actionRequired)) {
+            action = actionCNodeProps_Factory.createActionCNodeProps(actionRequired);
+            this.transferActionCNodeProps(action);
         }
 
         return
@@ -77,17 +96,24 @@ export class ActionController implements I_ActionController {
     }
 }
 
-// 这两个推断条件 todo
-function isActionCNodeProps(props: T_ActionCNode_Props | T_ActionTip_Props): props is T_ActionCNode_Props {
-    if (props.type in ActionCNode_collection) {
+function isActionCNodeRequired(actionRequired: T_actionRequired): actionRequired is T_ActionCNode_Required {
+    if (actionRequired.type in ActionCNode_collection) {
         return true
     }
 
     return false
 }
 
-function isActionTipProps(props: T_ActionCNode_Props | T_ActionTip_Props): props is T_ActionTip_Props {
-    if (props.type in ActionTip_collection) {
+function isActionTipRequired(actionRequired: T_actionRequired): actionRequired is T_ActionTip_Required {
+    if (actionRequired.type in ActionTip_collection) {
+        return true
+    }
+
+    return false
+}
+
+function isActionCNodePropsRequired(actionRequired: T_actionRequired): actionRequired is T_ActionCNodeProps_Required {
+    if (actionRequired.type in ActionCNodeProps_collection) {
         return true
     }
 

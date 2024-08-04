@@ -12,22 +12,22 @@ export function SettingRight_UI() {
 
     const { selectedCNode } = settingRight;
 
+    if (!selectedCNode) {
+        return <div>请在画布中选中组件</div>
+    }
+
+    const { CNode_UI_props } = selectedCNode;
+
     return (
-        <div
-            id='mpg-settingRight'
-        >{
-                selectedCNode ?
-                    <Tabs defaultValue='SettingProps' className="">
-                        <TabsList>
-                            <TabsTrigger value="SettingProps">属性</TabsTrigger>
-                            <TabsTrigger value="SettingCssStyle">样式</TabsTrigger>
-                        </TabsList>
-                        <TabsContent value="SettingProps"><SettingProps_UI /></TabsContent>
-                        <TabsContent value="SettingCssStyle"><SettingCssStyle_UI /></TabsContent>
-                    </Tabs>
-                    :
-                    <div>请在画布中选中组件</div>
-            }
+        <div id='mpg-settingRight'>
+            <Tabs defaultValue='SettingProps' className="">
+                <TabsList>
+                    {CNode_UI_props && <TabsTrigger value="SettingProps">属性</TabsTrigger>}
+                    {/* <TabsTrigger value="SettingCssStyle">样式</TabsTrigger> */}
+                </TabsList>
+                {CNode_UI_props && <TabsContent value="SettingProps"><SettingProps_UI /></TabsContent>}
+                {/* <TabsContent value="SettingCssStyle"><SettingCssStyle_UI /></TabsContent> */}
+            </Tabs>
         </div>
     )
 }

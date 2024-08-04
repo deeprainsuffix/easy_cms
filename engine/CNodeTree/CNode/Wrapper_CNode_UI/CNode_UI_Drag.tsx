@@ -1,5 +1,5 @@
 import React, { type DragEventHandler, useCallback } from 'react';
-import { ActionCNode_type_move } from '@/engine/ActionController/ActiocCNode';
+import { ActionCNode_type_move } from '@/engine/ActionController/ActionCNode';
 import { CNode } from '..';
 
 interface I_CNode_UI_Drag extends React.InputHTMLAttributes<HTMLDivElement> {

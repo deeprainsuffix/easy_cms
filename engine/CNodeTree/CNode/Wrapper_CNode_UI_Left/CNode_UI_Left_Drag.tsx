@@ -1,6 +1,6 @@
 import React, { type DragEventHandler, useCallback } from 'react';
 import { type T_ComponentName } from '../type';
-import { ActionCNode_type_add } from '@/engine/ActionController/ActiocCNode';
+import { ActionCNode_type_add } from '@/engine/ActionController/ActionCNode';
 
 interface I_CNode_UI_Left_Drag extends React.InputHTMLAttributes<HTMLDivElement> {
     componentName: T_ComponentName;

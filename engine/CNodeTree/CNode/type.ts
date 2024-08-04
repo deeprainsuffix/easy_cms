@@ -34,7 +34,9 @@ export type T_ComponentName =
     T_componentName_form
     ;
 
-export interface I_CNode_props { }; // 每个组件会设置自己的props
+export interface I_CNode_props {
+    [index: string]: any;
+}; // 每个组件会设置自己的props，这个还需要吗？ todo
 
 export interface I_CNode_cssStyle extends CSSProperties { };
 

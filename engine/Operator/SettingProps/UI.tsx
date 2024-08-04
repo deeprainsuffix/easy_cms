@@ -8,12 +8,11 @@ export function SettingProps_UI() {
     }, []);
 
     const { selectedCNode } = settingProps;
+    const CNode_UI_props = selectedCNode!.CNode_UI_props;
 
     return (
-        selectedCNode
-            ?
-            <div id='mpg-settingProps'>属性设置器</div>
-            :
-            null
+        <div id='mpg-settingProps'>
+            <CNode_UI_props cNode={selectedCNode} />
+        </div>
     )
 }

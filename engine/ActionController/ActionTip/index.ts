@@ -37,7 +37,7 @@ export class ActionTip_select_none implements I_ActionTip_select_none {
  * *********************************************************************************************************
  */
 
-export type T_ActionTip_Props =
+export type T_ActionTip_Required =
     I_ActionTip_select |
     I_ActionTip_select_none
     ;

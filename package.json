@@ -8,10 +8,10 @@
     "build": "webpack"
   },
   "keywords": [
-    "js",
-    "ts"
+    "ts",
+    "react"
   ],
-  "author": "me",
+  "author": "deeprainsuffix",
   "license": "ISC",
   "dependencies": {
     "@radix-ui/react-slot": "^1.1.0",

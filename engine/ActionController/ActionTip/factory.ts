@@ -1,11 +1,11 @@
 import {
-    T_ActionTip_Props, T_ActionTip, ActionTip_collection,
+    T_ActionTip_Required, T_ActionTip, ActionTip_collection,
     ActionTip_type_select, ActionTip_type_select_none,
-} from "../ActiocTip";
+} from ".";
 
 
 interface I_ActionTip_Factory {
-    createActionTip: (actionProps: T_ActionTip_Props) => T_ActionTip;
+    createActionTip: (actionRequired: T_ActionTip_Required) => T_ActionTip;
 }
 
 export class ActionTip_Factory implements I_ActionTip_Factory {
@@ -13,14 +13,14 @@ export class ActionTip_Factory implements I_ActionTip_Factory {
 
     }
 
-    createActionTip(actionProps: T_ActionTip_Props) {
+    createActionTip(actionRequired: T_ActionTip_Required) {
         let result = {} as T_ActionTip;
-        switch (actionProps.type) {
+        switch (actionRequired.type) {
             case ActionTip_type_select:
-                result = new ActionTip_collection[actionProps.type](actionProps.id);
+                result = new ActionTip_collection[actionRequired.type](actionRequired.id);
                 break;
             case ActionTip_type_select_none:
-                result = new ActionTip_collection[actionProps.type]();
+                result = new ActionTip_collection[actionRequired.type]();
                 break;
             default:
                 throw 'createActionTip失败'

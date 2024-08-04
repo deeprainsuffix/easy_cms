@@ -1,5 +1,5 @@
 
-import type { T_ComponentName, I_CNode_props, I_CNode_cssStyle } from "../../CNodeTree/CNode/type";
+import type { T_ComponentName } from "../../CNodeTree/CNode/type";
 import { idGenerator } from "@/engine/IdGenerator";
 
 /**
@@ -126,74 +126,24 @@ export class ActionCNode_delete implements I_ActionCNode_delete {
     }
 }
 
-
-/**
- * 更改节点props，该属性更改参与时间旅行
- */
-export const ActionCNode_type_update_props = 'update_props';
-export interface I_ActionCNode_update_props {
-    type: typeof ActionCNode_type_update_props;
-    id: string;
-    updateKey: [keyof I_CNode_props][], // 例如[a, b, c] 则更新cNode.props[a][b][c] todo
-}
-
-// 设计这部分的反命令时再说，包括后边的cssStyle，等到开发RIght时再具体设定 todo 
-interface T_updateKey_keys {
-    oldValue: I_CNode_props[keyof I_CNode_props];
-    newValue: I_CNode_props[keyof I_CNode_props];
-}
-
-export class ActionCNode_update_props implements I_ActionCNode_update_props {
-    type: typeof ActionCNode_type_update_props;
-    constructor(
-        public id: string,
-        public updateKey: [keyof I_CNode_props][],
-    ) {
-        this.type = ActionCNode_type_update_props;
-    }
-}
-
-
-/**
- * 更改节点cssStyle
- */
-export const ActionCNode_type_update_cssStyle = 'update_cssStyle';
-export interface I_ActionCNode_update_cssStyle {
-    type: typeof ActionCNode_type_update_cssStyle;
-    id: string;
-    updateKey: keyof I_CNode_cssStyle;
-}
-
-export class ActionCNode_update_cssStyle implements I_ActionCNode_update_cssStyle {
-    type: typeof ActionCNode_type_update_cssStyle;
-    constructor(
-        public id: string,
-        public updateKey: keyof I_CNode_cssStyle,
-    ) {
-        this.type = ActionCNode_type_update_cssStyle;
-    }
-}
-
 /**
  * *********************************************************************************************************
  * *********************************************************************************************************
  */
 
-type I_ActionCNode_add_props = {
+type I_ActionCNode_add_Required = {
     [prop in keyof I_ActionCNode_add as Exclude<prop, 'id'>]: I_ActionCNode_add[prop];
 }
-type I_ActionCNode_copy_props = {
+type I_ActionCNode_copy_Required = {
     [prop in keyof I_ActionCNode_copy as Exclude<prop, 'id'>]: I_ActionCNode_copy[prop];
 }
 
-export type T_ActionCNode_Props =
-    I_ActionCNode_add_props |
+export type T_ActionCNode_Required =
+    I_ActionCNode_add_Required |
     // I_ActionCNode_re_add | // 不需要添加
-    I_ActionCNode_copy_props |
+    I_ActionCNode_copy_Required |
     I_ActionCNode_move |
-    I_ActionCNode_delete |
-    I_ActionCNode_update_props |
-    I_ActionCNode_update_cssStyle
+    I_ActionCNode_delete
     ;
 
 export type T_ActionCNode =
@@ -201,9 +151,7 @@ export type T_ActionCNode =
     ActionCNode_re_add |
     ActionCNode_copy |
     ActionCNode_move |
-    ActionCNode_delete |
-    ActionCNode_update_props |
-    ActionCNode_update_cssStyle
+    ActionCNode_delete
     ;
 
 /**
@@ -217,8 +165,6 @@ export const ActionCNode_collection = {
     [ActionCNode_type_copy]: ActionCNode_copy,
     [ActionCNode_type_move]: ActionCNode_move,
     [ActionCNode_type_delete]: ActionCNode_delete,
-    [ActionCNode_type_update_props]: ActionCNode_update_props,
-    [ActionCNode_type_update_cssStyle]: ActionCNode_update_cssStyle,
 };
 
 export const ActionCNode_reverse_collection = {

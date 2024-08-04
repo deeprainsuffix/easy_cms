@@ -3,16 +3,21 @@ import { testRender } from '../../client'
 import { CNode_collection } from './CNode/CNode_collection';
 import type { T_ComponentName } from './CNode/type';
 import {
+    T_ActionCNode,
+    ActionCNode_type_add, ActionCNode_type_copy, ActionCNode_type_delete, ActionCNode_type_move, ActionCNode_type_re_add,
+} from '../ActionController/ActionCNode';
+import {
     T_ActionTip,
     ActionTip_type_select, ActionTip_type_select_none
-} from '../ActionController/ActiocTip';
+} from '../ActionController/ActionTip';
 import {
-    T_ActionCNode,
-    ActionCNode_type_add, ActionCNode_type_copy, ActionCNode_type_delete, ActionCNode_type_move, ActionCNode_type_re_add, ActionCNode_type_update_cssStyle, ActionCNode_type_update_props
-} from '../ActionController/ActiocCNode';
+    T_ActionCNodeProps,
+    ActionCNodeProps_type_update,
+} from '../ActionController/ActionCNodeProps';
 import { custom_eType_selectedCNodeChange } from '../Operator/dependOnSelectedCNode';
 import { deepClone } from '@/lib/utils';
 import { idGenerator } from '../IdGenerator';
+
 
 class CNodeTreeBase {
     constructor() {
@@ -185,14 +190,6 @@ class CNodeTree extends CNodeTreeBase {
                 this.receiveActionTip({ type: ActionTip_type_select_none });
             }
                 break;
-            case ActionCNode_type_update_props: {
-
-            }
-                break;
-            case ActionCNode_type_update_cssStyle: {
-
-            }
-                break;
             default:
                 throw 'receiveActionCNode失败';
         }
@@ -218,6 +215,19 @@ class CNodeTree extends CNodeTreeBase {
                 }
                 this.selectedCNode = null;
                 window.dispatchEvent(new CustomEvent(custom_eType_selectedCNodeChange, { detail: { selectedCNode: this.selectedCNode } }));
+                break;
+        }
+
+        this.render();
+    }
+
+    public receiveActionCNodeProps(action: T_ActionCNodeProps) {
+        switch (action.type) {
+            case ActionCNodeProps_type_update:
+                const { id, prop, value } = action;
+                const targetNode = CNodeTree.getCNode(id);
+                targetNode.props[prop] = value;
+                this.renderCNodes.push(targetNode);
                 break;
         }
 

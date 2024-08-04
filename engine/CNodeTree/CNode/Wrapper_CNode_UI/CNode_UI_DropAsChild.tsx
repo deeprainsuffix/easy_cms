@@ -1,5 +1,5 @@
 import { actionController } from '@/engine/ActionController';
-import { ActionCNode_type_add, ActionCNode_type_move } from '@/engine/ActionController/ActiocCNode';
+import { ActionCNode_type_add, ActionCNode_type_move } from '@/engine/ActionController/ActionCNode';
 import React, { DragEventHandler, useCallback } from 'react';
 import { type T_ComponentName } from '../type';
 import { type CNode } from '..';
