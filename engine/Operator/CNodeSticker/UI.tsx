@@ -57,7 +57,8 @@ export function CNodeSticker_UI(props: I_CNodeSticker_UI) {
         return null
     }
 
-    const { left, right, top, bottom } = domRect!; // todo
+    const { left, right, top, bottom, width, height } = domRect!; // todo
+    const borderWidth = 4; // 与className中的border-widht对应，tailwind无法识别表达式
 
     return (
         (
@@ -65,13 +66,30 @@ export function CNodeSticker_UI(props: I_CNodeSticker_UI) {
                 className='mpg-absolute'
                 style={{ left, top }}
             >
+                {/* 左右上下 */}
                 <div
-                    className='mpg-border-4 mpg-border-solid mpg-border-sky-500'
-                    style={{ width: right - left, height: bottom - top }}
+                    className='mpg-border-l-4 mpg-border-solid mpg-border-sky-500 mpg-absolute'
+                    style={{ width: borderWidth, height: height + borderWidth * 2, top: -borderWidth, left: -borderWidth }}
                 >
                 </div>
                 <div
-                    className='mpg-flex mpg-absolute mpg-right-0'
+                    className='mpg-border-r-4 mpg-border-solid mpg-border-sky-500 mpg-absolute'
+                    style={{ width: borderWidth, height: height + borderWidth * 2, top: -borderWidth, left: width }}
+                >
+                </div>
+                <div
+                    className='mpg-border-t-4 mpg-border-solid mpg-border-sky-500 mpg-absolute'
+                    style={{ width: width + borderWidth * 2, height: borderWidth, top: -borderWidth, left: -borderWidth }}
+                >
+                </div>
+                <div
+                    className='mpg-border-b-4 mpg-border-solid mpg-border-sky-500 mpg-absolute'
+                    style={{ width: width + borderWidth * 2, height: borderWidth, top: height, left: -borderWidth }}
+                >
+                </div>
+                <div
+                    className='mpg-flex mpg-absolute mpg-border-4 mpg-border-solid mpg-border-fuchsia-600'
+                    style={{ top: height + borderWidth, right: -(width + borderWidth) }}
                 >
                     <div className='mpg-w-12' onClick={onUpLevel}>向上</div>
                     <div className='mpg-w-12' onClick={onCopy}>复制</div>

@@ -46,7 +46,7 @@
   * ActionController
   * action需要再加一类，ActionPeripheral，该类不引起cNodeTree的render [todo]，ActionTip_type_select(_none)可能需要移进去
 * CNodeSticker
-  * 解决CNodeSticker遮挡cNodetree [todo]
+  * 解决CNodeSticker遮挡cNodetree [done]
   * 窗口resize后，要render
 * undo/redo [todo]
   * 测试项:
