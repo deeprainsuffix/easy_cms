@@ -1,6 +1,6 @@
 import {
     T_ActionTip_Required, T_ActionTip, ActionTip_collection,
-    ActionTip_type_select, ActionTip_type_select_none,
+    ActionTip_type_select, ActionTip_type_select_none, ActionTip_type_select_update
 } from ".";
 
 
@@ -20,6 +20,9 @@ export class ActionTip_Factory implements I_ActionTip_Factory {
                 result = new ActionTip_collection[actionRequired.type](actionRequired.id);
                 break;
             case ActionTip_type_select_none:
+                result = new ActionTip_collection[actionRequired.type]();
+                break;
+            case ActionTip_type_select_update:
                 result = new ActionTip_collection[actionRequired.type]();
                 break;
             default:

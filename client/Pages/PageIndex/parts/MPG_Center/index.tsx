@@ -9,6 +9,9 @@ export default function MPG_Center() {
         <div
             id='mpg-center'
             className={cn('mpg-grow mpg-shrink')}
+            style={{
+                maxWidth: 'calc(100% - 300px - 300px)',
+            }}
         >
             <TreePlanting cNode={ctx.cNodeRoot} />
         </div>

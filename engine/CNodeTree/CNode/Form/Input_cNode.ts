@@ -9,7 +9,7 @@ export const Input_cNode_meta = {
     title: '输入框',
 } as const;
 
-export const props_Input_cNode = Object.assign({}, props_Form_CNode_base);
+export const props_Input_CNode = Object.assign({}, props_Form_CNode_base);
 export interface I_props_Form_CNode extends I_props_Form_CNode_base { }
 
 interface I_props_Input_cNode extends I_props_Form_CNode { }
@@ -38,9 +38,9 @@ export class Input_CNode extends Category_Form implements I_Input_CNode {
         this.componentName = Input_cNode_meta.componentName;
         this.title = Input_cNode_meta.title;
         this.props = {
-            [props_Input_cNode.fieldKey]: `field-${id}`,
-            [props_Input_cNode.fieldLabel]: `字段-${id}`,
-            [props_Input_cNode.fieldPlaceholder]: `输入框-${id}`,
+            [props_Input_CNode.fieldKey]: `field-${id}`,
+            [props_Input_CNode.fieldLabel]: `字段-${id}`,
+            [props_Input_CNode.fieldPlaceholder]: `输入框-${id}`,
         };
         this.cssStyle = {};
     }

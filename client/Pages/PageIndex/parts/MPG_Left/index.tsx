@@ -6,7 +6,7 @@ export default function MPG_Left() {
     return (
         <div
             id='mpg-left'
-            className={cn('mpg-basis-72 mpg-grow-0 mpg-shrink-0 mpg-bg-zinc-200')}
+            className={cn('mpg-basis-[300px] mpg-min-w-[300px] mpg-grow-0 mpg-shrink-0 mpg-bg-zinc-200')}
         >
             <Simple />
         </div>

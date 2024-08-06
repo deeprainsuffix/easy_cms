@@ -43,3 +43,6 @@ export const custom_eType_selectedCNodeChange = 'selectedCNodeChange';
 export interface I_Detail_SelectedCNodeChange {
     selectedCNode: CNode | null;
 }
+
+export const custom_eType_selectedCNodeUpdate = 'selectedCNodeUpdate';
+export interface I_Detail_selectedCNodeUpdate { }

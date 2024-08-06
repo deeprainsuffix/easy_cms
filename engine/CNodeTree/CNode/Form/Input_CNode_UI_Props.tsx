@@ -1,7 +1,7 @@
 import React from 'react';
-import { props_Input_cNode, type Input_CNode } from "./Input_CNode";
+import { props_Input_CNode, type Input_CNode } from "./Input_CNode";
 import { Input } from '@/components/ui/input';
-import { useOnChangeInput } from '../Wrapper_CNode_UI_Props/useOnChangeInput';
+import { useInputOnChange } from '../Wrapper_CNode_UI_Props/useInputOnChange';
 
 interface I_Input_CNode_UI_Props {
     cNode: Input_CNode;
@@ -11,9 +11,9 @@ export function Input_CNode_UI_Props({ cNode }: I_Input_CNode_UI_Props) {
     const props = cNode.props;
     const { fieldKey, fieldLabel, fieldPlaceholder } = props;
 
-    const onChange_fieldKey = useOnChangeInput({ cNode, prop: props_Input_cNode.fieldKey });
-    const onChange_fieldLabel = useOnChangeInput({ cNode, prop: props_Input_cNode.fieldLabel });
-    const onChange_fieldPlaceholder = useOnChangeInput({ cNode, prop: props_Input_cNode.fieldPlaceholder });
+    const onChange_fieldKey = useInputOnChange({ cNode, prop: props_Input_CNode.fieldKey });
+    const onChange_fieldLabel = useInputOnChange({ cNode, prop: props_Input_CNode.fieldLabel });
+    const onChange_fieldPlaceholder = useInputOnChange({ cNode, prop: props_Input_CNode.fieldPlaceholder });
 
     return (
         <div>

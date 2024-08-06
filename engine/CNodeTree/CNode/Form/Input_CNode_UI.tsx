@@ -19,8 +19,8 @@ export function Input_CNode_UI({ cNode }: I_Input_CNode_UI) {
                 <CNode_UI_DropAsSibling cNode={cNode}>
                     <CNode_UI_Drag cNode={cNode}>
                         <div className='mpg-flex'>
-                            <div className='mpg-flex-grow-0 mpg-flex-shrink-0 mpg-w-24 mpg-flex mpg-justify-center mpg-items-center'>{fieldLabel}</div>
-                            <div className='mpg-flex-grow-0 mpg-flex-shrink-0 mpg-w-48'>
+                            <div className='mpg-flex-grow-0 mpg-flex-shrink-1 mpg-w-[100px] mpg-flex mpg-justify-center mpg-items-center'>{fieldLabel}</div>
+                            <div className='mpg-flex-grow-0 mpg-flex-shrink-1 mpg-w-[200px]'>
                                 <Input placeholder={fieldPlaceholder} />
                             </div>
                         </div>

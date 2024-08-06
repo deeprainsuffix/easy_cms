@@ -8,13 +8,14 @@ import {
 } from '../ActionController/ActionCNode';
 import {
     T_ActionTip,
-    ActionTip_type_select, ActionTip_type_select_none
+    ActionTip_type_select, ActionTip_type_select_none,
+    ActionTip_type_select_update
 } from '../ActionController/ActionTip';
 import {
     T_ActionCNodeProps,
     ActionCNodeProps_type_update,
 } from '../ActionController/ActionCNodeProps';
-import { custom_eType_selectedCNodeChange } from '../Operator/dependOnSelectedCNode';
+import { custom_eType_selectedCNodeChange, custom_eType_selectedCNodeUpdate } from '../Operator/dependOnSelectedCNode';
 import { deepClone } from '@/lib/utils';
 import { idGenerator } from '../IdGenerator';
 
@@ -208,6 +209,7 @@ class CNodeTree extends CNodeTreeBase {
                 // 但，react会将其改为 dataUpdate1 -> dataUpdate2 => ... -> viewRender1 -> viewRender2 -> ...
                 // todo 不过后续在render函数逻辑上可以顺成上述过程
                 window.dispatchEvent(new CustomEvent(custom_eType_selectedCNodeChange, { detail: { selectedCNode: this.selectedCNode } }));
+                this.render();
                 break;
             case ActionTip_type_select_none:
                 if (this.selectedCNode) {
@@ -215,10 +217,12 @@ class CNodeTree extends CNodeTreeBase {
                 }
                 this.selectedCNode = null;
                 window.dispatchEvent(new CustomEvent(custom_eType_selectedCNodeChange, { detail: { selectedCNode: this.selectedCNode } }));
+                this.render();
+                break;
+            case ActionTip_type_select_update:
+                window.dispatchEvent(new CustomEvent(custom_eType_selectedCNodeUpdate, { detail: { selectedCNode: this.selectedCNode } }));
                 break;
         }
-
-        this.render();
     }
 
     public receiveActionCNodeProps(action: T_ActionCNodeProps) {

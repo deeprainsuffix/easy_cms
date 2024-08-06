@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { lifeCycle_afterDomMounted, type CNode } from '../../../engine/CNodeTree/CNode';
+import { lifeCycle_afterDomMounted, lifeCycle_afterDomUpdated, type CNode } from '../../../engine/CNodeTree/CNode';
 
 export default function TreePlanting({ cNode }: { cNode: CNode }) {
     const CNode_UI = cNode.CNode_UI;
@@ -12,6 +12,12 @@ export default function TreePlanting({ cNode }: { cNode: CNode }) {
     useEffect(() => {
         if (renderPoint === 0) {
             cNode.lifeCycleRun(lifeCycle_afterDomMounted);
+        }
+    }, [renderPoint]);
+
+    useEffect(() => {
+        if (renderPoint > 0) {
+            cNode.lifeCycleRun(lifeCycle_afterDomUpdated);
         }
     }, [renderPoint]);
 

@@ -1,6 +1,8 @@
 import React, { type DragEventHandler, useCallback } from 'react';
 import { ActionCNode_type_move } from '@/engine/ActionController/ActionCNode';
 import { CNode } from '..';
+import { actionController } from '@/engine/ActionController';
+import { ActionTip_type_select_none } from '@/engine/ActionController/ActionTip';
 
 interface I_CNode_UI_Drag extends React.InputHTMLAttributes<HTMLDivElement> {
     cNode: CNode;
@@ -14,6 +16,9 @@ export function CNode_UI_Drag(props: I_CNode_UI_Drag) {
         e.dataTransfer.setData('moveFromParentId', cNode.parent!.id);
         e.dataTransfer.setData('moveFromPos', String(cNode.pos));
         e.stopPropagation();
+        actionController.dispatchAction({
+            type: ActionTip_type_select_none,
+        });
     }, []);
 
     return (
