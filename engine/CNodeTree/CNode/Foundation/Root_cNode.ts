@@ -2,6 +2,7 @@ import { Category_Foundation } from ".";
 import { CNode } from "..";
 import type { I_CNode_Concrete } from "../type";
 import { Root_CNode_UI } from "./Root_CNode_UI";
+import { Root_CNode_UI_Props } from "./Root_CNode_UI_Props";
 
 export const Root_cNode_meta = {
     componentName: 'root',
@@ -42,3 +43,4 @@ export class Root_CNode extends Category_Foundation implements I_Root_CNode {
 }
 
 Root_CNode.prototype.CNode_UI = Root_CNode_UI;
+Root_CNode.prototype.CNode_UI_props = Root_CNode_UI_Props;

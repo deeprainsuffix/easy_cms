@@ -38,18 +38,28 @@ export class Container_CNode extends Category_Layout implements I_Container_CNod
             [props_Container_CNode.widthRadio]: '100%',
             [props_Container_CNode.widthRadio_prev]: '100%',
             [props_Container_CNode.columnNum]: '2',
+            [props_Container_CNode.columnNum_prev]: '2',
         };
         this.cssStyle = {};
 
         this.lifeCycleRegister('afterDomUpdated', () => {
-            if (this.props['widthRadio_prev'] === this.props['widthRadio']) {
+            if (this.props['widthRadio_prev'] !== this.props['widthRadio']) {
+                this.props['widthRadio_prev'] = this.props['widthRadio'];
+                actionController.dispatchAction({
+                    type: ActionTip_type_select_update,
+                });
+
                 return
             }
 
-            this.props['widthRadio_prev'] = this.props['widthRadio'];
-            actionController.dispatchAction({
-                type: ActionTip_type_select_update,
-            });
+            if (this.props['columnNum_prev'] !== this.props['columnNum']) {
+                this.props['columnNum_prev'] = this.props['columnNum'];
+                actionController.dispatchAction({
+                    type: ActionTip_type_select_update,
+                });
+
+                return
+            }
         });
     }
 }
@@ -61,6 +71,7 @@ export const props_Container_CNode = {
     widthRadio: 'widthRadio',
     widthRadio_prev: 'widthRadio_prev',
     columnNum: 'columnNum',
+    columnNum_prev: 'columnNum_prev',
 } as const;
 export const props_Container_CNode_select = {
     [props_Container_CNode.widthRadio]: [
@@ -93,7 +104,8 @@ export const props_Container_CNode_select = {
     ]
 } as const;
 export interface I_props_Container_cNode {
-    [props_Container_CNode.widthRadio_prev]: typeof props_Container_CNode_select['widthRadio'][number]['value'];
     [props_Container_CNode.widthRadio]: typeof props_Container_CNode_select['widthRadio'][number]['value'];
+    [props_Container_CNode.widthRadio_prev]: typeof props_Container_CNode_select['widthRadio'][number]['value'];
     [props_Container_CNode.columnNum]: typeof props_Container_CNode_select['columnNum'][number]['value'];
+    [props_Container_CNode.columnNum_prev]: typeof props_Container_CNode_select['columnNum'][number]['value'];
 };
