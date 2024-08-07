@@ -2,7 +2,7 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import type { CNode } from '../engine/CNodeTree/CNode';
 import PageIndex from './Pages/PageIndex';
-import { Ctx } from './Ctx/ctx';
+import { Ctx } from './Ctx';
 import './Styles/global.css';
 
 const rootDom = document.createElement('div');

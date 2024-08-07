@@ -4,6 +4,7 @@ module.exports = {
   content: [
     './components/**/*.{ts,tsx}',
     './client/Pages/**/*.{ts,tsx}',
+    './client/Components/**/*.{ts,tsx}',
     './engine/**/*.{ts,tsx}',
   ],
   prefix: "mpg-",

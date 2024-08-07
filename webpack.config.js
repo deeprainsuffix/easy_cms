@@ -27,6 +27,7 @@ module.exports = {
             "@/components": path.resolve(__dirname, 'components'),
             "@/lib": path.resolve(__dirname, 'lib'),
             "@/engine": path.resolve(__dirname, 'engine'),
+            "@/client": path.resolve(__dirname, 'client'),
         },
     },
     module: {
