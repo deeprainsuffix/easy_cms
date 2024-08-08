@@ -15,7 +15,10 @@ export default function PageIndex() {
             <MPG_Header />
             <div
                 id='mpg-body'
-                className={cn('mpg-h-full mpg-flex')}
+                className={cn('mpg-flex')}
+                style={{
+                    height: 'calc(100% - 60px)',
+                }}
             >
                 <MPG_Left />
                 <MPG_Center />

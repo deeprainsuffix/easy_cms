@@ -8,7 +8,9 @@ export default function MPG_Center() {
     return (
         <div
             id='mpg-center'
-            className={cn('mpg-grow mpg-shrink')}
+            className={cn(
+                'mpg-grow mpg-shrink mpg-p-[8px] mpg-bg-card mpg-bg-workground'
+            )}
             style={{
                 maxWidth: 'calc(100% - 300px - 300px)',
             }}

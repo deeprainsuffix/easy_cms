@@ -17,14 +17,14 @@ export function Container_CNode_UI_Props({ cNode }: I_Container_CNode_UI_Props) 
     const onChange_columnNum = useSelectSingleOnChange({ cNode, prop: props_Container_CNode.columnNum });
 
     return (
-        <div>
-            <div className='mpg-flex mpg-m-3'>
+        <div className='mpg-flex mpg-flex-col'>
+            <div className='mpg-basis-[50px] mpg-flex mpg-items-center'>
                 <div className='mpg-grow-0 mpg-shrink-0 mpg-basis-20 mpg-flex mpg-items-center'>
                     宽度占比
                 </div>
                 <SelectSingle options={props_Container_CNode_select[props_Container_CNode['widthRadio']]} defaultValue={widthRadio} onValueChange={onChange_widthRadio} />
             </div>
-            <div className='mpg-flex mpg-m-3'>
+            <div className='mpg-basis-[50px] mpg-flex mpg-items-center'>
                 <div className='mpg-grow-0 mpg-shrink-0 mpg-basis-20 mpg-flex mpg-items-center'>
                     列数量
                 </div>

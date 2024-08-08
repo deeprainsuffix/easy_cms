@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useCallback, } from 'react';
 import { timeTravel } from '.';
 import { actionController } from '../ActionController';
-import { Button } from '@/components/ui/button';
 import { ActionTip_type_select_none } from '../ActionController/ActionTip';
+import Icon_undo from '@/client/resource/undo.png';
+import Icon_redo from '@/client/resource/redo.png';
+import { Button } from '@/components/ui/button';
 
 export function TimeTravel_UI() {
     const [_, setState] = useState(0);
@@ -28,8 +30,16 @@ export function TimeTravel_UI() {
 
     return (
         <div className='mpg-flex mpg-items-center'>
-            <Button onClick={onUndo} disabled={!canUndo} className='mpg-mr-8 mpg-border-4 mpg-border-solid mpg-border-sky-500'>撤销</Button>
-            <Button onClick={onRedo} disabled={!canRedo} className='mpg-mr-8 mpg-border-4 mpg-border-solid mpg-border-sky-500'>重做</Button>
+            <Button onClick={canUndo ? onUndo : undefined} variant={'TimeTravel'} size={'TimeTravel'}
+                style={canUndo ? { cursor: 'pointer' } : { cursor: 'not-allowed', opacity: '0.5' }}
+            >
+                <img src={Icon_undo} width={30} height={30} className='mpg-inline' alt="撤销" />
+            </Button>
+            <Button onClick={canRedo ? onRedo : undefined} variant={'TimeTravel'} size={'TimeTravel'}
+                style={canRedo ? { cursor: 'pointer' } : { cursor: 'not-allowed', opacity: '0.5' }}
+            >
+                <img src={Icon_redo} width={30} height={30} className='mpg-inline' alt="重做" />
+            </Button>
         </div>
     )
 }

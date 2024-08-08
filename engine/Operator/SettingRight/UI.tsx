@@ -13,20 +13,30 @@ export function SettingRight_UI() {
     const { selectedCNode } = settingRight;
 
     if (!selectedCNode) {
-        return <div>请在画布中选中组件</div>
+        return (
+            <div className='mpg-w-[150px] mpg-mx-auto mpg-mt-[60px] mpg-text-center mpg-text-secondary-foreground'>
+                请在画布中选中组件
+            </div>
+        )
     }
 
     const { CNode_UI_props } = selectedCNode;
 
     return (
         <div id='mpg-settingRight'>
-            <Tabs defaultValue='SettingProps' className="">
-                <TabsList>
-                    {CNode_UI_props && <TabsTrigger value="SettingProps">属性</TabsTrigger>}
-                    {/* <TabsTrigger value="SettingCssStyle">样式</TabsTrigger> */}
+            <Tabs
+                defaultValue='SettingProps'
+            >
+                <TabsList
+                    className='mpg-w-full mpg-shadow-[0px_5px_2px_#94a3b8]'
+                >
+                    {CNode_UI_props && <TabsTrigger className='mpg-flex-grow' value="SettingProps">属性</TabsTrigger>}
+                    <TabsTrigger className='mpg-flex-grow' value="SettingCssStyle">样式</TabsTrigger>
                 </TabsList>
-                {CNode_UI_props && <TabsContent value="SettingProps"><SettingProps_UI /></TabsContent>}
-                {/* <TabsContent value="SettingCssStyle"><SettingCssStyle_UI /></TabsContent> */}
+                <div className='mpg-p-3'>
+                    {CNode_UI_props && <TabsContent value="SettingProps"><SettingProps_UI /></TabsContent>}
+                    <TabsContent value="SettingCssStyle"><SettingCssStyle_UI /></TabsContent>
+                </div>
             </Tabs>
         </div>
     )

@@ -17,6 +17,7 @@ export function Container_CNode_UI(props: I_Container_CNode_UI) {
     return (
         <div id={cNode.id} ref={cNode.ref}
             style={{ width: widthRadio }}
+            className='mpg-my-[4px] first:mpg-mt-0 last:mpg-mb-0'
         >
             <CNode_UI_Mouse cNode={cNode}>
                 <CNode_UI_DropAsChild cNode={cNode}>

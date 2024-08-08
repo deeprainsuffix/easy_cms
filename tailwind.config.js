@@ -18,7 +18,7 @@ module.exports = {
     },
     extend: {
       colors: {
-        border: "hsl(var(--border))",
+        border: "var(--border)",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
@@ -50,6 +50,33 @@ module.exports = {
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
+        },
+        'chart-1': "hsl(var(--chart-1))",
+        'chart-2': "hsl(var(--chart-2))",
+        'chart-3': "hsl(var(--chart-3))",
+        'chart-4': "hsl(var(--chart-4))",
+        'chart-5': "hsl(var(--chart-5))",
+
+        workground: {
+          DEFAULT: "var(--workground)",
+          foreground: "var(--workground-foreground)",
+        },
+        Container: {
+          DEFAULT: "var(--Container)",
+          foreground: "var(--Container-foreground)",
+        },
+        Input: {
+          DEFAULT: "var(--Input)",
+          foreground: "var(--Input-foreground)",
+        },
+        'CNodeSticker-border': "var(--CNodeSticker-border)",
+        'CNodeSticker-tool': {
+          DEFAULT: "var(--CNodeSticker-tool)",
+          hover: "var(--CNodeSticker-tool-hover)",
+        },
+        TimeTravel: {
+          DEFAULT: "var(--TimeTravel)",
+          hover: "var(--TimeTravel-hover)",
         },
       },
       borderRadius: {

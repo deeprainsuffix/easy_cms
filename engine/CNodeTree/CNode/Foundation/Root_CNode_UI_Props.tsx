@@ -7,8 +7,8 @@ interface I_Root_CNode_UI_Props {
 
 export function Root_CNode_UI_Props({ cNode }: I_Root_CNode_UI_Props) {
     return (
-        <div>
-            <div className='mpg-flex mpg-m-3'>
+        <div className='mpg-flex mpg-flex-col'>
+            <div className='mpg-basis-[50px] mpg-flex mpg-items-center'>
                 <div className='mpg-grow-0 mpg-shrink-0 mpg-basis-20 mpg-flex mpg-items-center'>
                     层级
                 </div>

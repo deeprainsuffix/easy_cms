@@ -39,6 +39,7 @@
   * receiveAction的工作有点杂 [done]
   * 考虑删除掉ComponentCategory类，将category及其扩展属性单独添加，或使用生成器模式构造CNode [todo]
   * 实际上，CNodeTree变动后，很多通知其他相关组件更新的逻辑，都要在确定CNodeTree render完成之后进行
+  * 当被拖入的组件是给个提示，是拖入左右侧？还是内部？ [todo]
 * Action
   * 一次性提交多个命令 [todo]
   * undo/redo 反命令 [todo]
@@ -50,6 +51,7 @@
   * 窗口resize后，要render [todo]
   * 选中根节点时，要隐藏操作器 [todo]
   * 在dragStart和undo、redo时，要隐藏 [done]
+  * 当工作区内容撑起滚动条时，以及滚动式，要resize(是否考虑将CNodeSticker与组件绑定)
 * SettingRight
   * 向容器和跟组建不需要设Props和CssStyle，在点击之后右侧的显示 [todo]
 * undo/redo [todo]
@@ -58,6 +60,8 @@
     * copy -> delete(undo) -> readd(redo) -> delete(undo) -> newAction -> (again) [done]
     * move -> move(undo) -> move(redo) -> move(undo) -> newAction -> (again) [done]
     * delete -> readd(undo) -> delete(redo) -> readd(undo) -> newAction -> (again) [done]
+* css
+  * dark模式的颜色 [todo]
 
 ### 前端
 

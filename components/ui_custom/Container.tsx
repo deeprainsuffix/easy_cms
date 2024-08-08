@@ -12,13 +12,16 @@ export function Container(props: I_Container) {
 
     return (
         <div className={cn(
-            'mpg-border-8 mpg-border-dashed mpg-border-orange-700 mpg-bg-neutral-300 mpg-min-h-[60px]',
+            `mpg-min-h-[70px]
+            mpg-border-[1px] mpg-border-dashed mpg-border-Container-foreground mpg-bg-Container
+            `,
             className
         )}>
             {
                 children
                     ?
-                    <div className='mpg-grid mpg-items-center'
+                    <div className={`mpg-grid mpg-items-center
+                        mpg-p-[4px]`}
                         style={{
                             gridTemplateColumns: `repeat(${columnNum}, ${Math.floor(1 / +columnNum * 100)}%)`,
                             gridAutoRows: 'minmax(60px, auto)',
@@ -27,7 +30,7 @@ export function Container(props: I_Container) {
                         {children}
                     </div>
                     :
-                    <div className='mpg-h-[60px] mpg-flex mpg-justify-center mpg-items-center'>容器：待拖入其他组件</div>
+                    <div className='mpg-h-[68px] mpg-flex mpg-justify-center mpg-items-center'>容器：待拖入其他组件</div>
             }
         </div>
     )
