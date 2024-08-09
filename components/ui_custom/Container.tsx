@@ -13,7 +13,7 @@ export function Container(props: I_Container) {
     return (
         <div className={cn(
             `mpg-min-h-[70px]
-            mpg-border-[1px] mpg-border-dashed mpg-border-Container-foreground mpg-bg-Container
+            mpg-border-[1px] mpg-border-dashed mpg-border-s500 mpg-bg-s300
             `,
             className
         )}>

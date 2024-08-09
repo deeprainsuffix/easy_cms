@@ -14,13 +14,13 @@ export function Input_CNode_UI({ cNode }: I_Input_CNode_UI) {
     const { fieldLabel, fieldPlaceholder } = props;
 
     return (
-        <div id={cNode.id} ref={cNode.ref} className='mpg-max-w-[302px] mpg-bg-input'>
+        <div id={cNode.id} ref={cNode.ref} className='mpg-max-w-[302px] mpg-bg-s200'>
             <CNode_UI_Mouse cNode={cNode}>
                 <CNode_UI_DropAsSibling cNode={cNode}>
                     <CNode_UI_Drag cNode={cNode}>
                         <div className={`mpg-flex mpg-items-center
                         mpg-h-[50px] mpg-p-[4px]
-                        mpg-border-[2px] mpg-border-solid mpg-border-Input-foreground mpg-rounded-md`}>
+                        mpg-border-[2px] mpg-border-solid mpg-border-s400 mpg-rounded-md`}>
                             <div className='mpg-flex-grow-0 mpg-flex-shrink-1 mpg-basis-[100px] mpg-flex mpg-justify-center mpg-items-center mpg-break-all'>{fieldLabel}</div>
                             <div className='mpg-flex-grow-0 mpg-flex-shrink-1 mpg-basis-[200px]'>
                                 <Input placeholder={fieldPlaceholder} />

@@ -30,18 +30,15 @@
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
 
+    --s50: #f8fafc;
+    --s200: #e2e8f0;
+    --s300: #cbd5e1;
+    --s400: #94a3b8;
+    --s500: #64748b;
+
     --border: #cbd5e1;
-    --workground: #e2e8f0;
-    --workground-foreground: #94a3b8;
-    --Container: #cbd5e1;
-    --Container-foreground: #64748b;
-    --Input: #e2e8f0;
-    --Input-foreground: #94a3b8;
     --CNodeSticker-border: #0ea5e9;
     --CNodeSticker-tool: #0ea5e9;
-    --CNodeSticker-tool-hover: #f8fafc;
-    --TimeTravel: transparent;
-    --TimeTravel-hover: #e2e8f0;
   }
 
   .dark {
@@ -70,18 +67,15 @@
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
 
+    --s50: #f8fafc;
+    --s200: #e2e8f0;
+    --s300: #cbd5e1;
+    --s400: #94a3b8;
+    --s500: #64748b;
+
     --border: #cbd5e1;
-    --workground: #e2e8f0;
-    --workground-foreground: #94a3b8;
-    --Container: #cbd5e1;
-    --Container-foreground: #64748b;
-    --Input: #e2e8f0;
-    --Input-foreground: #94a3b8;
     --CNodeSticker-border: #0ea5e9;
     --CNodeSticker-tool: #0ea5e9;
-    --CNodeSticker-tool-hover: #f8fafc;
-    --TimeTravel: transparent;
-    --TimeTravel-hover: #e2e8f0;
   }
 }
 
@@ -121,5 +115,11 @@
   #root {
     @apply mpg-h-full;
     @apply mpg-overflow-hidden;
+  }
+}
+
+@layer base {
+  .icon_CNode_UI_Left {
+    @apply mpg-w-4 mpg-h-4 mpg-mr-2;
   }
 }

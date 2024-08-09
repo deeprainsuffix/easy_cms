@@ -1,3 +1,4 @@
+import React from 'react';
 import { Category_Form, props_Form_CNode_base, type I_props_Form_CNode_base } from ".";
 import { CNode } from "..";
 import type { I_CNode_Concrete } from "../type";
@@ -7,6 +8,12 @@ import { Input_CNode_UI_Props } from "./Input_CNode_UI_Props";
 export const Input_cNode_meta = {
     componentName: 'input',
     title: '输入框',
+    Icon_Left: () => (
+        <svg className='icon_CNode_UI_Left' viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4495" width="32" height="32">
+            <path d="M896 224H128c-35.2 0-64 28.8-64 64v448c0 35.2 28.8 64 64 64h768c35.2 0 64-28.8 64-64V288c0-35.2-28.8-64-64-64z m0 480c0 19.2-12.8 32-32 32H160c-19.2 0-32-12.8-32-32V320c0-19.2 12.8-32 32-32h704c19.2 0 32 12.8 32 32v384z" fill="#333333" p-id="4496"></path>
+            <path d="M224 352c-19.2 0-32 12.8-32 32v256c0 16 12.8 32 32 32s32-12.8 32-32V384c0-16-12.8-32-32-32z" fill="currentColor" p-id="4497"></path>
+        </svg>
+    )
 } as const;
 
 export const props_Input_CNode = Object.assign({}, props_Form_CNode_base);

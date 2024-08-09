@@ -3,6 +3,7 @@ import type { I_CNode_Category } from '../type';
 
 export const Category_Form_meta = {
     componentCategory: 'form',
+    title: '表单类',
 } as const;
 
 export interface I_Category_Form extends I_CNode_Category {

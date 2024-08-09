@@ -6,7 +6,7 @@ import { Input_cNode_meta } from './Input_CNode';
 export function Input_CNode_UI_Left() {
     return (
         <CNode_UI_Left_Drag componentName={Input_cNode_meta.componentName}>
-            <div>我是Input左侧</div>
+            <div>输入框</div>
         </CNode_UI_Left_Drag>
     )
 }

@@ -40,6 +40,7 @@
   * 考虑删除掉ComponentCategory类，将category及其扩展属性单独添加，或使用生成器模式构造CNode [todo]
   * 实际上，CNodeTree变动后，很多通知其他相关组件更新的逻辑，都要在确定CNodeTree render完成之后进行
   * 当被拖入的组件是给个提示，是拖入左右侧？还是内部？ [todo]
+  * Root_CNode_UI_Left可以删除，本想着设计每个组件的独特UI_Left
 * Action
   * 一次性提交多个命令 [todo]
   * undo/redo 反命令 [todo]
@@ -80,3 +81,30 @@
 * 搭个页面大体框架，以备开发Right和Action
 
 ### 后端
+
+### 行程
+
+* day1
+  <!-- * mpg-left样式 -->
+  * CNodeSticker更新
+    * resize
+    * 复制引起撑开滚动条时
+    * 滚动
+* day1
+  * [表单svg](https://www.iconfont.cn/collections/detail?spm=a313x.search_index.0.da5a778a4.255d3a81BFLqRV&cid=3991)
+  * 加一个select组件
+  * 加一个上传文件组件
+* day4-5
+  * 根据CNode结构生成json，serviceWork
+  * 根据json生成前端文件
+    * PC
+    * m
+  * 根据json生成后端文件
+* day1 页面预览
+  * 生成文件，并缓存，可以节省出码的速度
+  * 新建页面
+  * 详情页面
+* day2 屏幕尺寸
+* day2考虑加一个表格
+* day1 大纲树
+* 解决todo

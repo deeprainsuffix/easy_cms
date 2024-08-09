@@ -57,26 +57,24 @@ module.exports = {
         'chart-4': "hsl(var(--chart-4))",
         'chart-5': "hsl(var(--chart-5))",
 
-        workground: {
-          DEFAULT: "var(--workground)",
-          foreground: "var(--workground-foreground)",
+        s50: {
+          DEFAULT: "var(--s50)",
         },
-        Container: {
-          DEFAULT: "var(--Container)",
-          foreground: "var(--Container-foreground)",
+        s200: {
+          DEFAULT: "var(--s200)",
         },
-        Input: {
-          DEFAULT: "var(--Input)",
-          foreground: "var(--Input-foreground)",
+        s300: {
+          DEFAULT: "var(--s300)",
+        },
+        s400: {
+          DEFAULT: "var(--s400)",
+        },
+        s500: {
+          DEFAULT: "var(--s500)",
         },
         'CNodeSticker-border': "var(--CNodeSticker-border)",
         'CNodeSticker-tool': {
           DEFAULT: "var(--CNodeSticker-tool)",
-          hover: "var(--CNodeSticker-tool-hover)",
-        },
-        TimeTravel: {
-          DEFAULT: "var(--TimeTravel)",
-          hover: "var(--TimeTravel-hover)",
         },
       },
       borderRadius: {

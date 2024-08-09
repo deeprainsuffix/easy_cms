@@ -3,6 +3,7 @@ import type { I_CNode_Category } from '../type';
 
 export const Category_Foundation_meta = {
     componentCategory: 'foundation',
+    title: '地基类',
 } as const;
 
 export interface I_Category_Foundation extends I_CNode_Category {

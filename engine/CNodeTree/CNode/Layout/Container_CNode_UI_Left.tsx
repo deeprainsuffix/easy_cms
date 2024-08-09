@@ -5,7 +5,7 @@ import { CNode_UI_Left_Drag } from '../Wrapper_CNode_UI_Left/CNode_UI_Left_Drag'
 export function Container_CNode_UI_Left() {
     return (
         <CNode_UI_Left_Drag componentName={Container_cNode_meta.componentName}>
-            <div>我是容器左侧</div>
+            <div>表单容器</div>
         </CNode_UI_Left_Drag>
     )
 }

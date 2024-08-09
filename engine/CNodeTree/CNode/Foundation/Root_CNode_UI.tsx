@@ -14,7 +14,7 @@ export function Root_CNode_UI(props: I_Root_CNode_UI) {
     return (
         <div
             id={cNode.id} ref={cNode.ref}
-            className='mpg-h-full mpg-bg-input'
+            className='mpg-h-full mpg-bg-s200'
         >
             <CNode_UI_Mouse cNode={cNode} className='mpg-h-full'>
                 <CNode_UI_DropAsChild cNode={cNode} className='mpg-h-full mpg-overflow-y-auto'>

@@ -18,8 +18,8 @@ const buttonVariants = cva(
           "mpg-bg-secondary mpg-text-secondary-foreground hover:mpg-bg-secondary/80",
         ghost: "hover:mpg-bg-accent hover:mpg-text-accent-foreground",
         link: "mpg-text-primary mpg-underline-offset-4 hover:mpg-underline",
-        'CNodeSticker-tool': "mpg-bg-transparent hover:mpg-bg-CNodeSticker-tool-hover",
-        TimeTravel: "mpg-bg-transparent hover:mpg-bg-TimeTravel-hover",
+        'CNodeSticker-tool': "mpg-bg-transparent hover:mpg-bg-s50",
+        TimeTravel: "mpg-bg-transparent hover:mpg-bg-s200",
       },
       size: {
         default: "mpg-h-10 mpg-px-4 mpg-py-2",
