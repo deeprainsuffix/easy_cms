@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import type { Root_CNode } from './Root_CNode';
 import { CNode_UI_DropAsChild } from '../Wrapper_CNode_UI/CNode_UI_DropAsChild';
 import { CNode_UI_Mouse } from '../Wrapper_CNode_UI/CNode_UI_Mouse';
+import { actionController } from '@/engine/ActionController';
+import { ActionTip_type_select_update } from '@/engine/ActionController/ActionTip';
 
 interface I_Root_CNode_UI {
     cNode: Root_CNode;
@@ -10,6 +12,19 @@ interface I_Root_CNode_UI {
 
 export function Root_CNode_UI(props: I_Root_CNode_UI) {
     const { cNode, children } = props;
+    useEffect(() => {
+        const handleScroll = () => {
+            actionController.dispatchAction({
+                type: ActionTip_type_select_update,
+            });
+        };
+        const scrollBox = document.querySelector('#scrollBox') as HTMLDivElement;
+        scrollBox.addEventListener('scroll', handleScroll, false);
+
+        return () => {
+            scrollBox.removeEventListener('scroll', handleScroll, false);
+        }
+    }, []);
 
     return (
         <div
@@ -17,8 +32,10 @@ export function Root_CNode_UI(props: I_Root_CNode_UI) {
             className='mpg-h-full mpg-bg-s200'
         >
             <CNode_UI_Mouse cNode={cNode} className='mpg-h-full'>
-                <CNode_UI_DropAsChild cNode={cNode} className='mpg-h-full mpg-overflow-y-auto'>
-                    {children}
+                <CNode_UI_DropAsChild cNode={cNode} className='mpg-h-full'>
+                    <div id='scrollBox' className='mpg-h-full mpg-overflow-y-auto'>
+                        {children}
+                    </div>
                 </CNode_UI_DropAsChild>
             </CNode_UI_Mouse>
         </div>

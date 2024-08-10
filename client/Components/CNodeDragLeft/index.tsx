@@ -6,10 +6,9 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion"
+import { CNode_UI_Left_Drag } from '@/engine/CNodeTree/CNode/Wrapper_CNode_UI_Left/CNode_UI_Left_Drag';
 
 export function CNodeDragLeft() {
-    console.log('CNode_UI_Left_collection', CNode_UI_Left_collection);
-
     return (
         <div>
             <Accordion type="multiple">
@@ -21,10 +20,13 @@ export function CNodeDragLeft() {
                                 {
                                     components.map(({ componentName, Icon_Left, title: component_title, CNode_UI_Left }) => {
                                         return (
-                                            <AccordionContent key={componentName} className='mpg-h-10 mpg-px-2 mpg-flex mpg-items-center mpg-rounded-md hover:mpg-bg-s200 mpg-cursor-grab'>
-                                                <Icon_Left />
-                                                <CNode_UI_Left />
-                                            </AccordionContent>
+                                            <CNode_UI_Left_Drag key={componentName} componentName={componentName}>
+                                                <AccordionContent className='mpg-h-10 mpg-px-2 mpg-flex mpg-items-center mpg-rounded-md hover:mpg-bg-s200 mpg-cursor-grab'>
+                                                    <Icon_Left />
+                                                    {/* <CNode_UI_Left /> */}
+                                                    <span>{component_title}</span>
+                                                </AccordionContent>
+                                            </CNode_UI_Left_Drag>
                                         )
                                     })
                                 }

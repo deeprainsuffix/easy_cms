@@ -53,6 +53,8 @@
   * 选中根节点时，要隐藏操作器 [todo]
   * 在dragStart和undo、redo时，要隐藏 [done]
   * 当工作区内容撑起滚动条时，以及滚动式，要resize(是否考虑将CNodeSticker与组件绑定)
+  * 对于tool的top逻辑是专门针对滚动的，而且未达到预期效果，应该专门区分update的来源，resize、scroll、props、cssStyle等等，以实现更精细化的控制
+  * 在scroll时能明显看到edge的更新，最好的方法是将其与CNode耦合，以去掉ActionTip_type_select_update
 * SettingRight
   * 向容器和跟组建不需要设Props和CssStyle，在点击之后右侧的显示 [todo]
 * undo/redo [todo]
@@ -86,10 +88,10 @@
 
 * day1
   <!-- * mpg-left样式 -->
-  * CNodeSticker更新
-    * resize
-    * 复制引起撑开滚动条时
-    * 滚动
+  <!-- * CNodeSticker更新 -->
+    <!-- * resize -->
+    <!-- * 复制引起撑开滚动条时 -->
+    <!-- * 滚动 -->
 * day1
   * [表单svg](https://www.iconfont.cn/collections/detail?spm=a313x.search_index.0.da5a778a4.255d3a81BFLqRV&cid=3991)
   * 加一个select组件

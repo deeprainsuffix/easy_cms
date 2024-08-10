@@ -9,7 +9,7 @@ export default function MPG_Center() {
         <div
             id='mpg-center'
             className={cn(
-                'mpg-grow mpg-shrink mpg-p-[8px] mpg-bg-s200'
+                'mpg-grow mpg-shrink mpg-p-[8px] mpg-bg-s200 mpg-relative mpg-z-0'
             )}
             style={{
                 maxWidth: 'calc(100% - 300px - 300px)',

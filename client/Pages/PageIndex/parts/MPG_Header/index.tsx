@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 export default function MPG_Header() {
     return (
         <div id='mpg-header'
-            className={cn(`mpg-h-[60px] mpg-grow-0 mpg-shrink-0 mpg-flex mpg-justify-around`)}>
+            className={cn(`mpg-h-[60px] mpg-grow-0 mpg-shrink-0 mpg-flex mpg-justify-around mpg-bg-secondary mpg-relative mpg-z-20`)}>
             <TimeTravel_UI />
         </div>
     )

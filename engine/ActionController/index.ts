@@ -15,8 +15,8 @@ import { timeTravel } from "../TimeTravel";
 //     source_CNode_Sticker = 'CNode_Sticker';
 
 type T_actionRequired =
-    T_ActionCNode_Required
-    | T_ActionTip_Required |
+    T_ActionCNode_Required |
+    T_ActionTip_Required |
     T_ActionCNodeProps_Required
     ;
 

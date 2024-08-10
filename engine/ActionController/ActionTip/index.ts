@@ -33,7 +33,7 @@ export class ActionTip_select_none implements I_ActionTip_select_none {
 }
 
 /**
- * 选中节点更新
+ * CNodeSticker更新
  */
 export const ActionTip_type_select_update = 'select_update';
 export interface I_ActionTip_select_update {
