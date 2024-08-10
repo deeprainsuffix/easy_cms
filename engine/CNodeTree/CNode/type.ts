@@ -10,6 +10,7 @@ import { I_Container_CNode } from './Layout/Container_CNode'
 import { I_Category_Form } from "./Form";
 import { I_Input_CNode } from './Form/Input_CNode'
 import { I_Select_CNode } from "./Form/Select_CNode";
+import { I_FileUpload_CNode } from "./Form/FileUpload_CNode";
 
 export type T_componentCategory =
     I_Category_Foundation['componentCategory'] | // 地基类
@@ -27,7 +28,8 @@ type T_componentName_layout =
 
 type T_componentName_form =
     I_Input_CNode['componentName'] |
-    I_Select_CNode['componentName']
+    I_Select_CNode['componentName'] |
+    I_FileUpload_CNode['componentName']
     ;
 
 export type T_ComponentName =

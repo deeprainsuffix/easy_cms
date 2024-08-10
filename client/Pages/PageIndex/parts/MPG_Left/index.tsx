@@ -7,7 +7,11 @@ import {
     TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { CNodeDragLeft } from '@/client/Components/CNodeDragLeft';
-const Todo = () => 1; // todo
+const Todo = () => (
+    <div>
+        1
+    </div>
+); // todo
 
 const panel_CNodeDragLeft = 'CNodeDragLeft';
 const panel_CNodeTreeLeft = 'CNodeTreeLeft';

@@ -5,13 +5,18 @@ import { ActionTip_type_select } from '@/engine/ActionController/ActionTip';
 
 interface I_CNode_UI_Mouse extends React.InputHTMLAttributes<HTMLDivElement> {
     cNode: CNode;
+    enablePropagation?: boolean;
+    enablePrevent?: boolean;
 }
 
 export function CNode_UI_Mouse(props: I_CNode_UI_Mouse) {
-    const { cNode, children, className } = props;
+    const {
+        cNode, enablePropagation = false, enablePrevent = false,
+        children, className
+    } = props;
     const onClick = useCallback<MouseEventHandler>((e) => {
-        e.stopPropagation();
-        e.preventDefault();
+        !enablePropagation && e.stopPropagation();
+        !enablePrevent && e.preventDefault();
         actionController.dispatchAction({
             type: ActionTip_type_select,
             id: cNode.id,

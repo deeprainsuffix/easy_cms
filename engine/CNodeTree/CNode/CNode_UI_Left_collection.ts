@@ -7,6 +7,7 @@ import { Container_cNode_meta } from "./Layout/Container_CNode";
 import { Category_Form_meta } from "./Form";
 import { Input_cNode_meta } from "./Form/Input_CNode";
 import { Select_cNode_meta } from "./Form/Select_CNode";
+import { FileUpload_cNode_meta } from "./Form/FileUpload_CNode";
 
 export const CNode_UI_Left_collection = [
     // 地基类
@@ -32,6 +33,7 @@ export const CNode_UI_Left_collection = [
         components: [
             { ...Input_cNode_meta },
             { ...Select_cNode_meta },
+            { ...FileUpload_cNode_meta },
         ],
     },
 ] as const;

@@ -95,7 +95,7 @@
 * day1
   * [表单svg](https://www.iconfont.cn/collections/detail?spm=a313x.search_index.0.da5a778a4.255d3a81BFLqRV&cid=3991)
   <!-- * 加一个select组件 -->
-  * 加一个上传文件组件
+  <!-- * 加一个上传文件组件 -->
 * day4-5
   * 根据CNode结构生成json，serviceWork
   * 根据json生成前端文件
