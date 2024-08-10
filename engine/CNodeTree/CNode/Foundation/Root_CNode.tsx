@@ -42,8 +42,7 @@ export class Root_CNode extends Category_Foundation implements I_Root_CNode {
 
         this.componentName = Root_cNode_meta.componentName;
         this.title = Root_cNode_meta.title;
-        this.props = {
-        };
+        this.props = {};
         this.cssStyle = {};
     }
 }

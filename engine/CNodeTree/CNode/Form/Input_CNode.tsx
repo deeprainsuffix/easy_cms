@@ -47,7 +47,7 @@ export class Input_CNode extends Category_Form implements I_Input_CNode {
         this.props = {
             [props_Input_CNode.fieldKey]: `field-${id}`,
             [props_Input_CNode.fieldLabel]: `字段-${id}`,
-            [props_Input_CNode.fieldPlaceholder]: `输入框-${id}`,
+            [props_Input_CNode.fieldPlaceholder]: `${Input_cNode_meta.title}-${id}`,
         };
         this.cssStyle = {};
     }

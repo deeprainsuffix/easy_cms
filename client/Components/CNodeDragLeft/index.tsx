@@ -18,12 +18,11 @@ export function CNodeDragLeft() {
                             <AccordionItem key={componentCategory} value={componentCategory}>
                                 <AccordionTrigger className='mpg-pt-2.5 hover:mpg-no-underline'>{category_title}</AccordionTrigger>
                                 {
-                                    components.map(({ componentName, Icon_Left, title: component_title, CNode_UI_Left }) => {
+                                    components.map(({ componentName, Icon_Left, title: component_title }) => {
                                         return (
                                             <CNode_UI_Left_Drag key={componentName} componentName={componentName}>
                                                 <AccordionContent className='mpg-h-10 mpg-px-2 mpg-flex mpg-items-center mpg-rounded-md hover:mpg-bg-s200 mpg-cursor-grab'>
                                                     <Icon_Left />
-                                                    {/* <CNode_UI_Left /> */}
                                                     <span>{component_title}</span>
                                                 </AccordionContent>
                                             </CNode_UI_Left_Drag>

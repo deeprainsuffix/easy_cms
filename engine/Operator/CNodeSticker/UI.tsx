@@ -58,7 +58,6 @@ export function CNodeSticker_UI(props: I_CNodeSticker_UI) {
         return null
     }
 
-
     const { positionInfo } = cNodeSticker;
     const { box, edge_borderWidth, edge_left, edge_right, edge_top, edge_bottom, tool } = positionInfo;
 
