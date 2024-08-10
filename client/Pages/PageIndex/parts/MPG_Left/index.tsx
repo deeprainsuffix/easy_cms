@@ -50,10 +50,10 @@ export default function MPG_Left() {
 
             <div className={`mpg-basis-[50px] mpg-grow-0 mpg-shrink-0 mpg-border-r-[1px] mpg-border-solid mpg-border-border
                 mpg-flex mpg-flex-col`}>
-                {
-                    panel_collection.map(({ type, Icon, Panel, description }) => {
-                        return (
-                            <TooltipProvider key={type}>
+                <TooltipProvider>
+                    {
+                        panel_collection.map(({ type, Icon, Panel, description }) => {
+                            return (
                                 <Tooltip>
                                     <TooltipTrigger onClick={choosePanel(type)} className='mpg-basis-[50px] mpg-p-[5px]'>
                                         <div className='mpg-w-full mpg-h-full mpg-flex mpg-justify-center mpg-items-center mpg-rounded-md'
@@ -61,14 +61,14 @@ export default function MPG_Left() {
                                             <Icon />
                                         </div>
                                     </TooltipTrigger>
-                                    <TooltipContent>
+                                    <TooltipContent side='right'>
                                         <p>{description}</p>
                                     </TooltipContent>
                                 </Tooltip>
-                            </TooltipProvider>
-                        )
-                    })
-                }
+                            )
+                        })
+                    }
+                </TooltipProvider>
             </div>
             <div className='mpg-h-full mpg-flex-auto mpg-overflow-y-auto mpg-p-[10px] mpg-pt-0'>
                 {
