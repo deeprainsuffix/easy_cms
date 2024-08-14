@@ -1,9 +1,9 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import type { CNode } from '../engine/CNodeTree/CNode';
-import PageIndex from './Pages/PageIndex';
 import { Ctx } from './Ctx';
 import './Styles/global.css';
+import { Page_Router } from './Pages/Page_Router';
 
 const rootDom = document.createElement('div');
 rootDom.setAttribute('id', 'root');
@@ -15,7 +15,7 @@ export function testRender(cNodeRoot: CNode) { // todelete
 
     rootReact.render(
         <Ctx.Provider value={{ cNodeRoot }}>
-            <PageIndex />
+            <Page_Router />
         </Ctx.Provider>
     );
 }

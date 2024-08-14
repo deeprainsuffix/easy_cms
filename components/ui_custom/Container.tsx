@@ -1,9 +1,17 @@
 import * as React from 'react';
 import { cn } from "@/lib/utils"
 import { type Container_CNode, props_Container_CNode, props_Container_CNode_select } from '@/engine/CNodeTree/CNode/Layout/Container_CNode';
+import { type CNode } from '@/engine/CNodeTree/CNode';
+
+export interface I_children_item extends React.JSX.Element {
+    props: {
+        cNode: CNode;
+    };
+}
 
 interface I_Container extends React.HTMLAttributes<HTMLDivElement> {
     cNode: Container_CNode;
+    children: I_children_item[] | null;
 }
 
 export function Container(props: I_Container) {
@@ -27,6 +35,13 @@ export function Container(props: I_Container) {
                             gridAutoRows: 'minmax(60px, auto)',
                         }}
                     >
+                        {/* {children.map(UI => {
+                            return (
+                                <div>
+                                    todo
+                                </div>
+                            )
+                        })} */}
                         {children}
                     </div>
                     :

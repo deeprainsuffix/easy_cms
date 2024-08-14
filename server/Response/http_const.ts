@@ -1,0 +1,4 @@
+export const cNodeTree_hash_param = 'cNodeTree_hash';
+export const cNodeTree_hash_Birth_param = 'cNodeTree_hash_birth';
+export const cNodeTree_json_clearTimeMs = 24 * 60 * 60 * 1000; // h24
+export const cNodeTree_json_fileName_prefix = 'cNodeTree';

@@ -1,13 +1,13 @@
 import React, { type ReactNode } from 'react';
 import type { Container_CNode } from './Container_CNode';
-import { Container } from '@/components/ui_custom/Container';
+import { type I_children_item, Container } from '@/components/ui_custom/Container';
 import { CNode_UI_Drag } from '../Wrapper_CNode_UI/CNode_UI_Drag';
 import { CNode_UI_DropAsChild } from '../Wrapper_CNode_UI/CNode_UI_DropAsChild';
 import { CNode_UI_Mouse } from '../Wrapper_CNode_UI/CNode_UI_Mouse';
 
 interface I_Container_CNode_UI {
     cNode: Container_CNode;
-    children: React.ReactNode[];
+    children: I_children_item[];
 }
 
 export function Container_CNode_UI(props: I_Container_CNode_UI) {

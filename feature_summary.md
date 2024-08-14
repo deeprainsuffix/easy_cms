@@ -41,6 +41,7 @@
   * 实际上，CNodeTree变动后，很多通知其他相关组件更新的逻辑，都要在确定CNodeTree render完成之后进行
   * 当被拖入的组件是给个提示，是拖入左右侧？还是内部？ [todo]
   * CNode_UI_Left可以删除，本想着设计每个组件的独特UI_Left [done]
+  * Container组件，需要将内部的Container_CNode_UI区分出来，如果是，则根据其“宽度占比”属性分配x空间 [todo]
 * Action
   * 一次性提交多个命令 [todo]
   * undo/redo 反命令 [todo]
@@ -65,6 +66,17 @@
     * delete -> readd(undo) -> delete(redo) -> readd(undo) -> newAction -> (again) [done]
 * css
   * dark模式的颜色 [todo]
+* 预览
+  * 方案1: 后端生成代码，访问新的文件，并设置缓存，后续出码节省时间
+  <!-- * 方案2: 前端生成代码，访问前端路由 因为打算新开标签页，该方案不合适 -->
+  * 方案3: 前端截图展示
+* 性能优化
+  * 资源打包
+  * 路由组件懒加载
+* 网络请求
+  * 地址需要区分本地和生产
+* 打包
+  * tsc打包服务端前，先清空文件夹，可能要写个脚本 [todo]
 
 ### 前端
 
@@ -93,10 +105,11 @@
     <!-- * 复制引起撑开滚动条时 -->
     <!-- * 滚动 -->
 * day1
+  * [撤销重做](https://www.iconfont.cn/collections/detail?spm=a313x.search_index.0.da5a778a4.2fe83a81dZkbrm&cid=19149)
   * [表单svg](https://www.iconfont.cn/collections/detail?spm=a313x.search_index.0.da5a778a4.255d3a81BFLqRV&cid=3991)
   <!-- * 加一个select组件 -->
   <!-- * 加一个上传文件组件 -->
-* day4-5
+* day4-5 8.15
   * 根据CNode结构生成json，serviceWork
   * 根据json生成前端文件
     * PC

@@ -15,4 +15,4 @@ export const CNode_collection = {
     [Input_cNode_meta.componentName]: Input_CNode,
     [Select_cNode_meta.componentName]: Select_CNode,
     [FileUpload_cNode_meta.componentName]: FileUpload_CNode,
-};
+} as const;

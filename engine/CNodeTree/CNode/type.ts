@@ -66,3 +66,7 @@ export interface I_CNode_Concrete extends I_CNode_Category {
     props: I_CNode_props; // 属性
     cssStyle: I_CNode_cssStyle; // 样式 todo
 }
+
+export interface I_CNode_JSON extends Omit<I_CNode_Concrete, 'isDraggable' | 'isDroppable' | 'parent' | 'children'> {
+    children: I_CNode_JSON[];
+};

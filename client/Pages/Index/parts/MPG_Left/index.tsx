@@ -54,7 +54,7 @@ export default function MPG_Left() {
                     {
                         panel_collection.map(({ type, Icon, Panel, description }) => {
                             return (
-                                <Tooltip>
+                                <Tooltip key={type}>
                                     <TooltipTrigger onClick={choosePanel(type)} className='mpg-basis-[50px] mpg-p-[5px]'>
                                         <div className='mpg-w-full mpg-h-full mpg-flex mpg-justify-center mpg-items-center mpg-rounded-md'
                                             style={{ backgroundColor: panel === type ? 'var(--s300)' : 'transparent' }}>

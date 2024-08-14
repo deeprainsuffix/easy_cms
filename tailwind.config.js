@@ -76,6 +76,10 @@ module.exports = {
         'CNodeSticker-tool': {
           DEFAULT: "var(--CNodeSticker-tool)",
         },
+        // toast_dom_info: {
+        //   DEFAULT: "var(--toast_dom_info)",
+        //   foreground: "var(--s900)",
+        // }
       },
       borderRadius: {
         lg: "var(--radius)",

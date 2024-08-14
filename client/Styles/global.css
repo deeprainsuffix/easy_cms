@@ -35,10 +35,12 @@
     --s300: #cbd5e1;
     --s400: #94a3b8;
     --s500: #64748b;
+    --s900: #0f172a;
 
     --border: #cbd5e1;
     --CNodeSticker-border: #0ea5e9;
     --CNodeSticker-tool: #0ea5e9;
+    --toast_dom_info: #6ee7b7;
   }
 
   .dark {
@@ -72,10 +74,12 @@
     --s300: #cbd5e1;
     --s400: #94a3b8;
     --s500: #64748b;
+    --s900: #0f172a;
 
     --border: #cbd5e1;
     --CNodeSticker-border: #0ea5e9;
     --CNodeSticker-tool: #0ea5e9;
+    --toast_dom_info: #6ee7b7;
   }
 }
 
@@ -92,7 +96,8 @@
     background-color: hsl(var(--secondary));
     color: hsl(var(--foreground));
     font-synthesis-weight: none;
-    text-rendering: optimizeLegibility
+    text-rendering: optimizeLegibility;
+    position: relative;
   }
 }
 
@@ -113,7 +118,7 @@
   }
 
   #root {
-    @apply mpg-h-full;
+    @apply mpg-h-full mpg-relative mpg-z-0;
     @apply mpg-overflow-hidden;
   }
 }

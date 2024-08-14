@@ -1,0 +1,8 @@
+{
+    "ignore": [
+        "server/cNodeTree_jsonFiles"
+    ],
+    "watch": [
+        "server"
+    ]
+}
