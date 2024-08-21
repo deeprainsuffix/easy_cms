@@ -313,11 +313,9 @@ class CNodeTree extends CNodeTreeBase {
   }
 
   createRoot_fortest() { // todelete
-    this.root = this.produce('root', String(idGenerator.gene()));
-    const container = this.produce('container', String(idGenerator.gene()));
-    this.alter_appendAsChild(container, this.root);
-    const container2 = this.produce('container', String(idGenerator.gene()));
-    this.alter_appendAsChild(container2, this.root);
+    this.root = this.produce('Root', String(idGenerator.gene()));
+    const formBlock = this.produce('FormBlock', String(idGenerator.gene()));
+    this.alter_appendAsChild(formBlock, this.root);
   }
 
   public bootstrap() {

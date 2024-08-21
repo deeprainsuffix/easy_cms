@@ -10,10 +10,6 @@ export function SettingCssStyle_UI() {
     const { selectedCNode } = settingCssStyle;
 
     return (
-        selectedCNode
-            ?
-            <div id='mpg-settingCssStyle'>样式设置器</div>
-            :
-            null
+        <div id='mpg-settingCssStyle'>样式设置器</div>
     )
 }

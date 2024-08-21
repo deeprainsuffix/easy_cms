@@ -1,7 +1,7 @@
-import { valid_fresh_cNodeTree_hash } from '@/engine/lib/validate';
+import { valid_cNodeTree_hash_fresh } from '@/engine/lib/validate';
 import { cNodeTree_JSON_get_req } from '@/engine/Requset';
 import { toast_dom } from '@/lib/utils';
-import { cNodeTree_hash_Birth_param, cNodeTree_hash_param, cNodeTree_json_fileName_prefix } from '@/server/Response/http_const';
+import { cNodeTree_hash_Birth_param, cNodeTree_hash_param } from '@/server/http.const';
 import React, { useEffect } from 'react';
 
 export function PagePreview(props: any) {
@@ -14,7 +14,7 @@ export function PagePreview(props: any) {
                 return
             }
 
-            if (!valid_fresh_cNodeTree_hash(+cNodeTree_hash_Birth)) {
+            if (!valid_cNodeTree_hash_fresh(+cNodeTree_hash_Birth)) {
                 localStorage.removeItem(cNodeTree_hash_param);
                 localStorage.removeItem(cNodeTree_hash_Birth_param);
                 toast_dom('预览页面过期');
@@ -26,8 +26,6 @@ export function PagePreview(props: any) {
                 toast_dom('预览失败');
                 return
             }
-
-            console.log('拿到json:', cNodeTree_JSON);
         }
         fetchData();
     }, []);

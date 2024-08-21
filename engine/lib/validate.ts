@@ -1,7 +1,22 @@
-import { cNodeTree_json_clearTimeMs } from "@/server/Response/http_const";
+import { cNodeTree_json_clearTimeMs } from "@/server/http.const";
 
-export function valid_fresh_cNodeTree_hash(cNodeTree_hash_Birth: number): boolean {
+export function valid_cNodeTree_hash_fresh(cNodeTree_hash_Birth: number): boolean {
     if (+new Date() - cNodeTree_hash_Birth > cNodeTree_json_clearTimeMs) {
+        return false
+    }
+
+    return true
+}
+
+
+// todo 应该写一个服务端校验器
+export function valid_cNodeTree_hash_format(cNodeTree_hash: string | null | undefined) {
+    if (!cNodeTree_hash) {
+        return false
+    }
+
+    const re = /[0-9a-z]{64}/;
+    if (!re.test(cNodeTree_hash)) {
         return false
     }
 

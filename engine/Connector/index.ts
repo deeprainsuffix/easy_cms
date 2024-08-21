@@ -1,12 +1,14 @@
+import { cNodeTree_hash_Birth_param, cNodeTree_hash_param } from "@/server/http.const";
 import { cNodeTree } from "../CNodeTree";
-import { cNodeTree_JSON_save_req } from '../Requset';
-import { cNodeTree_hash_Birth_param, cNodeTree_hash_param } from '@/server/Response/http_const';
-import { valid_fresh_cNodeTree_hash } from '../lib/validate';
+import { cNodeTree_JSON_save_req, landingCode_gen_req } from '../Requset';
+import { valid_cNodeTree_hash_fresh } from '../lib/validate';
+import type { I_CNode_JSON } from "../CNodeTree/CNode/type";
 
 interface I_Connector {
 
 }
 
+// 不需要render，由UI自己控制
 class Connector implements I_Connector {
     constructor() {
 
@@ -22,7 +24,7 @@ class Connector implements I_Connector {
                 cNodeTree_hash_Birth = localStorage.getItem(cNodeTree_hash_Birth_param);
 
             if (cNodeTree_hash_prev && cNodeTree_hash_Birth) {
-                if (!valid_fresh_cNodeTree_hash(+cNodeTree_hash_Birth)) {
+                if (!valid_cNodeTree_hash_fresh(+cNodeTree_hash_Birth)) {
                     localStorage.removeItem(cNodeTree_hash_param);
                     localStorage.removeItem(cNodeTree_hash_Birth_param);
                 } else {
@@ -43,9 +45,13 @@ class Connector implements I_Connector {
 
             return true
         } catch (err) {
-            console.log('getCNodeTreeJSON出错 -> ' + err);
+            console.log('preview出错 -> ' + err);
             return false
         }
+    }
+
+    public async codeGen(cNodeTree_JSON: I_CNode_JSON, cNodeTree_hash: string): Promise<number | null> {
+        return await landingCode_gen_req(cNodeTree_JSON, cNodeTree_hash);
     }
 }
 

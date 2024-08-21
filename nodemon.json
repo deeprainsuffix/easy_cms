@@ -1,8 +1,10 @@
 {
     "ignore": [
-        "server/cNodeTree_jsonFiles"
+        "server/cNodeTree_jsonFiles",
+        "server/landing_project"
     ],
     "watch": [
-        "server"
+        "server",
+        "engine/CodeGen"
     ]
 }

@@ -12,7 +12,7 @@ export function SettingProps_UI() {
 
     return (
         <div id='mpg-settingProps'>
-            <CNode_UI_props cNode={selectedCNode} />
+            <CNode_UI_props key={selectedCNode!.id} cNode={selectedCNode} />
         </div>
     )
 }

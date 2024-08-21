@@ -124,7 +124,54 @@
 }
 
 @layer base {
-  .icon_CNode_UI_Left {
+  .Icon_CNode_UI_Left {
     @apply mpg-w-4 mpg-h-4 mpg-mr-2;
+  }
+
+  .Icon_tip_codeGen.doing {
+    animation: doing 1.5s linear 0s infinite;
+  }
+
+  .active>.Icon_tip_codeGen.success {
+    animation: success 2.4s linear 0s infinite;
+  }
+
+  .active>.Icon_tip_codeGen.fail {
+    animation: fail 1.5s linear 0s infinite alternate;
+  }
+
+
+  @keyframes doing {
+    from {
+      transform: rotate(0deg);
+    }
+
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes success {
+    0% {
+      transform: rotate3d(0, 1, 0, 0deg);
+    }
+
+    50% {
+      transform: rotate3d(0, 1, 0, 360deg);
+    }
+
+    100% {
+      transform: rotate3d(0, 1, 0, 360deg);
+    }
+  }
+
+  @keyframes fail {
+    from {
+      transform: scale(0.8);
+    }
+
+    to {
+      transform: scale(1.2);
+    }
   }
 }

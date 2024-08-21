@@ -20,6 +20,7 @@ const buttonVariants = cva(
         link: "mpg-text-primary mpg-underline-offset-4 hover:mpg-underline",
         'CNodeSticker-tool': "mpg-bg-transparent hover:mpg-bg-s50",
         TimeTravel: "mpg-bg-transparent hover:mpg-bg-s200",
+        noBackground: "",
       },
       size: {
         default: "mpg-h-10 mpg-px-4 mpg-py-2",
@@ -28,6 +29,7 @@ const buttonVariants = cva(
         icon: "mpg-h-10 mpg-w-10",
         'CNodeSticker-tool': "mpg-h-[32px] mpg-w-[32px] mpg-mr-[8px] last:mpg-mr-0 mpg-flex mpg-justify-center mpg-items-center",
         TimeTravel: "mpg-w-[50px] mpg-h-[50px] mpg-mr-[4px] mpg-text-center",
+        noSize: "mpg-bg-[initial] hover:mpg-bg-[initial]",
       },
     },
     defaultVariants: {

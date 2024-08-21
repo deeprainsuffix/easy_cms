@@ -5,7 +5,7 @@ import { I_Category_Foundation } from "./Foundation";
 import { I_Root_CNode } from "./Foundation/Root_CNode";
 
 import { I_Category_Layout } from "./Layout";
-import { I_Container_CNode } from './Layout/Container_CNode'
+import { I_FormBlock_CNode } from './Layout/FormBlock_CNode'
 
 import { I_Category_Form } from "./Form";
 import { I_Input_CNode } from './Form/Input_CNode'
@@ -23,7 +23,7 @@ type T_componentName_foundation =
     ;
 
 type T_componentName_layout =
-    I_Container_CNode['componentName']
+    I_FormBlock_CNode['componentName']
     ;
 
 type T_componentName_form =
@@ -60,6 +60,8 @@ export interface I_CNode_Category extends I_CNode {
     componentCategory: T_componentCategory; // 组件类别 todo 可能没用
 }
 
+// 到此，只是将CNode的结构定义好了，并没有区分出联合类型，包括下边的I_CNode_JSON
+// 如果要区分，再定义一个T_CNode_Concrete收集所有的CNode，再定义T_CNode_JSON，这里就先不定义了
 export interface I_CNode_Concrete extends I_CNode_Category {
     componentName: T_ComponentName; // 组件标识符
     title: string; // 组件名称
@@ -70,3 +72,4 @@ export interface I_CNode_Concrete extends I_CNode_Category {
 export interface I_CNode_JSON extends Omit<I_CNode_Concrete, 'isDraggable' | 'isDroppable' | 'parent' | 'children'> {
     children: I_CNode_JSON[];
 };
+

@@ -1,8 +1,8 @@
-import { httpUrl_cNodeTree_JSON_get_prefix, httpUrl_cNodeTree_JSON_save } from "@/server/Response/http_url";
+import { httpUrl_cNodeTree_JSON_get_prefix, httpUrl_cNodeTree_JSON_save, httpUrl_landingCode_gen } from "@/server/http.url";
 import { type I_CNode_JSON } from "../CNodeTree/CNode/type";
-import { type T_resApiBody } from "@/server/Response";
 import { toast_dom } from "@/lib/utils";
-import { cNodeTree_hash_param, cNodeTree_json_fileName_prefix } from "@/server/Response/http_const";
+import { cNodeTree_hash_param, cNodeTree_json_fileName_prefix } from "@/server/http.const";
+import type { T_resApiBody } from "@/server/Response/HandleApi/type";
 
 type T_Param_fetch = Parameters<typeof fetch>;
 interface I_init extends NonNullable<T_Param_fetch[1]> {
@@ -25,15 +25,17 @@ async function fetchReqApiWrap(input: T_Param_fetch[0], init?: I_init): Promise<
     init.signal = controller.signal;
 
     let timer = null, timeout = 30 * 1000, errMsg_Timeout = '超时30s';
-    if (init.timeout) {
+    if (init.timeout !== undefined) {
         timeout = init.timeout;
         if (init.errMsg_Timeout) {
             errMsg_Timeout = init.errMsg_Timeout
         }
     }
-    timer = setTimeout(() => {
-        controller.abort(errMsg_Timeout);
-    }, timeout);
+    if (timeout !== 0) {
+        timer = setTimeout(() => {
+            controller.abort(errMsg_Timeout);
+        }, timeout);
+    }
 
     try {
         const res = await fetch(input, init);
@@ -45,7 +47,9 @@ async function fetchReqApiWrap(input: T_Param_fetch[0], init?: I_init): Promise<
         console.log('api请求失败兜底: ', err);
         init.toast && toast_dom('' + err);
     } finally {
-        clearTimeout(timer);
+        if (timer !== null) {
+            clearTimeout(timer);
+        }
     }
 
     console.log('看下最终的result_api todo', result);
@@ -58,7 +62,7 @@ interface I_init_file extends I_init {
 interface T_fetchWrap_result extends Omit<T_resApiBody, 'data'> {
     data: any;
 };
-
+// todo 后续下掉这个
 async function fetchReqFileWrap(input: T_Param_fetch[0], init?: I_init_file): Promise<T_fetchWrap_result> {
     let result: T_fetchWrap_result = {
         success: false,
@@ -75,15 +79,17 @@ async function fetchReqFileWrap(input: T_Param_fetch[0], init?: I_init_file): Pr
     init.signal = controller.signal;
 
     let timer = null, timeout = 30 * 1000, errMsg_Timeout = '超时30s';
-    if (init.timeout) {
+    if (init.timeout !== undefined) {
         timeout = init.timeout;
         if (init.errMsg_Timeout) {
             errMsg_Timeout = init.errMsg_Timeout
         }
     }
-    timer = setTimeout(() => {
-        controller.abort(errMsg_Timeout);
-    }, timeout);
+    if (timeout !== 0) {
+        timer = setTimeout(() => {
+            controller.abort(errMsg_Timeout);
+        }, timeout);
+    }
 
     try {
         const res = await fetch(input, init);
@@ -103,7 +109,9 @@ async function fetchReqFileWrap(input: T_Param_fetch[0], init?: I_init_file): Pr
         console.log('文件请求失败兜底: ', err);
         init.toast && toast_dom('' + err);
     } finally {
-        clearTimeout(timer);
+        if (timer !== null) {
+            clearTimeout(timer);
+        }
     }
 
     console.log('看下最终的result_file todo', result);
@@ -141,6 +149,32 @@ export async function cNodeTree_JSON_get_req(cNodeTree_hash: string): Promise<I_
         return data
     } catch (err) {
         console.log('cNodeTree_JSON_get_req出错 -> ', err);
+        return null
+    }
+}
+
+export async function landingCode_gen_req(cNodeTree_JSON: I_CNode_JSON, cNodeTree_hash: string): Promise<number | null> {
+    try {
+        const { success, data, errMsg } = await fetchReqApiWrap(httpUrl_landingCode_gen, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                json: cNodeTree_JSON,
+                hash: cNodeTree_hash,
+            }),
+            timeout: 5 * 60 * 1000, // 5 mins
+            errMsg_Timeout: '超时5分钟',
+        });
+
+        if (!success) {
+            throw errMsg;
+        }
+
+        return +data
+    } catch (err) {
+        console.log('landingCode_gen_req出错 -> ', err);
         return null
     }
 }

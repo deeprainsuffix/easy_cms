@@ -1,10 +1,6 @@
 import { CNode } from '../index'
 import type { I_CNode_Category } from '../type';
-
-export const Category_Layout_meta = {
-    componentCategory: 'layout',
-    title: '布局类',
-} as const;
+import { Category_Layout_meta } from './index.meta';
 
 export interface I_Category_Layout extends I_CNode_Category {
     componentCategory: typeof Category_Layout_meta['componentCategory'];

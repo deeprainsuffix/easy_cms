@@ -41,7 +41,8 @@
   * 实际上，CNodeTree变动后，很多通知其他相关组件更新的逻辑，都要在确定CNodeTree render完成之后进行
   * 当被拖入的组件是给个提示，是拖入左右侧？还是内部？ [todo]
   * CNode_UI_Left可以删除，本想着设计每个组件的独特UI_Left [done]
-  * Container组件，需要将内部的Container_CNode_UI区分出来，如果是，则根据其“宽度占比”属性分配x空间 [todo]
+  * FormBlock组件，需要将内部的FormBlock_CNode_UI区分出来，如果是，则根据其“宽度占比”属性分配x空间 [todo]
+  * FormBlock组件的含义不对，应该叫FormRegion [todo]
 * Action
   * 一次性提交多个命令 [todo]
   * undo/redo 反命令 [todo]
@@ -57,7 +58,7 @@
   * 对于tool的top逻辑是专门针对滚动的，而且未达到预期效果，应该专门区分update的来源，resize、scroll、props、cssStyle等等，以实现更精细化的控制
   * 在scroll时能明显看到edge的更新，最好的方法是将其与CNode耦合，以去掉ActionTip_type_select_update
 * SettingRight
-  * 向容器和跟组建不需要设Props和CssStyle，在点击之后右侧的显示 [todo]
+  * 向表单块和跟组建不需要设Props和CssStyle，在点击之后右侧的显示 [todo]
 * undo/redo [todo]
   * 测试项:
     * add -> delete(undo) -> readd(redo) -> delete(undo) -> newAction -> (again) [done]
@@ -66,6 +67,9 @@
     * delete -> readd(undo) -> delete(redo) -> readd(undo) -> newAction -> (again) [done]
 * css
   * dark模式的颜色 [todo]
+* CodeGen
+  * 解析json(包括CNodeTree中的递归操作)，可能需要将递归改为循环
+  * 应该放在服务端
 * 预览
   * 方案1: 后端生成代码，访问新的文件，并设置缓存，后续出码节省时间
   <!-- * 方案2: 前端生成代码，访问前端路由 因为打算新开标签页，该方案不合适 -->
@@ -73,10 +77,17 @@
 * 性能优化
   * 资源打包
   * 路由组件懒加载
+  * tree shaking 必须开启
+  * 递归处理(可以不做)
+  * json上传处理
+  * CNode的meta提取，打包优化是次要，这个文件必须提出来，作为依赖递归根文件，包括props定义
+  * cNodeTree_jsonFiles各项目中通用文件的提取，例如react
 * 网络请求
   * 地址需要区分本地和生产
 * 打包
   * tsc打包服务端前，先清空文件夹，可能要写个脚本 [todo]
+* 模块解析路径
+  * 将所有CNode的meta资源独立成一份文件 [todo]
 
 ### 前端
 
@@ -111,6 +122,8 @@
   <!-- * 加一个上传文件组件 -->
 * day4-5 8.15
   * 根据CNode结构生成json，serviceWork
+* day4-5 8.20
+  * CodeGen
   * 根据json生成前端文件
     * PC
     * m

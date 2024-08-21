@@ -95,7 +95,7 @@ export function CNodeSticker_UI(props: I_CNodeSticker_UI) {
                 >
                 </div>
                 {// todo 这里的id判断应该改成'1'
-                    selectedCNode.id !== '4' && <div
+                    selectedCNode.id !== '3' && <div
                         className={`mpg-flex mpg-absolute mpg-bg-CNodeSticker-tool
                       mpg-h-[40px]  mpg-p-[4px]`}
                         style={{ top: tool.top, right: tool.right }}

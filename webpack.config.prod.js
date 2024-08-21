@@ -9,13 +9,13 @@ const config_my = {
     module: {
         rules: [
             { test: /\.(ts|tsx)$/, loader: "ts-loader", exclude: /node_modules/ },
-            { test: /\.(css)$/, use: [MiniCssExtractPlugin.loader, , "css-loader", 'postcss-loader'] },
+            { test: /\.(css)$/, use: [MiniCssExtractPlugin.loader, "css-loader", 'postcss-loader'] },
         ]
     },
     plugins: [
-        new webpack.DefinePlugin({
-            PRODUCTION: JSON.stringify(true),
-        }),
+        // new webpack.DefinePlugin({
+        //     PRODUCTION: JSON.stringify(true),
+        // }),
         new MiniCssExtractPlugin(),
     ],
     optimization: {

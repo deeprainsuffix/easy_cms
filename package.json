@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "drag to create manage platform",
   "main": "index.js",
+  "sideEffects": false,
   "scripts": {
     "dev": "webpack serve --config webpack.config.dev.js --open",
     "build": "webpack --config webpack.config.prod.js",
@@ -16,6 +17,7 @@
   "license": "ISC",
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.0",
+    "@radix-ui/react-dialog": "^1.1.1",
     "@radix-ui/react-label": "^2.1.0",
     "@radix-ui/react-select": "^2.1.1",
     "@radix-ui/react-slot": "^1.1.0",
@@ -24,6 +26,8 @@
     "@radix-ui/react-tooltip": "^1.1.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "dayjs": "^1.11.12",
+    "jszip": "^3.10.1",
     "lucide-react": "^0.403.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -45,6 +49,7 @@
     "tailwindcss": "^3.4.4",
     "ts-loader": "^9.5.1",
     "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.4.5",
     "webpack": "^5.92.1",
     "webpack-cli": "^5.1.4",
