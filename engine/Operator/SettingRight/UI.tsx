@@ -14,24 +14,24 @@ export function SettingRight_UI() {
 
     if (!selectedCNode) {
         return (
-            <div className='mpg-w-[150px] mpg-mx-auto mpg-mt-[60px] mpg-text-center mpg-text-secondary-foreground'>
+            <div className='w-[150px] mx-auto mt-[60px] text-center text-secondary-foreground'>
                 请在画布中选中组件
             </div>
         )
     }
 
     return (
-        <div id='mpg-settingRight'>
+        <div id='settingRight'>
             <Tabs
                 defaultValue='SettingProps'
             >
                 <TabsList
-                    className='mpg-w-full mpg-shadow-[0px_5px_2px_#94a3b8]'
+                    className='w-full shadow-[0px_5px_2px_#94a3b8]'
                 >
-                    <TabsTrigger className='mpg-flex-grow' value="SettingProps">属性</TabsTrigger>
-                    <TabsTrigger className='mpg-flex-grow' value="SettingCssStyle">样式</TabsTrigger>
+                    <TabsTrigger className='flex-grow' value="SettingProps">属性</TabsTrigger>
+                    <TabsTrigger className='flex-grow' value="SettingCssStyle">样式</TabsTrigger>
                 </TabsList>
-                <div className='mpg-p-3'>
+                <div className='p-3'>
                     <TabsContent value="SettingProps"><SettingProps_UI /></TabsContent>
                     <TabsContent value="SettingCssStyle"><SettingCssStyle_UI /></TabsContent>
                 </div>

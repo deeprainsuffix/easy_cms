@@ -17,21 +17,21 @@ export function Input_CNode_UI_Props({ cNode }: I_Input_CNode_UI_Props) {
     const onChange_fieldPlaceholder = useInputOnChange({ cNode, prop: Input_CNode_props_key.fieldPlaceholder });
 
     return (
-        <div className='mpg-flex mpg-flex-col'>
-            <div className='mpg-basis-[50px] mpg-flex mpg-items-center'>
-                <div className='mpg-grow-0 mpg-shrink-0 mpg-basis-20 mpg-flex mpg-items-center'>
+        <div className='flex flex-col'>
+            <div className='basis-[50px] flex items-center'>
+                <div className='grow-0 shrink-0 basis-20 flex items-center'>
                     字段key
                 </div>
                 <Input defaultValue={fieldKey} onChange={onChange_fieldKey} />
             </div>
-            <div className='mpg-basis-[50px] mpg-flex mpg-items-center'>
-                <div className='mpg-grow-0 mpg-shrink-0 mpg-basis-20 mpg-flex mpg-items-center'>
+            <div className='basis-[50px] flex items-center'>
+                <div className='grow-0 shrink-0 basis-20 flex items-center'>
                     字段label
                 </div>
                 <Input defaultValue={fieldLabel} onChange={onChange_fieldLabel} />
             </div>
-            <div className='mpg-basis-[50px] mpg-flex mpg-items-center'>
-                <div className='mpg-grow-0 mpg-shrink-0 mpg-basis-20 mpg-flex mpg-items-center'>
+            <div className='basis-[50px] flex items-center'>
+                <div className='grow-0 shrink-0 basis-20 flex items-center'>
                     占位值
                 </div>
                 <Input defaultValue={fieldPlaceholder} onChange={onChange_fieldPlaceholder} />

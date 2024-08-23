@@ -17,13 +17,13 @@ export function CNodeDragLeft() {
                     CNode_UI_Left_collection.map(({ componentCategory, title: category_title, components }) => {
                         return (
                             <AccordionItem key={componentCategory} value={componentCategory}>
-                                <AccordionTrigger className='mpg-pt-2.5 hover:mpg-no-underline'>{category_title}</AccordionTrigger>
+                                <AccordionTrigger className='pt-2.5 hover:no-underline'>{category_title}</AccordionTrigger>
                                 {
                                     components.map(({ componentName, title: component_title }) => {
                                         const Icon_Left = CNode_UI_Left_Icon_collection[componentName];
                                         return (
                                             <CNode_UI_Left_Drag key={componentName} componentName={componentName}>
-                                                <AccordionContent className='mpg-h-10 mpg-px-2 mpg-flex mpg-items-center mpg-rounded-md hover:mpg-bg-s200 mpg-cursor-grab'>
+                                                <AccordionContent className='h-10 px-2 flex items-center rounded-md hover:bg-s200 cursor-grab'>
                                                     <Icon_Left />
                                                     <span>{component_title}</span>
                                                 </AccordionContent>

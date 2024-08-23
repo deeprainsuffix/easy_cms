@@ -5,15 +5,15 @@ import { HeaderRightBtns } from '@/engine/Connector/index.UI';
 
 export function MPG_Header() {
     return (
-        <div id='mpg-header'
-            className={cn(`mpg-h-[60px] mpg-grow-0 mpg-shrink-0 mpg-flex mpg-justify-around mpg-bg-secondary mpg-relative mpg-z-20`)}>
-            <div className='mpg-flex-grow-[2] mpg-basis-0 mpg-flex mpg-items-center'>
+        <div id='header'
+            className={cn(`h-[60px] grow-0 shrink-0 flex justify-around bg-secondary relative z-20`)}>
+            <div className='flex-grow-[2] basis-0 flex items-center'>
 
             </div>
-            <div className='mpg-flex-grow-[3] mpg-basis-0 mpg-flex mpg-items-center mpg-justify-center'>
+            <div className='flex-grow-[3] basis-0 flex items-center justify-center'>
                 <TimeTravel_UI />
             </div>
-            <div className='mpg-flex-grow-[2] mpg-basis-0 mpg-flex mpg-items-center'>
+            <div className='flex-grow-[2] basis-0 flex items-center'>
                 <HeaderRightBtns />
             </div>
         </div>

@@ -20,7 +20,7 @@ export function HeaderRightBtns() {
     }, []);
 
     return (
-        <div className='mpg-flex mpg-items-center'>
+        <div className='flex items-center'>
             <Button disabled={ban_preview} onClick={handle_preview}>预览</Button>
             <CodeGen_UI />
         </div>

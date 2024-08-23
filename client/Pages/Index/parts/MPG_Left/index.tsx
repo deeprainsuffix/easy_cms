@@ -42,21 +42,21 @@ export function MPG_Left() {
 
     return (
         <div
-            id='mpg-left'
-            className={cn(`mpg-basis-[300px] mpg-min-w-[300px] mpg-grow-0 mpg-shrink-0
-                mpg-bg-secondary mpg-border-[1px] mpg-border-solid
-                mpg-flex`)}
+            id='left'
+            className={cn(`basis-[300px] min-w-[300px] grow-0 shrink-0
+                bg-secondary border-[1px] border-solid
+                flex`)}
         >
 
-            <div className={`mpg-basis-[50px] mpg-grow-0 mpg-shrink-0 mpg-border-r-[1px] mpg-border-solid mpg-border-border
-                mpg-flex mpg-flex-col`}>
+            <div className={`basis-[50px] grow-0 shrink-0 border-r-[1px] border-solid border-border
+                flex flex-col`}>
                 <TooltipProvider>
                     {
                         panel_collection.map(({ type, Icon, Panel, description }) => {
                             return (
                                 <Tooltip key={type}>
-                                    <TooltipTrigger onClick={choosePanel(type)} className='mpg-basis-[50px] mpg-p-[5px]'>
-                                        <div className='mpg-w-full mpg-h-full mpg-flex mpg-justify-center mpg-items-center mpg-rounded-md'
+                                    <TooltipTrigger onClick={choosePanel(type)} className='basis-[50px] p-[5px]'>
+                                        <div className='w-full h-full flex justify-center items-center rounded-md'
                                             style={{ backgroundColor: panel === type ? 'var(--s300)' : 'transparent' }}>
                                             <Icon />
                                         </div>
@@ -70,7 +70,7 @@ export function MPG_Left() {
                     }
                 </TooltipProvider>
             </div>
-            <div className='mpg-h-full mpg-flex-auto mpg-overflow-y-auto mpg-p-[10px] mpg-pt-0'>
+            <div className='h-full flex-auto overflow-y-auto p-[10px] pt-0'>
                 {
                     panel_collection.map(({ type, Panel }) => {
                         return (

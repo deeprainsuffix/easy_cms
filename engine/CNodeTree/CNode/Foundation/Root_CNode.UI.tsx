@@ -29,11 +29,11 @@ export function Root_CNode_UI(props: I_Root_CNode_UI) {
     return (
         <div
             id={cNode.id} ref={cNode.ref}
-            className='mpg-h-full mpg-bg-s200'
+            className='h-full bg-s200'
         >
-            <CNode_UI_Mouse cNode={cNode} className='mpg-h-full'>
-                <CNode_UI_DropAsChild cNode={cNode} className='mpg-h-full'>
-                    <div id='scrollBox' className='mpg-h-full mpg-overflow-y-auto'>
+            <CNode_UI_Mouse cNode={cNode} className='h-full'>
+                <CNode_UI_DropAsChild cNode={cNode} className='h-full'>
+                    <div id='scrollBox' className='h-full overflow-y-auto'>
                         {children}
                     </div>
                 </CNode_UI_DropAsChild>

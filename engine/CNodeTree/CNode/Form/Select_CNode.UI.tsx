@@ -14,7 +14,7 @@ export function Select_CNode_UI({ cNode }: I_Select_CNode_UI) {
     const { fieldLabel, fieldPlaceholder } = props;
 
     return (
-        <div id={cNode.id} ref={cNode.ref} className='mpg-w-full mpg-max-w-[300px] mpg-bg-s200'>
+        <div id={cNode.id} ref={cNode.ref} className='w-full max-w-[300px] bg-s200'>
             <CNode_UI_Mouse cNode={cNode}>
                 <CNode_UI_DropAsSibling cNode={cNode}>
                     <CNode_UI_Drag cNode={cNode}>

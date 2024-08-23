@@ -80,9 +80,9 @@ export function CodeGen_UI() {
 
     return (
         <Dialog open={Dialog_show}>
-            <div className='mpg-flex'>
-                <Button className='mpg-w-[90px] mpg-text-center' disabled={state === DOING} onClick={handle_codeGen}>{btn_text[state]}</Button>
-                <div className='mpg-w-[40px] mpg-flex mpg-justify-center mpg-items-center' onClick={handle_getAssets}>
+            <div className='flex'>
+                <Button className='w-[90px] text-center' disabled={state === DOING} onClick={handle_codeGen}>{btn_text[state]}</Button>
+                <div className='w-[40px] flex justify-center items-center' onClick={handle_getAssets}>
                     {tip_Icon_show && (
                         <TooltipProvider>
                             <Tooltip open={tip_text_show}>
@@ -95,7 +95,7 @@ export function CodeGen_UI() {
                     )}
                 </div>
             </div>
-            <DialogContent className="sm:max-w-[425px]" onClose={handle_close}>
+            <DialogContent className="sm:max-w-[520px]" onClose={handle_close}>
                 <DialogHeader>
                     <DialogTitle>{DialogTitle_text[state]}</DialogTitle>
                     <DialogDescription>{DialogDescription_text[state]}</DialogDescription>

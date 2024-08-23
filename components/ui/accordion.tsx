@@ -12,7 +12,7 @@ const AccordionItem = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <AccordionPrimitive.Item
     ref={ref}
-    className={cn("mpg-border-b", className)}
+    className={cn("border-b", className)}
     {...props}
   />
 ))
@@ -22,17 +22,17 @@ const AccordionTrigger = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger>
 >(({ className, children, ...props }, ref) => (
-  <AccordionPrimitive.Header className="mpg-flex">
+  <AccordionPrimitive.Header className="flex">
     <AccordionPrimitive.Trigger
       ref={ref}
       className={cn(
-        "mpg-flex mpg-flex-1 mpg-items-center mpg-justify-between mpg-py-4 mpg-font-medium mpg-transition-all hover:mpg-underline [&[data-state=open]>svg]:mpg-rotate-180",
+        "flex flex-1 items-center justify-between py-4 font-medium transition-all hover:underline [&[data-state=open]>svg]:rotate-180",
         className
       )}
       {...props}
     >
       {children}
-      <ChevronDown className="mpg-h-4 mpg-w-4 mpg-shrink-0 mpg-transition-transform mpg-duration-200" />
+      <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200" />
     </AccordionPrimitive.Trigger>
   </AccordionPrimitive.Header>
 ))
@@ -44,10 +44,10 @@ const AccordionContent = React.forwardRef<
 >(({ className, children, ...props }, ref) => (
   <AccordionPrimitive.Content
     ref={ref}
-    className="mpg-overflow-hidden mpg-text-sm mpg-transition-all data-[state=closed]:mpg-animate-accordion-up data-[state=open]:mpg-animate-accordion-down last:mpg-mb-2"
+    className="overflow-hidden text-sm transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down last:mb-2"
     {...props}
   >
-    <div className={cn("mpg-pb-2 mpg-pt-2", className)}>{children}</div>
+    <div className={cn("pb-2 pt-2", className)}>{children}</div>
   </AccordionPrimitive.Content>
 ))
 

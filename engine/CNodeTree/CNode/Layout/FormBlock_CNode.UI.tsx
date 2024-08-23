@@ -17,7 +17,7 @@ export function FormBlock_CNode_UI(props: I_FormBlock_CNode_UI) {
     return (
         <div id={cNode.id} ref={cNode.ref}
             style={{ width: widthRadio, flexBasis: widthRadio }}
-            className='mpg-my-[4px] first:mpg-mt-0 last:mpg-mb-0'
+            className='my-[4px] first:mt-0 last:mb-0'
         >
             <CNode_UI_Mouse cNode={cNode}>
                 <CNode_UI_DropAsChild cNode={cNode}>
@@ -49,21 +49,21 @@ export function FormBlock_CNode_UI(props: I_FormBlock_CNode_UI) {
 //     const columnNum = +cNode.props.columnNum;
 
 //     return (
-//         <div className={`mpg-min-h-[70px]
-//             mpg-border-[1px] mpg-border-dashed mpg-border-s500 mpg-bg-s300
+//         <div className={`min-h-[70px]
+//             border-[1px] border-dashed border-s500 bg-s300
 //             `
 //         }>
 //             {
 
 //                 children
 //                     ?
-//                     <div className="mpg-flex mpg-items-center mpg-flex-wrap mpg-p-[4px]"
+//                     <div className="flex items-center flex-wrap p-[4px]"
 //                     >
 //                         {children.map(UI => {
 //                             return (
 //                                 <div
 //                                     key={UI.props.cNode.id}
-//                                     className='mpg-min-h-[60px] mpg-flex mpg-items-center'
+//                                     className='min-h-[60px] flex items-center'
 //                                     style={{
 //                                         flex: UI.props.cNode.componentName === 'container' ?
 //                                             UI.props.cNode.props.widthRadio
@@ -76,7 +76,7 @@ export function FormBlock_CNode_UI(props: I_FormBlock_CNode_UI) {
 //                         })}
 //                     </div>
 //                     :
-//                     <div className='mpg-h-[68px] mpg-flex mpg-justify-center mpg-items-center'>容器：待拖入其他组件</div>
+//                     <div className='h-[68px] flex justify-center items-center'>容器：待拖入其他组件</div>
 //             }
 //         </div>
 //     )

@@ -18,15 +18,15 @@ export function FormBlock_CNode_UI_Props({ cNode }: I_FormBlock_CNode_UI_Props) 
     const onChange_columnNum = useSelectSingleOnChange({ cNode, prop: FormBlock_CNode_props_key.columnNum });
 
     return (
-        <div className='mpg-flex mpg-flex-col'>
-            <div className='mpg-basis-[50px] mpg-flex mpg-items-center'>
-                <div className='mpg-grow-0 mpg-shrink-0 mpg-basis-20 mpg-flex mpg-items-center'>
+        <div className='flex flex-col'>
+            <div className='basis-[50px] flex items-center'>
+                <div className='grow-0 shrink-0 basis-20 flex items-center'>
                     宽度占比
                 </div>
                 <SelectSingle options={FormBlock_CNode_props_select[FormBlock_CNode_props_key['widthRadio']]} defaultValue={widthRadio} onValueChange={onChange_widthRadio} />
             </div>
-            <div className='mpg-basis-[50px] mpg-flex mpg-items-center'>
-                <div className='mpg-grow-0 mpg-shrink-0 mpg-basis-20 mpg-flex mpg-items-center'>
+            <div className='basis-[50px] flex items-center'>
+                <div className='grow-0 shrink-0 basis-20 flex items-center'>
                     列数量
                 </div>
                 <SelectSingle options={FormBlock_CNode_props_select[FormBlock_CNode_props_key['columnNum']]} defaultValue={columnNum} onValueChange={onChange_columnNum} />

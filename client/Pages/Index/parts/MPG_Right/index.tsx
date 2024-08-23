@@ -5,9 +5,9 @@ import { SettingRight_UI } from '@/engine/Operator/SettingRight/UI';
 export function MPG_Right() {
     return (
         <div
-            id='mpg-right'
-            className={cn(`mpg-basis-[300px] mpg-min-w-[300px] mpg-grow-0 mpg-shrink-0
-                mpg-bg-secondary mpg-border-[1px] mpg-border-solid`)}
+            id='right'
+            className={cn(`basis-[300px] min-w-[300px] grow-0 shrink-0
+                bg-secondary border-[1px] border-solid`)}
         >
             <SettingRight_UI />
         </div>

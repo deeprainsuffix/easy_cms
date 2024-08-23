@@ -5,31 +5,31 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "mpg-inline-flex mpg-items-center mpg-justify-center mpg-whitespace-nowrap mpg-rounded-md mpg-text-sm mpg-font-medium mpg-ring-offset-background mpg-transition-colors focus-visible:mpg-outline-none focus-visible:mpg-ring-2 focus-visible:mpg-ring-ring focus-visible:mpg-ring-offset-2 disabled:mpg-pointer-events-none disabled:mpg-opacity-50",
+  "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
-        default: "mpg-bg-primary mpg-text-primary-foreground hover:mpg-bg-primary/90",
+        default: "bg-primary text-primary-foreground hover:bg-primary/90",
         destructive:
-          "mpg-bg-destructive mpg-text-destructive-foreground hover:mpg-bg-destructive/90",
+          "bg-destructive text-destructive-foreground hover:bg-destructive/90",
         outline:
-          "mpg-border mpg-border-input mpg-bg-background hover:mpg-bg-accent hover:mpg-text-accent-foreground",
+          "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
         secondary:
-          "mpg-bg-secondary mpg-text-secondary-foreground hover:mpg-bg-secondary/80",
-        ghost: "hover:mpg-bg-accent hover:mpg-text-accent-foreground",
-        link: "mpg-text-primary mpg-underline-offset-4 hover:mpg-underline",
-        'CNodeSticker-tool': "mpg-bg-transparent hover:mpg-bg-s50",
-        TimeTravel: "mpg-bg-transparent hover:mpg-bg-s200",
+          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+        ghost: "hover:bg-accent hover:text-accent-foreground",
+        link: "text-primary underline-offset-4 hover:underline",
+        'CNodeSticker-tool': "bg-transparent hover:bg-s50",
+        TimeTravel: "bg-transparent hover:bg-s200",
         noBackground: "",
       },
       size: {
-        default: "mpg-h-10 mpg-px-4 mpg-py-2",
-        sm: "mpg-h-9 mpg-rounded-md mpg-px-3",
-        lg: "mpg-h-11 mpg-rounded-md mpg-px-8",
-        icon: "mpg-h-10 mpg-w-10",
-        'CNodeSticker-tool': "mpg-h-[32px] mpg-w-[32px] mpg-mr-[8px] last:mpg-mr-0 mpg-flex mpg-justify-center mpg-items-center",
-        TimeTravel: "mpg-w-[50px] mpg-h-[50px] mpg-mr-[4px] mpg-text-center",
-        noSize: "mpg-bg-[initial] hover:mpg-bg-[initial]",
+        default: "h-10 px-4 py-2",
+        sm: "h-9 rounded-md px-3",
+        lg: "h-11 rounded-md px-8",
+        icon: "h-10 w-10",
+        'CNodeSticker-tool': "h-[32px] w-[32px] mr-[8px] last:mr-0 flex justify-center items-center",
+        TimeTravel: "w-[50px] h-[50px] mr-[4px] text-center",
+        noSize: "bg-[initial] hover:bg-[initial]",
       },
     },
     defaultVariants: {

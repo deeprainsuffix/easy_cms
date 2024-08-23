@@ -11,12 +11,12 @@ export function Input_gen({ props, className }: I_Input_gen) {
     const { fieldKey, fieldLabel, fieldPlaceholder } = props;
 
     return (
-        <div className={cn(`mpg-flex mpg-items-center
-            mpg-h-[50px] mpg-p-[4px]
-            mpg-border-[2px] mpg-border-solid mpg-border-s400 mpg-rounded-md`
+        <div className={cn(`flex items-center
+            h-[50px] p-[4px]
+            border-[2px] border-solid border-s400 rounded-md`
             , className)}>
-            <div className='mpg-flex-grow-0 mpg-flex-shrink-1 mpg-basis-[100px] mpg-flex mpg-justify-center mpg-items-center mpg-break-all'>{fieldLabel}</div>
-            <div className='mpg-flex-grow-0 mpg-flex-shrink-1 mpg-basis-[200px]'>
+            <div className='flex-grow-0 flex-shrink-1 basis-[100px] flex justify-center items-center break-all'>{fieldLabel}</div>
+            <div className='flex-grow-0 flex-shrink-1 basis-[200px]'>
                 <Input placeholder={fieldPlaceholder} />
             </div>
         </div>

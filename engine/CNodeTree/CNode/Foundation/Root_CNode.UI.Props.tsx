@@ -7,9 +7,9 @@ interface I_Root_CNode_UI_Props {
 
 export function Root_CNode_UI_Props({ cNode }: I_Root_CNode_UI_Props) {
     return (
-        <div className='mpg-flex mpg-flex-col'>
-            <div className='mpg-basis-[50px] mpg-flex mpg-items-center'>
-                <div className='mpg-grow-0 mpg-shrink-0 mpg-basis-20 mpg-flex mpg-items-center'>
+        <div className='flex flex-col'>
+            <div className='basis-[50px] flex items-center'>
+                <div className='grow-0 shrink-0 basis-20 flex items-center'>
                     层级
                 </div>
                 <div>根节点</div>

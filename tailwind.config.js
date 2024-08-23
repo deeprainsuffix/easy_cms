@@ -7,7 +7,7 @@ module.exports = {
     './client/Components/**/*.{ts,tsx}',
     './engine/**/*.{ts,tsx}',
   ],
-  prefix: "mpg-",
+  // prefix: "",
   theme: {
     container: {
       center: true,

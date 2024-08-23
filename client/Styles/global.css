@@ -108,24 +108,24 @@
 
 @layer base {
   html {
-    @apply mpg-h-full;
-    @apply mpg-overflow-hidden;
+    @apply h-full;
+    @apply overflow-hidden;
   }
 
   body {
-    @apply mpg-h-full;
-    @apply mpg-overflow-hidden;
+    @apply h-full;
+    @apply overflow-hidden;
   }
 
   #root {
-    @apply mpg-h-full mpg-relative mpg-z-0;
-    @apply mpg-overflow-hidden;
+    @apply h-full relative z-0;
+    @apply overflow-hidden;
   }
 }
 
 @layer base {
   .Icon_CNode_UI_Left {
-    @apply mpg-w-4 mpg-h-4 mpg-mr-2;
+    @apply w-4 h-4 mr-2;
   }
 
   .Icon_tip_codeGen.doing {

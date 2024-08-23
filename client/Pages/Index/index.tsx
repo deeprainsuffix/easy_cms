@@ -24,13 +24,13 @@ export function PageIndex() {
 
     return (
         <div
-            id='mpg-page-index'
-            className={cn('mpg-h-full mpg-flex mpg-flex-col')}
+            id='page-index'
+            className={cn('h-full flex flex-col')}
         >
             <MPG_Header />
             <div
-                id='mpg-body'
-                className={cn('mpg-flex')}
+                id='body'
+                className={cn('flex')}
                 style={{
                     height: 'calc(100% - 60px)',
                 }}

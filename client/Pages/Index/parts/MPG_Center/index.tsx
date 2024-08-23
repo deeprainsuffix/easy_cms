@@ -7,9 +7,9 @@ export function MPG_Center() {
     const ctx = useContext(Ctx);
     return (
         <div
-            id='mpg-center'
+            id='center'
             className={cn(
-                'mpg-grow mpg-shrink mpg-p-[8px] mpg-bg-s200 mpg-relative mpg-z-0'
+                'grow shrink p-[8px] bg-s200 relative z-0'
             )}
             style={{
                 maxWidth: 'calc(100% - 300px - 300px)',

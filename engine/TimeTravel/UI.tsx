@@ -27,7 +27,7 @@ export function TimeTravel_UI() {
     const { canUndo, canRedo } = timeTravel;
 
     return (
-        <div className='mpg-flex mpg-items-center'>
+        <div className='flex items-center'>
             <Button onClick={canUndo ? onUndo : undefined} variant={'TimeTravel'} size={'TimeTravel'}
                 style={canUndo ? { cursor: 'pointer' } : { cursor: 'not-allowed', opacity: '0.5' }}
             >
