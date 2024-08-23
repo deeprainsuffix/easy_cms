@@ -1,5 +1,5 @@
 
-import type { T_ComponentName } from "../../CNodeTree/CNode/type";
+import type { T_ComponentName } from "../../CNodeTree/CNode/index.type";
 import { idGenerator } from "@/engine/IdGenerator";
 
 /**

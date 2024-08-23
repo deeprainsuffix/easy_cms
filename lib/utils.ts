@@ -164,3 +164,13 @@ export function toast_dom(text: string, type?: 'error' | 'info') {
   document.body.appendChild(toast);
   window.requestAnimationFrame(show_frame);
 }
+
+export function downloadByA(fileName: string, blob: Blob) {
+  const a = document.createElement("a");
+  const objectUrl = window.URL.createObjectURL(blob);
+  a.download = fileName;
+  a.href = objectUrl;
+  a.click();
+  window.URL.revokeObjectURL(objectUrl);
+  a.remove();
+}

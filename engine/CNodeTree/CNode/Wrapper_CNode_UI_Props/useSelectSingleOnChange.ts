@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import type { CNode } from "..";
 import { actionController } from '@/engine/ActionController';
 import { ActionCNodeProps_type_update } from '@/engine/ActionController/ActionCNodeProps';
-import type { I_CNode_props } from "../type";
+import type { I_CNode_props } from "../index.type";
 import type { I_SelectSingle } from "@/components/ui_custom/SelectSingle"
 
 

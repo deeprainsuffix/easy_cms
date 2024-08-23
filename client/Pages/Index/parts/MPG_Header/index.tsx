@@ -3,7 +3,7 @@ import { TimeTravel_UI } from '@/engine/TimeTravel/UI';
 import { cn } from '@/lib/utils';
 import { HeaderRightBtns } from '@/engine/Connector/index.UI';
 
-export default function MPG_Header() {
+export function MPG_Header() {
     return (
         <div id='mpg-header'
             className={cn(`mpg-h-[60px] mpg-grow-0 mpg-shrink-0 mpg-flex mpg-justify-around mpg-bg-secondary mpg-relative mpg-z-20`)}>

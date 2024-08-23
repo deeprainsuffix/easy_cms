@@ -1,4 +1,4 @@
-import { I_CNode_props, T_ComponentName, type I_CNode_JSON } from "../CNodeTree/CNode/type";
+import { I_CNode_props, T_ComponentName, type I_CNode_JSON } from "../CNodeTree/CNode/index.type";
 import { type T_template_CNode, template_CNode, template_module, template_exec } from "./template";
 import { Root_cNode_meta, Root_cNode_props_key, type I_Root_cNode_props } from "../CNodeTree/CNode/Foundation/Root_CNode.meta";
 import { FormBlock_cNode_meta, FormBlock_CNode_props_key, type I_FormBlock_cNode_props } from "../CNodeTree/CNode/Layout/FormBlock_CNode.meta";
@@ -6,7 +6,7 @@ import { Input_cNode_meta, Input_CNode_props_key, type I_Input_cNode_props } fro
 import { Select_CNode_props_key, Select_cNode_meta, type I_Select_cNode_props } from "../CNodeTree/CNode/Form/Select_CNode.meta";
 import { FileUpload_cNode_meta, FileUpload_CNode_props_key, type I_FileUpload_cNode_props } from "../CNodeTree/CNode/Form/FileUpload_CNode.meta";
 
-interface I_CodeGen {
+interface I_Complier {
     template_CNode: T_template_CNode;
     template_module: typeof template_module;
     template_exec: typeof template_exec;
@@ -22,13 +22,13 @@ interface I_CodeGen {
 
 // todo 这里要启动service work来帮助工作
 // todo 测一下每个gen函数的时间
-export class CodeGen implements I_CodeGen {
-    template_CNode: I_CodeGen['template_CNode'];
-    template_module: I_CodeGen['template_module'];
-    template_exec: I_CodeGen['template_exec'];
-    cNodeTree_JSON: I_CodeGen['cNodeTree_JSON'];
-    imports: I_CodeGen['imports'];
-    region: I_CodeGen['region'];
+export class Complier implements I_Complier {
+    template_CNode: I_Complier['template_CNode'];
+    template_module: I_Complier['template_module'];
+    template_exec: I_Complier['template_exec'];
+    cNodeTree_JSON: I_Complier['cNodeTree_JSON'];
+    imports: I_Complier['imports'];
+    region: I_Complier['region'];
 
     constructor() {
         this.template_CNode = template_CNode;
@@ -45,7 +45,7 @@ export class CodeGen implements I_CodeGen {
     }
 
     // 每次使用前必须调用这一步
-    public set_cNodeTree_JSON(cNodeTree_JSON: I_CodeGen['cNodeTree_JSON']) {
+    public set_cNodeTree_JSON(cNodeTree_JSON: I_Complier['cNodeTree_JSON']) {
         this.cNodeTree_JSON = cNodeTree_JSON;
     }
 
@@ -184,4 +184,4 @@ export class CodeGen implements I_CodeGen {
     }
 }
 
-export const codeGen = new CodeGen();
+export const complier = new Complier();

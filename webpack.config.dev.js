@@ -6,11 +6,11 @@ const config_my = {
     mode: 'development',
     devtool: 'inline-source-map',
     devServer: {
-        static: './dist',
+        static: './dist_client',
         historyApiFallback: true,
         proxy: [
             {
-                context: ['/api', '/json'],
+                context: ['/api', '/landing_project',],
                 target: 'http://localhost:3000',
             },
         ],

@@ -1,7 +1,7 @@
-import { CNode } from "../CNodeTree/CNode";
+import type { T_CNode_Concrete } from "../CNodeTree/CNode/index.type";
 
 interface I_DependOnSelectedCNode {
-    selectedCNode: CNode | null;
+    selectedCNode: T_CNode_Concrete | null;
 }
 
 /**
@@ -11,7 +11,7 @@ interface I_DependOnSelectedCNode {
  */
 export abstract class DependOnSelectedCNode implements I_DependOnSelectedCNode {
     abstract render: any;
-    selectedCNode: CNode | null;
+    selectedCNode: I_DependOnSelectedCNode['selectedCNode'];
 
     constructor() {
         this.selectedCNode = null;
@@ -21,7 +21,7 @@ export abstract class DependOnSelectedCNode implements I_DependOnSelectedCNode {
 
     public abstract notify(e: CustomEvent<I_Detail_SelectedCNodeChange>): any;
 
-    protected update_selectedCNode(selectedCNode: typeof this.selectedCNode) {
+    protected update_selectedCNode(selectedCNode: I_DependOnSelectedCNode['selectedCNode']) {
         if (!selectedCNode) {
             this.reset_selectedCNode();
             return
@@ -41,7 +41,7 @@ export abstract class DependOnSelectedCNode implements I_DependOnSelectedCNode {
 
 export const custom_eType_selectedCNodeChange = 'selectedCNodeChange';
 export interface I_Detail_SelectedCNodeChange {
-    selectedCNode: CNode | null;
+    selectedCNode: T_CNode_Concrete | null;
 }
 
 export const custom_eType_selectedCNodeUpdate = 'selectedCNodeUpdate';

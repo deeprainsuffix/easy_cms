@@ -1,7 +1,7 @@
 import { CNode, lifeCycle_afterDomMounted } from './CNode/index'
 import { testRender } from '../../client'
 import { CNode_collection } from './CNode/CNode_collection';
-import type { I_CNode_JSON, T_ComponentName } from './CNode/type';
+import type { I_CNode_JSON, T_ComponentName } from './CNode/index.type';
 import {
   T_ActionCNode,
   ActionCNode_type_add, ActionCNode_type_copy, ActionCNode_type_delete, ActionCNode_type_move, ActionCNode_type_re_add,
@@ -19,6 +19,7 @@ import { custom_eType_selectedCNodeChange, custom_eType_selectedCNodeUpdate } fr
 import { deepClone } from '@/lib/utils';
 import { idGenerator } from '../IdGenerator';
 import { deepClone_forHash, digest_cNode_hashSource, type T_cNode_hashSource } from '../lib/utils';
+import type { Root_CNode } from './CNode/Foundation/Root_CNode';
 
 class CNodeTreeBase {
   constructor() {
@@ -116,14 +117,14 @@ class CNodeTree extends CNodeTreeBase {
     this.cNodeMap.set(id, cNode)
   }
 
-  root: CNode; // 节点数的根节点，保证存在
+  root: Root_CNode; // 节点数的根节点，保证存在
   renderCNodes: CNode[]; // 待render的cNode
   selectedCNode: CNode | null; // 当前选中的节点
   // selectedCNodeChangeCallbacks: Function[]; // todo selectedCNode更换时触发，这里后续可以再优化，目前直接使用浏览器事件机制，简单
 
   constructor() {
     super();
-    this.root = {} as CNode;
+    this.root = {} as Root_CNode;
     this.renderCNodes = [];
     this.selectedCNode = null;
 
@@ -313,7 +314,7 @@ class CNodeTree extends CNodeTreeBase {
   }
 
   createRoot_fortest() { // todelete
-    this.root = this.produce('Root', String(idGenerator.gene()));
+    this.root = this.produce('Root', String(idGenerator.gene())) as Root_CNode;
     const formBlock = this.produce('FormBlock', String(idGenerator.gene()));
     this.alter_appendAsChild(formBlock, this.root);
   }

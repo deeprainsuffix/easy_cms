@@ -5,6 +5,7 @@
     ],
     "watch": [
         "server",
-        "engine/CodeGen"
-    ]
+        "engine/Complier"
+    ],
+    "ext": "ts,json"
 }

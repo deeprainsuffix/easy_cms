@@ -1,6 +1,6 @@
 import { Category_Form } from ".";
 import { CNode } from "..";
-import type { I_CNode_Concrete } from "../type";
+import type { I_CNode_Concrete } from "../index.type";
 import { Select_CNode_UI } from "./Select_CNode.UI";
 import { Select_CNode_UI_Props } from "./Select_CNode.UI.Props";
 import { type I_Select_cNode_props, Select_CNode_props_key, Select_cNode_meta } from './Select_CNode.meta';
@@ -35,7 +35,12 @@ export class Select_CNode extends Category_Form implements I_Select_CNode {
         };
         this.cssStyle = {};
     }
-}
 
-Select_CNode.prototype.CNode_UI = Select_CNode_UI;
-Select_CNode.prototype.CNode_UI_props = Select_CNode_UI_Props;
+    get CNode_UI() {
+        return Select_CNode_UI
+    }
+
+    get CNode_UI_Props() {
+        return Select_CNode_UI_Props
+    }
+}

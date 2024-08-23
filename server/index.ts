@@ -1,14 +1,15 @@
 import http from 'http';
 import { handleApi } from './Response/HandleApi';
-import { handleFile } from './Response/HandleFile';
+import { httpUrl_prefix_api, httpUrl_prefix_assets } from './http.url';
+import { handle_assets } from './Response/Handle_assets';
 
 const server = http.createServer(async (req, res) => {
     try {
         req.url = req.url || '';
-        if (req.url.startsWith('/api')) {
+        if (req.url.startsWith(httpUrl_prefix_api)) {
             return await handleApi.router(req, res);
-        } else {
-            return await handleFile.router(req, res);
+        } else if (req.url.startsWith(httpUrl_prefix_assets)) {
+            return await handle_assets.router(req, res);
         }
     } catch (err) {
         console.log('createServer中兜底::', err);

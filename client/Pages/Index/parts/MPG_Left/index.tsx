@@ -34,7 +34,7 @@ const panel_collection = [
     },
 ] as const;
 
-export default function MPG_Left() {
+export function MPG_Left() {
     const [panel, setPanel] = useState<T_panel>('CNodeDragLeft');
     const choosePanel = (panel: T_panel) => () => {
         setPanel(panel);

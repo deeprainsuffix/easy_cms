@@ -1,4 +1,4 @@
-import { type I_CNode_props } from "@/engine/CNodeTree/CNode/type";
+import { type I_CNode_props } from "@/engine/CNodeTree/CNode/index.type";
 
 /**
  * 选中节点

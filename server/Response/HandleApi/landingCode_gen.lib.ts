@@ -1,10 +1,9 @@
-import { dir_landing_project } from '@/server/config';
 import { exec as exec_ori } from 'child_process';
 import { promisify } from 'node:util';
-import { join } from 'path';
 import { writeFile } from 'node:fs/promises';
+import { type I_Assets, type I_AssetsFromWebpack, ASSES_CSS, ASSES_HTML, ASSES_JS, essentialAssets } from '../Handle_assets/index.const';
 
-export async function complie_tsx(filePath_entry: string, cNodeTree_hash: string): Promise<string[]> {
+export async function complie_tsx(filePath_entry: string, cNodeTree_hash: string): Promise<I_AssetsFromWebpack> {
     // 应该需要改变执行路径
     const exec = promisify(exec_ori);
     try {
@@ -16,48 +15,55 @@ export async function complie_tsx(filePath_entry: string, cNodeTree_hash: string
             throw stderr;
         }
 
-        return stdout.trimEnd().split(' ');
+        // 检查资源完整性
+        const assets: I_AssetsFromWebpack = {
+            [ASSES_HTML]: '',
+            [ASSES_JS]: '',
+            [ASSES_CSS]: '',
+        };
+
+        if (!stdout) {
+            throw 'webpack无输出';
+        }
+        const stdout_arr = stdout.trimEnd().split(' ');
+        if (!stdout_arr.length) {
+            throw 'webpack输出资产文件数量为0';
+        }
+
+        for (const fileName of stdout_arr) {
+            const ext = fileName.split('.')[1];
+            switch (ext) {
+                case ASSES_HTML: assets[ASSES_HTML] = fileName; break;
+                case ASSES_JS: assets[ASSES_JS] = fileName; break;
+                case ASSES_CSS: assets[ASSES_CSS] = fileName; break;
+            }
+        }
+
+        const assets_lack = essentialAssets.filter(e => assets[e] === '');
+        if (assets_lack.length) {
+            throw '缺少的资产' + assets_lack.join('、');
+        }
+
+        return assets;
     } catch (err) {
         throw 'complie_tsx出错 -> ' + err;
     }
 }
 
-// todo 这里后边要改，资产中还有公共包
-const ASSES_HTML = 'html', ASSES_JS = 'js', ASSES_CSS = 'css';
-interface I_pack {
-    manifest: string;
-    entry: string;
-    [ASSES_HTML]: string | null;
-    [ASSES_JS]: string | null;
-    [ASSES_CSS]: string | null;
-}
-
-export async function create_manifest(manifest: string, entry: string, assets: string[]) {
+export async function create_manifest(
+    filePath_manifest: string,
+    fileName_manifest: string, fileName_tsx: string,
+    assetsFromWebpack: I_AssetsFromWebpack
+): Promise<string> {
     try {
-        const pack: I_pack = {
-            manifest,
-            entry,
-            [ASSES_HTML]: null,
-            [ASSES_JS]: null,
-            [ASSES_CSS]: null,
+        const assets: I_Assets = {
+            manifest: fileName_manifest,
+            entry: fileName_tsx,
+            ...assetsFromWebpack,
         };
 
-        for (const file of assets) {
-            const ext = file.split('.')[1];
-            const filePath_asset = join(dir_landing_project, file);
-            switch (ext) {
-                case ASSES_HTML: pack[ASSES_HTML] = filePath_asset; break;
-                case ASSES_JS: pack[ASSES_JS] = filePath_asset; break;
-                case ASSES_CSS: pack[ASSES_CSS] = filePath_asset; break;
-            }
-        }
-
-        const assets_lack = ([ASSES_HTML, ASSES_JS, ASSES_CSS] as const).filter(e => pack[e] === null);
-        if (assets_lack.length) {
-            throw '缺少的资产' + assets_lack.join('、');
-        }
-
-        await writeFile(manifest, JSON.stringify(pack));
+        await writeFile(filePath_manifest, JSON.stringify(assets));
+        return assets['manifest']
     } catch (err) {
         throw 'create_manifest出错 -> ' + err;
     }

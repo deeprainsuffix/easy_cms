@@ -1,5 +1,5 @@
 import { CNode } from '../index'
-import type { I_CNode_Category } from '../type';
+import type { I_CNode_Category } from '../index.type';
 import { Category_Foundation_meta } from './index.meta';
 
 export interface I_Category_Foundation extends I_CNode_Category {

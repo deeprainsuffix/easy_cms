@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
-import TreePlanting from '@/client/Components/TreePlanting';
+import { TreePlanting } from '@/client/Components/TreePlanting';
 import { Ctx } from '@/client/Ctx';
 import { cn } from '@/lib/utils';
 
-export default function MPG_Center() {
+export function MPG_Center() {
     const ctx = useContext(Ctx);
     return (
         <div

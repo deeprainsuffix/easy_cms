@@ -1,8 +1,8 @@
 import { cNodeTree_hash_Birth_param, cNodeTree_hash_param } from "@/server/http.const";
 import { cNodeTree } from "../CNodeTree";
-import { cNodeTree_JSON_save_req, landingCode_gen_req } from '../Requset';
+import { landingCode_gen_req } from '../Requset';
 import { valid_cNodeTree_hash_fresh } from '../lib/validate';
-import type { I_CNode_JSON } from "../CNodeTree/CNode/type";
+import type { I_CNode_JSON } from "../CNodeTree/CNode/index.type";
 
 interface I_Connector {
 
@@ -35,13 +35,13 @@ class Connector implements I_Connector {
             }
 
             // 3、存储hash和json
-            const birthtimeMs = await cNodeTree_JSON_save_req(cNodeTree_JSON, cNodeTree_hash);
-            if (!birthtimeMs) {
-                throw 'cNode_JSON_save_req失败';
-            }
+            // const birthtimeMs = await cNodeTree_JSON_save_req(cNodeTree_JSON, cNodeTree_hash);
+            // if (!birthtimeMs) {
+            //     throw 'cNode_JSON_save_req失败';
+            // }
 
-            localStorage.setItem(cNodeTree_hash_param, cNodeTree_hash);
-            localStorage.setItem(cNodeTree_hash_Birth_param, birthtimeMs);
+            // localStorage.setItem(cNodeTree_hash_param, cNodeTree_hash);
+            // localStorage.setItem(cNodeTree_hash_Birth_param, birthtimeMs);
 
             return true
         } catch (err) {
@@ -50,7 +50,7 @@ class Connector implements I_Connector {
         }
     }
 
-    public async codeGen(cNodeTree_JSON: I_CNode_JSON, cNodeTree_hash: string): Promise<number | null> {
+    public async codeGen(cNodeTree_JSON: I_CNode_JSON, cNodeTree_hash: string): Promise<ReturnType<typeof landingCode_gen_req>> {
         return await landingCode_gen_req(cNodeTree_JSON, cNodeTree_hash);
     }
 }

@@ -18,6 +18,7 @@
 ## 06.21
 
 * CNodeTree
+  * CNodeTree后边要优化[todo]
   * CNode
     * 需要实现get、set吗？[todo]
     * 尽量完整定义schema [todo]
@@ -68,8 +69,11 @@
 * css
   * dark模式的颜色 [todo]
 * CodeGen
-  * 解析json(包括CNodeTree中的递归操作)，可能需要将递归改为循环
+  * 解析json(包括CNodeTree中的递归操作)，理论上需要将递归改为循环，包括copy
   * 应该放在服务端
+  * codeGen.worker最关键是要能够计算CNodeTree_json，如果找不到办法，这个这个worker是负作用
+  * worker的重启和server端codegen的pool可做可不不做
+  * CNodeTree_hash的生成需要加一个用户端的参数，否则会重复[todo]
 * 预览
   * 方案1: 后端生成代码，访问新的文件，并设置缓存，后续出码节省时间
   <!-- * 方案2: 前端生成代码，访问前端路由 因为打算新开标签页，该方案不合适 -->

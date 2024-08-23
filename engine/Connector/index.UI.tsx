@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { page_Preview } from '@/client/Pages/page_urls';
 import { connector } from '@/engine/Connector';
 import { toast_dom } from '@/lib/utils';
-import { Btn_codeGen } from './Btn_codeGen.UI';
+import { CodeGen_UI } from './codeGen.UI';
 
 export function HeaderRightBtns() {
     const [ban_preview, set_ban_preview] = useState(false);
@@ -22,7 +22,7 @@ export function HeaderRightBtns() {
     return (
         <div className='mpg-flex mpg-items-center'>
             <Button disabled={ban_preview} onClick={handle_preview}>预览</Button>
-            <Btn_codeGen />
+            <CodeGen_UI />
         </div>
     )
 }

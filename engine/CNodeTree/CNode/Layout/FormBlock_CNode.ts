@@ -1,7 +1,7 @@
 import { actionController } from "@/engine/ActionController";
 import { Category_Layout } from ".";
 import { CNode } from "..";
-import type { I_CNode_Concrete } from "../type";
+import type { I_CNode_Concrete } from "../index.type";
 import { FormBlock_CNode_UI } from "./FormBlock_CNode.UI";
 import { FormBlock_CNode_UI_Props } from "./FormBlock_CNode.UI.Props";
 import { ActionTip_type_select_update } from "@/engine/ActionController/ActionTip";
@@ -58,7 +58,12 @@ export class FormBlock_CNode extends Category_Layout implements I_FormBlock_CNod
             }
         });
     }
-}
 
-FormBlock_CNode.prototype.CNode_UI = FormBlock_CNode_UI;
-FormBlock_CNode.prototype.CNode_UI_props = FormBlock_CNode_UI_Props;
+    get CNode_UI() {
+        return FormBlock_CNode_UI
+    }
+
+    get CNode_UI_Props() {
+        return FormBlock_CNode_UI_Props
+    }
+}

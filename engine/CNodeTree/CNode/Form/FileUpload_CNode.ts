@@ -1,6 +1,6 @@
 import { Category_Form } from ".";
 import { CNode } from "..";
-import type { I_CNode_Concrete } from "../type";
+import type { I_CNode_Concrete } from "../index.type";
 import { FileUpload_CNode_UI } from "./FileUpload_CNode.UI";
 import { FileUpload_CNode_UI_Props } from "./FileUpload_CNode.UI.Props";
 import { FileUpload_cNode_meta, FileUpload_CNode_props_key, type I_FileUpload_cNode_props } from './FileUpload_CNode.meta';
@@ -35,7 +35,12 @@ export class FileUpload_CNode extends Category_Form implements I_FileUpload_CNod
         };
         this.cssStyle = {};
     }
-}
 
-FileUpload_CNode.prototype.CNode_UI = FileUpload_CNode_UI;
-FileUpload_CNode.prototype.CNode_UI_props = FileUpload_CNode_UI_Props;
+    get CNode_UI() {
+        return FileUpload_CNode_UI
+    }
+
+    get CNode_UI_Props() {
+        return FileUpload_CNode_UI_Props
+    }
+}

@@ -1,5 +1,5 @@
 import { valid_cNodeTree_hash_fresh } from '@/engine/lib/validate';
-import { cNodeTree_JSON_get_req } from '@/engine/Requset';
+// import { cNodeTree_JSON_get_req } from '@/engine/Requset';
 import { toast_dom } from '@/lib/utils';
 import { cNodeTree_hash_Birth_param, cNodeTree_hash_param } from '@/server/http.const';
 import React, { useEffect } from 'react';
@@ -21,11 +21,11 @@ export function PagePreview(props: any) {
                 return
             }
 
-            const cNodeTree_JSON = await cNodeTree_JSON_get_req(cNodeTree_hash);
-            if (!cNodeTree_JSON) {
-                toast_dom('预览失败');
-                return
-            }
+            // const cNodeTree_JSON = await cNodeTree_JSON_get_req(cNodeTree_hash);
+            // if (!cNodeTree_JSON) {
+            //     toast_dom('预览失败');
+            //     return
+            // }
         }
         fetchData();
     }, []);

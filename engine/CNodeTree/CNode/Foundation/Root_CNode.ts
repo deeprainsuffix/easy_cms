@@ -1,6 +1,6 @@
 import { Category_Foundation } from ".";
 import { CNode } from "..";
-import type { I_CNode_Concrete } from "../type";
+import type { I_CNode_Concrete } from "../index.type";
 import { Root_CNode_UI } from "./Root_CNode.UI";
 import { Root_CNode_UI_Props } from "./Root_CNode.UI.Props";
 import { type I_Root_cNode_props, Root_cNode_meta, Root_cNode_props_key } from './Root_CNode.meta';
@@ -30,7 +30,12 @@ export class Root_CNode extends Category_Foundation implements I_Root_CNode {
         this.props = {};
         this.cssStyle = {};
     }
-}
 
-Root_CNode.prototype.CNode_UI = Root_CNode_UI;
-Root_CNode.prototype.CNode_UI_props = Root_CNode_UI_Props;
+    get CNode_UI() {
+        return Root_CNode_UI
+    }
+
+    get CNode_UI_Props() {
+        return Root_CNode_UI_Props
+    }
+}

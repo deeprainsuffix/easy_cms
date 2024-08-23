@@ -8,11 +8,16 @@ export function SettingProps_UI() {
     }, []);
 
     const { selectedCNode } = settingProps;
-    const CNode_UI_props = selectedCNode!.CNode_UI_props;
+    if (!selectedCNode) {
+        return null
+    }
+
+    const CNode_UI_Props = selectedCNode.CNode_UI_Props;
 
     return (
         <div id='mpg-settingProps'>
-            <CNode_UI_props key={selectedCNode!.id} cNode={selectedCNode} />
+            {/** @ts-ignore 程序保证CNode对应 */}
+            <CNode_UI_Props key={selectedCNode.id} cNode={selectedCNode} />
         </div>
     )
 }

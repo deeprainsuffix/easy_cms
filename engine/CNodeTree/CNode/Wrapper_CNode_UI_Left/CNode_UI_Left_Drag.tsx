@@ -1,5 +1,5 @@
 import React, { type DragEventHandler, useCallback } from 'react';
-import { type T_ComponentName } from '../type';
+import { type T_ComponentName } from '../index.type';
 import { actionController } from '@/engine/ActionController';
 import { ActionCNode_type_add } from '@/engine/ActionController/ActionCNode';
 import { ActionTip_type_select_none } from '@/engine/ActionController/ActionTip';

@@ -1,7 +1,7 @@
 import { actionController } from '@/engine/ActionController';
 import { ActionCNode_type_add, ActionCNode_type_move } from '@/engine/ActionController/ActionCNode';
 import React, { DragEventHandler, useCallback } from 'react';
-import { type T_ComponentName } from '../type';
+import { type T_ComponentName } from '../index.type';
 import { type CNode } from '..';
 
 interface I_CNode_UI_DropAsChild extends React.InputHTMLAttributes<HTMLDivElement> {

@@ -1,14 +1,15 @@
-import { I_CNode_JSON } from '@/engine/CNodeTree/CNode/type';
+import { I_CNode_JSON } from '@/engine/CNodeTree/CNode/index.type';
 import { HandleBase } from '..';
 import { valid_cNodeTree_hash_format } from '@/engine/lib/validate';
 import { join } from 'path';
 import { dir_landing_project } from '@/server/config';
 import { createWriteStream, existsSync, statSync } from 'fs';
-import { codeGen } from '@/engine/CodeGen';
+import { readFile } from 'node:fs/promises';
+import { complier } from '@/engine/Complier';
 import { writeFile } from 'node:fs/promises';
 import { complie_tsx, create_manifest } from './landingCode_gen.lib';
 import { httpUrl_landingCode_gen } from '../../http.url';
-import type { T_resApiBody, T_resApiInfo } from './type';
+import type { I_resApiBody, T_errMsgOrData, I_body_landingCode_gen } from './index.type';
 
 export class HandleApi extends HandleBase {
     constructor() {
@@ -27,9 +28,9 @@ export class HandleApi extends HandleBase {
         }   return
     }
 
-    fetchResApiWrap(resApiInfo?: T_resApiInfo): void {
+    fetchResApiWrap<T_data = any>(resApiInfo?: T_errMsgOrData<T_data>): void {
         const { res } = this;
-        const resBody: T_resApiBody = {
+        const resBody: I_resApiBody<T_data> = {
             success: true,
             data: null,
             errMsg: '',
@@ -93,32 +94,36 @@ export class HandleApi extends HandleBase {
                         this.fetchResApiWrap({ errMsg: 'cNodeTree_hash校验不通过' });
                     };
 
-                    const filePath_manifest = join(dir_landing_project, hash + 'manifest.json'),
-                        filePath_tsx = join(dir_landing_project, hash + '.tsx');
+                    const
+                        fileName_manifest = hash + '.manifest.json',
+                        filePath_manifest = join(dir_landing_project, fileName_manifest),
+                        fileName_tsx = hash + '.tsx',
+                        filePath_tsx = join(dir_landing_project, fileName_tsx);
 
                     // 1、若存在manifest，直接返回
                     if (existsSync(filePath_manifest)) {
+                        const { manifest } = JSON.parse(await readFile(filePath_manifest, { encoding: 'utf-8' }));
                         const { birthtimeMs } = statSync(filePath_manifest);
-                        this.fetchResApiWrap({ data: birthtimeMs });
+                        this.fetchResApiWrap<I_body_landingCode_gen>({ data: { birthtimeMs, downloadUrl_manifest: manifest as string } });
                         return
                     }
 
                     // 2、根据json编译出tsx文件
-                    codeGen.set_cNodeTree_JSON(json);
-                    codeGen.gen_form_edit();
-                    const tsx = codeGen.getResult();
+                    complier.set_cNodeTree_JSON(json);
+                    complier.gen_form_edit();
+                    const tsx = complier.getResult();
                     const data = new Uint8Array(Buffer.from(tsx));
                     await writeFile(filePath_tsx, data);
 
                     // 3、编译tsx，生成html、js、css
                     // todo 这里应该建一个进程池，对正在运行的进程数量做控制
-                    const assets = await complie_tsx(filePath_tsx, hash);
+                    const assetsFromWebpack = await complie_tsx(filePath_tsx, hash);
 
                     // 4、拿到资产，生成manifest
                     // 要在此处生成manifest而不是webpack afterEmit中，因为后者即使报错也会生成中间产物
-                    await create_manifest(filePath_manifest, filePath_tsx, assets);
+                    const downloadUrl_manifest = await create_manifest(filePath_manifest, fileName_manifest, fileName_tsx, assetsFromWebpack);
                     const { birthtimeMs } = statSync(filePath_manifest);
-                    this.fetchResApiWrap({ data: birthtimeMs });
+                    this.fetchResApiWrap<I_body_landingCode_gen>({ data: { birthtimeMs, downloadUrl_manifest  } });
                 } catch (err) {
                     throw err;
                 }

@@ -20,8 +20,6 @@ export function SettingRight_UI() {
         )
     }
 
-    const { CNode_UI_props } = selectedCNode;
-
     return (
         <div id='mpg-settingRight'>
             <Tabs
@@ -30,11 +28,11 @@ export function SettingRight_UI() {
                 <TabsList
                     className='mpg-w-full mpg-shadow-[0px_5px_2px_#94a3b8]'
                 >
-                    {CNode_UI_props && <TabsTrigger className='mpg-flex-grow' value="SettingProps">属性</TabsTrigger>}
+                    <TabsTrigger className='mpg-flex-grow' value="SettingProps">属性</TabsTrigger>
                     <TabsTrigger className='mpg-flex-grow' value="SettingCssStyle">样式</TabsTrigger>
                 </TabsList>
                 <div className='mpg-p-3'>
-                    {CNode_UI_props && <TabsContent value="SettingProps"><SettingProps_UI /></TabsContent>}
+                    <TabsContent value="SettingProps"><SettingProps_UI /></TabsContent>
                     <TabsContent value="SettingCssStyle"><SettingCssStyle_UI /></TabsContent>
                 </div>
             </Tabs>

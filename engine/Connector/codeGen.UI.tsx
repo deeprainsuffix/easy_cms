@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { btn_codeGen, UNDO, DOING, SUCCESS, FAIL } from './Btn_codeGen';
+import { codeGen } from './codeGen';
+import { DOING, FAIL, SUCCESS, UNDO } from '../Requset/index.const';
 import { Button } from "@/components/ui/button"
 import {
     Dialog,
@@ -17,7 +18,6 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip"
-
 
 const btn_text = {
     [UNDO]: '生成代码',
@@ -44,38 +44,39 @@ const btn_text = {
         [FAIL]: '代码生成失败',
     } as const;
 
-export function Btn_codeGen() {
+export function CodeGen_UI() {
     const [_, setState] = useState(0);
     useEffect(() => {
-        btn_codeGen.render = () => setState(_ => _ + 1);
+        codeGen.render = () => setState(_ => _ + 1);
     }, []);
 
 
     const handle_codeGen = useCallback(() => {
-        btn_codeGen.codeGen();
+        codeGen.codeGen();
     }, []);
 
     const handle_codeGenAgain = useCallback(() => {
-        btn_codeGen.codeGenAgain();
+        codeGen.codeGenAgain();
     }, []);
 
     const handle_close = useCallback(() => {
-        btn_codeGen.close();
+        codeGen.close();
     }, []);
 
     const handle_getAssets = useCallback(() => {
-        btn_codeGen.getAssets();
+        codeGen.getAssets();
     }, []);
 
     const handle_downloadAssets = useCallback(() => {
-        btn_codeGen.downloadAssets();
+        codeGen.downloadAssets();
     }, []);
 
     const {
         state,
         Dialog_show, content,
-        tip_Icon_show, tip_Icon_active, tip_text_show, tip_text
-    } = btn_codeGen;
+        tip_Icon_show, tip_Icon_active, tip_text_show, tip_text,
+        disabledBtnDownloadBtn
+    } = codeGen;
 
     return (
         <Dialog open={Dialog_show}>
@@ -101,7 +102,7 @@ export function Btn_codeGen() {
                 </DialogHeader>
                 {content}
                 <DialogFooter>
-                    {state === SUCCESS && <Button type="submit" onClick={handle_downloadAssets}>下载文件包zip</Button>}
+                    {state === SUCCESS && <Button type="submit" disabled={disabledBtnDownloadBtn} onClick={handle_downloadAssets}>下载文件包zip</Button>}
                     {state === FAIL && <Button type="submit" onClick={handle_codeGenAgain}>再试一次</Button>}
                 </DialogFooter>
             </DialogContent>
