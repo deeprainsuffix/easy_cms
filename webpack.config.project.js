@@ -32,7 +32,7 @@ module.exports = (env, argv) => {
         },
         plugins: [
             new HtmlWebpackPlugin({
-                title: 'lowcode_platform',
+                title: 'easy_cms',
                 filename: `${cNodeTree_hash}.html`,
             }),
             new MiniCssExtractPlugin({

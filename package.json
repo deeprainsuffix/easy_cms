@@ -1,7 +1,7 @@
 {
-  "name": "lowcode_platform",
+  "name": "easy_cms",
   "version": "1.0.0",
-  "description": "drag to create manage platform",
+  "description": "drag to create content manage system",
   "main": "index.js",
   "sideEffects": [
     "**/*.css"
