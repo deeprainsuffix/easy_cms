@@ -50,8 +50,8 @@ class Connector implements I_Connector {
         }
     }
 
-    public async codeGen(cNodeTree_JSON: I_CNode_JSON, cNodeTree_hash: string): Promise<ReturnType<typeof landingCode_gen_req>> {
-        return await landingCode_gen_req(cNodeTree_JSON, cNodeTree_hash);
+    public async codeGen(params: Parameters<typeof landingCode_gen_req>[0]): Promise<ReturnType<typeof landingCode_gen_req>> {
+        return await landingCode_gen_req(params);
     }
 }
 

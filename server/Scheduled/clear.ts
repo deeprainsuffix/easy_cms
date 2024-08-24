@@ -36,9 +36,9 @@ function clear(dir: string, saveTime: number, errMsg: string) {
 // console.log('定时任务启动: 清理cNodeTree_json');
 // setInterval(() => {
 //     clear(dir_cNodeTree_json, cNodeTree_json_clearTimeMs, '清理cNodeTree_json出错 -> ');
-// }, cNodeTree_json_clearTimeMs / 2);
+// }, cNodeTree_json_clearTimeMs);
 
 // console.log('定时任务启动: 清理landing_project');
 // setInterval(() => {
 // clear(dir_landing_project, landing_project_clearTimeMs, '清理landing_project出错 -> ');
-// }, landing_project_clearTimeMs / 2);
+// }, landing_project_clearTimeMs);

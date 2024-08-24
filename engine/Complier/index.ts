@@ -1,5 +1,5 @@
 import { I_CNode_props, T_ComponentName, type I_CNode_JSON } from "../CNodeTree/CNode/index.type";
-import { type T_template_CNode, template_CNode, template_module, template_exec } from "./template";
+import { type T_template_CNode, template_CNode, template_import_essentail, template_exec, template_import_path, RegionHeader, RegionSideMenuBar, template_import_region, template_Combine } from "./template";
 import { Root_cNode_meta, Root_cNode_props_key, type I_Root_cNode_props } from "../CNodeTree/CNode/Foundation/Root_CNode.meta";
 import { FormBlock_cNode_meta, FormBlock_CNode_props_key, type I_FormBlock_cNode_props } from "../CNodeTree/CNode/Layout/FormBlock_CNode.meta";
 import { Input_cNode_meta, Input_CNode_props_key, type I_Input_cNode_props } from "../CNodeTree/CNode/Form/Input_CNode.meta";
@@ -7,75 +7,122 @@ import { Select_CNode_props_key, Select_cNode_meta, type I_Select_cNode_props } 
 import { FileUpload_cNode_meta, FileUpload_CNode_props_key, type I_FileUpload_cNode_props } from "../CNodeTree/CNode/Form/FileUpload_CNode.meta";
 
 interface I_Complier {
-    template_CNode: T_template_CNode;
-    template_module: typeof template_module;
-    template_exec: typeof template_exec;
     cNodeTree_JSON: I_CNode_JSON | null;
-    imports: string[];
-    region: {
-        header: string | null;
-        sideMenuBar: string | null;
-        form_edit: string | null;
-        form_preview: string | null;
+
+    result_imports: string[];
+    result_body: string | null; // 表单区域主体
+    result_region: {
+        [RegionHeader]: boolean;
+        [RegionSideMenuBar]: boolean;
     };
+    result: string[];
 }
 
-// todo 这里要启动service work来帮助工作
 // todo 测一下每个gen函数的时间
 export class Complier implements I_Complier {
-    template_CNode: I_Complier['template_CNode'];
-    template_module: I_Complier['template_module'];
-    template_exec: I_Complier['template_exec'];
     cNodeTree_JSON: I_Complier['cNodeTree_JSON'];
-    imports: I_Complier['imports'];
-    region: I_Complier['region'];
+
+    result_imports: I_Complier['result_imports'];
+    result_body: I_Complier['result_body'];
+    result_region: I_Complier['result_region'];
+    result: I_Complier['result'];
 
     constructor() {
-        this.template_CNode = template_CNode;
-        this.template_module = template_module;
-        this.template_exec = template_exec;
         this.cNodeTree_JSON = null;
-        this.imports = [];
-        this.region = {
-            header: null,
-            sideMenuBar: null,
-            form_edit: null,
-            form_preview: null,
+        this.result_imports = [];
+        this.result_body = null;
+        this.result_region = {
+            [RegionHeader]: false,
+            [RegionSideMenuBar]: false,
         };
+        this.result = [];
     }
 
     // 每次使用前必须调用这一步
     public set_cNodeTree_JSON(cNodeTree_JSON: I_Complier['cNodeTree_JSON']) {
+        this.reset();
         this.cNodeTree_JSON = cNodeTree_JSON;
+    }
+
+    public gen_form_edit() {
+        const { parsed_import, parsed_body } = this.parse();
+        for (let m of parsed_import) {
+            this.result_imports.push(`import { ${m} } from "${template_import_path}/edit/${m}";\n`);
+        }
+        this.result_body = 'const FormBody = () => ' + parsed_body.join('');
+    }
+
+    public gen_form_preview() {
+        const { parsed_import, parsed_body } = this.parse();
+        for (let m of parsed_import) {
+            this.result_imports.push(`import { ${m} } from "${template_import_path}/preview/${m}";\n`);
+        }
+        this.result_body = 'const FormBody = () => ' + parsed_body.join('');
+    }
+
+    public gen_header() {
+        this.result_region[RegionHeader] = true;
+    }
+
+    public gen_sideMenuBar() {
+        this.result_region[RegionSideMenuBar] = true;
+    }
+
+    public getResult(): string {
+        // 处理模块
+        this.handle_import();
+        // 处理body
+        this.handle_body();
+        // 处理region
+        const regionGenerated = this.handle_region();
+        // 组合
+        this.handle_combine(regionGenerated);
+        // 必要工作
+        this.result.push(template_exec);
+        return this.result.join('');
     }
 
     public reset() {
         this.cNodeTree_JSON = null;
-        this.imports = [];
-        this.region.header = null;
-        this.region.sideMenuBar = null;
-        this.region.form_edit = null;
-        this.region.form_preview = null;
+        this.result_imports = [];
+        this.result_body = null;
+        this.result_region = {
+            [RegionHeader]: false,
+            [RegionSideMenuBar]: false,
+        };
+        this.result = [];
     }
 
-    public getResult(): string {
-        // todo
-        let result: string[] = [];
-        result.push(...this.template_module);
-        if (this.imports) {
-            result.push(...this.imports);
+    private handle_import() {
+        this.result.push(...template_import_essentail);
+        this.result.push(...template_import_region);
+        if (this.result_imports) {
+            this.result.push(...this.result_imports);
+        }
+    }
+
+    private handle_body() {
+        if (this.result_body) {
+            this.result.push(this.result_body);
+        }
+    }
+
+    private handle_region() {
+        const regionGenerated: string[] = [];
+        if (this.result_region[RegionHeader]) {
+            regionGenerated.push(`is${RegionHeader}={true}`);
+        }
+        if (this.result_region[RegionSideMenuBar]) {
+            regionGenerated.push(`is${RegionSideMenuBar}={true}`);
         }
 
-        result.push('const Page = () => ');
-        if (this.region.form_edit) {
-            result.push(this.region.form_edit);
-        }
+        return regionGenerated
+    }
 
-        result.push(this.template_exec);
-
-        this.reset();
-
-        return result.join('');
+    private handle_combine(regionGenerated: ReturnType<typeof this.handle_region>) {
+        // 在Page组件中写是最简单的
+        this.result.push(template_Combine);
+        this.result.push(`const Page = () => { return (<Combine ${regionGenerated.join(' ')} />)};\n`);
     }
 
     private distribute(componentName: T_ComponentName, props: I_CNode_props): string {
@@ -146,42 +193,31 @@ export class Complier implements I_Complier {
         ])
     }
 
-    public gen_form_edit() {
-        const json = this.cNodeTree_JSON,
-            template = this.template_CNode;
-        if (!json) {
+    private check() {
+        if (!this.cNodeTree_JSON) {
             throw '未调用set_cNodeTree_JSON';
         }
+    }
 
-        let result_import: Set<string> = new Set(), result_body: string[] = [];
-        const parse = (json: I_CNode_JSON) => {
+    private parse() {
+        this.check();
+
+        let
+            parsed_import: Set<string> = new Set(),
+            parsed_body: string[] = [];
+
+        const parseOne = (json: I_CNode_JSON) => {
             const { componentName } = json;
-            const templateItem = template[componentName];
-
-            result_import.add(templateItem.module_import);
-            result_body.push(templateItem['prefix'], ' ', this.distribute(componentName, json.props), templateItem['prefix_close'], '\n');
+            const templateItem = template_CNode[componentName];
+            parsed_import.add(templateItem.module_import);
+            parsed_body.push(templateItem['prefix'], ' ', this.distribute(componentName, json.props), templateItem['prefix_close'], '\n');
             for (let child of json.children) {
-                parse(child);
+                parseOne(child);
             }
-            result_body.push(templateItem.suffix, '\n');
+            parsed_body.push(templateItem.suffix, '\n');
         };
 
-        parse(json);
-        for (let m of result_import) {
-            this.imports.push(`import { ${m}_gen as ${m} } from "@/components/ui_gen/${m}";\n`);
-        }
-        // this.imports = Array.from(result_import).map(m => `import { ${m}_gen as ${m} } from "@/components/ui_gen/${m}";\n`).join('') + '\n';
-        this.region.form_edit = result_body.join('');
-    }
-    public gen_form_preview() {
-
-    }
-    public gen_sideMenuBar() {
-
-    }
-    public gen_header() {
-
+        parseOne(this.cNodeTree_JSON!);
+        return { parsed_import, parsed_body }
     }
 }
-
-export const complier = new Complier();

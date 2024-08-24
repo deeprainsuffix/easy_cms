@@ -128,6 +128,10 @@
   * 根据CNode结构生成json，serviceWork
 * day4-5 8.20
   * CodeGen
+    * hash的生成加一个用户参数
+    * 检测到manifest已生成后，要更新manifest的生成时间
+    * 改CNodeTree交互
+    * 考虑下预览要不要做
   * 根据json生成前端文件
     * PC
     * m

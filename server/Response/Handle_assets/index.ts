@@ -14,8 +14,4 @@ export class Handle_assets extends HandleBase {
 
         return await this.get_plain(filePath, ext)
     }
-
-
 }
-
-export const handle_assets = new Handle_assets();

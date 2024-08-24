@@ -41,6 +41,8 @@ class Zip_Manager implements I_Zip_Manager {
             if (!succes) {
                 throw '下载资产失败';
             }
+
+            await this.Zip_downloader.saveResult(downloadUrl_manifest, manifest);
         } catch (err) {
             throw err;
         }
@@ -131,8 +133,6 @@ class Zip_downloader implements I_zip_downloader {
                 throw this.errMsg;
             }
 
-            await this.saveResult();
-
             return true
         } catch (err) {
             console.log(err);
@@ -140,15 +140,16 @@ class Zip_downloader implements I_zip_downloader {
         }
     }
 
-    private async saveResult() {
+    public async saveResult(manifest_fileName: string, manifest: I_Assets) {
         for (const { fileName, data } of this.result_task) {
             this.zip.file(fileName, data!);
         }
+        this.zip.file(manifest_fileName, JSON.stringify(manifest));
 
         this.result = await this.zip.generateAsync({ type: 'arraybuffer' });
     }
 
-    public release() {
-        // 不需要了
-    }
+    // public release() {
+    //     // 不需要了
+    // }
 }

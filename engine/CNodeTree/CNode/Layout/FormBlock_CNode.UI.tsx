@@ -3,7 +3,7 @@ import type { FormBlock_CNode } from './FormBlock_CNode';
 import { CNode_UI_Drag } from '../Wrapper_CNode_UI/CNode_UI_Drag';
 import { CNode_UI_DropAsChild } from '../Wrapper_CNode_UI/CNode_UI_DropAsChild';
 import { CNode_UI_Mouse } from '../Wrapper_CNode_UI/CNode_UI_Mouse';
-import { FormBlock_gen } from '@/components/ui_CNode/FormBlock';
+import { FormBlock } from '@/components/ui_CNode/FormBlock';
 
 interface I_FormBlock_CNode_UI {
     cNode: FormBlock_CNode;
@@ -22,7 +22,7 @@ export function FormBlock_CNode_UI(props: I_FormBlock_CNode_UI) {
             <CNode_UI_Mouse cNode={cNode}>
                 <CNode_UI_DropAsChild cNode={cNode}>
                     <CNode_UI_Drag cNode={cNode}>
-                        <FormBlock_gen children={children.length ? children : null} props={{ ...cNode.props }} />
+                        <FormBlock children={children.length ? children : null} props={{ ...cNode.props }} />
                     </CNode_UI_Drag>
                 </CNode_UI_DropAsChild >
             </CNode_UI_Mouse>

@@ -2,7 +2,7 @@ import { httpUrl_cNodeTree_JSON_get_prefix, httpUrl_cNodeTree_JSON_save, httpUrl
 import { type I_CNode_JSON } from "../CNodeTree/CNode/index.type";
 import { toast_dom } from "@/lib/utils";
 import { cNodeTree_hash_param, cNodeTree_json_fileName_prefix } from "@/server/http.const";
-import type { I_body_landingCode_gen, I_resApiBody } from "@/server/Response/HandleApi/index.type";
+import type { I_req_landingCode_gen, I_res_landingCode_gen, I_resApiBody } from "@/server/Response/HandleApi/index.type";
 
 type T_Param_fetch = Parameters<typeof fetch>;
 interface I_init extends NonNullable<T_Param_fetch[1]> {
@@ -163,17 +163,14 @@ export async function fetchReqFileWrap<T extends fileType>(input: T_Param_fetch[
 //     }
 // }
 
-export async function landingCode_gen_req(cNodeTree_JSON: I_CNode_JSON, cNodeTree_hash: string): Promise<I_body_landingCode_gen | null> {
+export async function landingCode_gen_req(params: I_req_landingCode_gen): Promise<I_res_landingCode_gen | null> {
     try {
         const { success, data, errMsg } = await fetchReqApiWrap(httpUrl_landingCode_gen, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                json: cNodeTree_JSON,
-                hash: cNodeTree_hash,
-            }),
+            body: JSON.stringify(params),
             timeout: 5 * 60 * 1000, // 5 mins
             errMsg_Timeout: '超时5分钟',
         });

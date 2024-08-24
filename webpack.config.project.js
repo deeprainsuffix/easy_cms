@@ -40,6 +40,7 @@ module.exports = (env, argv) => {
             }),
             new AssetsSendPlugin()
         ],
+        // todo
         // optimization: {
         //     runtimeChunk: 'single',
         //     splitChunks: {

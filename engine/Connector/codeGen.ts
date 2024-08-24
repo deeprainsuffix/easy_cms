@@ -6,19 +6,19 @@ import { cNodeTree } from "../CNodeTree";
 import { type T_state, DOING, FAIL, SUCCESS, UNDO } from "../Requset/index.const";
 import { T_Message_from_main, ZIP_DOWNLOAD, ZIP_fail, ZIP_SAVED, ZIP_SUCCESS, type T_Message_from_worker, } from "./codeGen.worker.type";
 import { downloadByA, toast_dom } from "@/lib/utils";
+import type { I_req_landingCode_gen } from "@/server/Response/HandleApi/index.type";
 
-const state_content = {
-    [UNDO]: 'no content',
-    [DOING]: '正在生成代码文件资源...',
-    [SUCCESS]: (birthtimeMs: number) => `资源截止到${dayjs(birthtimeMs + landing_project_clearTimeMs).format('YYYY-MM-DD HH:mm:ss')}失效，请及时下载`,
-    [FAIL]: '请咨询管理员',
-} as const,
+const
     state_tip_text = {
         [UNDO]: null,
         [DOING]: '生成中，请稍后',
         [SUCCESS]: '点击查看',
         [FAIL]: '出错啦',
     } as const;
+
+export type T_region = {
+    [p in NonNullable<keyof NonNullable<I_req_landingCode_gen['region']>>]: boolean;
+}
 
 interface I_Btn_codeGen {
     render: any;
@@ -27,10 +27,10 @@ interface I_Btn_codeGen {
     state: T_state;
     cNodeTree_JSON: I_CNode_JSON | null;
     cNodeTree_hash: string | null;
-    downloadUrl_manifest: string | null;
+    region: T_region;
+    data: Awaited<ReturnType<typeof connector.codeGen>> | null;
 
     Dialog_show: boolean; // 弹窗展示
-    content: string | null; // 弹窗content，之所以设为状态是因为有消失过渡
     tip_Icon_show: boolean; // tip_Icon展示
     tip_Icon_active: boolean; // tip_Icon的动画
     tip_text_show: boolean; // tip_text展示
@@ -38,7 +38,7 @@ interface I_Btn_codeGen {
     firstOpen: boolean;
     tip_text_loading_first: ReturnType<typeof setTimeout> | null; // 第一次关闭时，若为加载中，提示一下
 
-    disabledBtnDownloadBtn: boolean;
+    disabledBtnDownloadZip: boolean;
 }
 
 export class CodeGen implements I_Btn_codeGen {
@@ -48,10 +48,10 @@ export class CodeGen implements I_Btn_codeGen {
     state: I_Btn_codeGen['state'];
     cNodeTree_JSON: I_Btn_codeGen['cNodeTree_JSON'];
     cNodeTree_hash: I_Btn_codeGen['cNodeTree_hash'];
-    downloadUrl_manifest: I_Btn_codeGen['downloadUrl_manifest'];
+    region: I_Btn_codeGen['region'];
+    data: I_Btn_codeGen['data'];
 
     Dialog_show: I_Btn_codeGen['Dialog_show'];
-    content: I_Btn_codeGen['content'];
     tip_Icon_show: I_Btn_codeGen['tip_Icon_show'];
     tip_Icon_active: I_Btn_codeGen['tip_Icon_active'];
     tip_text_show: I_Btn_codeGen['tip_text_show'];
@@ -59,7 +59,7 @@ export class CodeGen implements I_Btn_codeGen {
     firstOpen: I_Btn_codeGen['firstOpen'];
     tip_text_loading_first: I_Btn_codeGen['tip_text_loading_first'];
 
-    disabledBtnDownloadBtn: I_Btn_codeGen['disabledBtnDownloadBtn'];
+    disabledBtnDownloadZip: I_Btn_codeGen['disabledBtnDownloadZip'];
 
     constructor() {
         this.worker = null;
@@ -67,10 +67,13 @@ export class CodeGen implements I_Btn_codeGen {
         this.state = UNDO;
         this.cNodeTree_JSON = null;
         this.cNodeTree_hash = null;
-        this.downloadUrl_manifest = null;
+        this.region = {
+            RegionHeader: true,
+            RegionSideMenuBar: true,
+        };
+        this.data = null;
 
         this.Dialog_show = false;
-        this.content = state_content[this.state];
         this.tip_Icon_show = false;
         this.tip_Icon_active = false;
         this.tip_text_show = false;
@@ -78,43 +81,32 @@ export class CodeGen implements I_Btn_codeGen {
         this.firstOpen = false;
         this.tip_text_loading_first = null;
 
-        this.disabledBtnDownloadBtn = false;
+        this.disabledBtnDownloadZip = false;
     }
 
     public async codeGen() {
         this.state = DOING;
-        const { cNodeTree_JSON, cNodeTree_hash } = await cNodeTree.getCNodeTreeJSON();
-        this.cNodeTree_JSON = cNodeTree_JSON;
-        this.cNodeTree_hash = cNodeTree_hash;
-
-        this.firstOpen = true;
-        this.Dialog_show = true;
-        this.content = state_content[this.state];
-        this.tip_Icon_show = true;
-        this.tip_text_show = false;
         this.render();
+        if (!(this.cNodeTree_JSON && this.cNodeTree_hash)) {
+            const { cNodeTree_JSON, cNodeTree_hash } = await cNodeTree.getCNodeTreeJSON();
+            this.cNodeTree_JSON = cNodeTree_JSON;
+            this.cNodeTree_hash = cNodeTree_hash;
+        }
 
-        const data = await connector.codeGen(this.cNodeTree_JSON, this.cNodeTree_hash);
-        this.codeGen_after(data);
-    }
-
-    public async codeGenAgain() {
-        this.state = DOING;
-        this.content = state_content[this.state];
-        this.render();
-        const data = await connector.codeGen(this.cNodeTree_JSON!, this.cNodeTree_hash!);
+        const data = await connector.codeGen({
+            cNodeTree_JSON: this.cNodeTree_JSON,
+            cNodeTree_hash: this.cNodeTree_hash,
+            region: this.region,
+        });
         this.codeGen_after(data);
     }
 
     private codeGen_after(data: Awaited<ReturnType<typeof connector.codeGen>>) {
         if (!data) {
             this.state = FAIL;
-            this.content = state_content[this.state];
         } else {
-            const { birthtimeMs, downloadUrl_manifest } = data;
             this.state = SUCCESS;
-            this.content = state_content[this.state](birthtimeMs);
-            this.downloadUrl_manifest = downloadUrl_manifest;
+            this.data = data;
         }
         this.tip_text = state_tip_text[this.state];
 
@@ -130,6 +122,15 @@ export class CodeGen implements I_Btn_codeGen {
             this.tip_text_loading_first = null;
         }
 
+        this.render();
+    }
+
+    public open() {
+        this.firstOpen = true;
+        this.Dialog_show = true;
+        this.tip_Icon_show = true;
+        this.tip_Icon_active = false;
+        this.tip_text_show = false;
         this.render();
     }
 
@@ -153,6 +154,11 @@ export class CodeGen implements I_Btn_codeGen {
         this.render();
     }
 
+    public setRegion(regionKey: keyof I_Btn_codeGen['region'], show: boolean) {
+        this.region[regionKey] = show;
+        this.render();
+    }
+
     public getAssets() {
         if (this.state === UNDO) {
             return
@@ -172,17 +178,17 @@ export class CodeGen implements I_Btn_codeGen {
     }
 
     public async downloadAssets() {
-        if (!this.downloadUrl_manifest) {
+        if (!this.data) {
             return
         }
 
         this.initWorker();
 
-        this.disabledBtnDownloadBtn = true;
+        this.disabledBtnDownloadZip = true;
         this.render();
         this.worker_send({
             type: ZIP_DOWNLOAD,
-            downloadUrl_manifest: this.downloadUrl_manifest,
+            downloadUrl_manifest: this.data.downloadUrl_manifest,
         });
     }
 
@@ -204,13 +210,13 @@ export class CodeGen implements I_Btn_codeGen {
                 const { zip } = message;
                 downloadByA('project.zip', new Blob([zip]));
                 this.worker_send({ type: ZIP_SAVED });
-                this.disabledBtnDownloadBtn = false;
+                this.disabledBtnDownloadZip = false;
                 this.render();
                 break;
             case ZIP_fail:
                 const errMsg = '下载zip文件失败';
                 toast_dom(errMsg);
-                this.disabledBtnDownloadBtn = false;
+                this.disabledBtnDownloadZip = false;
                 this.render();
                 break;
         }

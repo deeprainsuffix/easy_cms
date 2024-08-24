@@ -2,12 +2,12 @@ import React from 'react';
 import { cn } from "@/lib/utils";
 import type { I_FormBlock_cNode_props } from '@/engine/CNodeTree/CNode/Layout/FormBlock_CNode.meta';
 
-interface I_FormBlock_gen extends React.HTMLAttributes<HTMLDivElement> {
+interface I_FormBlock extends React.HTMLAttributes<HTMLDivElement> {
     props: I_FormBlock_cNode_props;
     // children: React.JSX.Element[] | null;
 }
 
-export function FormBlock_gen({ props, className, children }: I_FormBlock_gen) {
+export function FormBlock({ props, className, children }: I_FormBlock) {
     const columnNum = +props.columnNum;
 
     return (

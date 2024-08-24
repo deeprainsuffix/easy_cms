@@ -5,11 +5,11 @@ import { join } from 'path';
 import { dir_landing_project } from '@/server/config';
 import { createWriteStream, existsSync, statSync } from 'fs';
 import { readFile } from 'node:fs/promises';
-import { complier } from '@/engine/Complier';
+import { Complier } from '@/engine/Complier';
 import { writeFile } from 'node:fs/promises';
 import { complie_tsx, create_manifest } from './landingCode_gen.lib';
 import { httpUrl_landingCode_gen } from '../../http.url';
-import type { I_resApiBody, T_errMsgOrData, I_body_landingCode_gen } from './index.type';
+import type { I_resApiBody, T_errMsgOrData, I_res_landingCode_gen, I_req_landingCode_gen } from './index.type';
 
 export class HandleApi extends HandleBase {
     constructor() {
@@ -55,13 +55,13 @@ export class HandleApi extends HandleBase {
         return
     }
 
-    // 
+
     // async landingCode_gen(): Promise<void> {
     //     return new Promise<void>((re, rj) => {
     //         setTimeout(() => {
     //             re();
     //             // rj();
-    //         }, 2 * 1000);
+    //         }, 5 * 1000);
     //     })
     //         .then(_ => {
     //             this.fetchResApiWrap({ data: +new Date() });
@@ -74,8 +74,8 @@ export class HandleApi extends HandleBase {
     async landingCode_gen(): Promise<void> {
         const { req } = this;
         const errMsg = '生成代码文件出错';
-        // todo 需要建立一个pool，pool[id]为hash，若正在生成，则不做处理 
-        return new Promise<{ json: I_CNode_JSON, hash: string }>((re, rj) => {
+        // todo 可以建立一个pool，pool[id]为hash，若正在生成，则不做处理 
+        return new Promise<I_req_landingCode_gen>((re, rj) => {
             let jsonStr = ''
             req
                 .on('error', err => { rj(err) })
@@ -86,44 +86,47 @@ export class HandleApi extends HandleBase {
                     re(JSON.parse(jsonStr));
                 })
         })
-            .then(async ({ json, hash }) => {
+            .then(async ({ cNodeTree_JSON, cNodeTree_hash, region = {} }) => {
                 // const controller = new AbortController();
                 // const { signal } = controller;
                 try {
-                    if (!valid_cNodeTree_hash_format(hash)) {
+                    if (!valid_cNodeTree_hash_format(cNodeTree_hash)) {
                         this.fetchResApiWrap({ errMsg: 'cNodeTree_hash校验不通过' });
                     };
 
                     const
-                        fileName_manifest = hash + '.manifest.json',
+                        fileName_manifest = cNodeTree_hash + '.manifest.json',
                         filePath_manifest = join(dir_landing_project, fileName_manifest),
-                        fileName_tsx = hash + '.tsx',
+                        fileName_tsx = cNodeTree_hash + '.tsx',
                         filePath_tsx = join(dir_landing_project, fileName_tsx);
 
                     // 1、若存在manifest，直接返回
                     if (existsSync(filePath_manifest)) {
                         const { manifest } = JSON.parse(await readFile(filePath_manifest, { encoding: 'utf-8' }));
                         const { birthtimeMs } = statSync(filePath_manifest);
-                        this.fetchResApiWrap<I_body_landingCode_gen>({ data: { birthtimeMs, downloadUrl_manifest: manifest as string } });
+                        this.fetchResApiWrap<I_res_landingCode_gen>({ data: { birthtimeMs, downloadUrl_manifest: manifest as string } });
                         return
                     }
 
                     // 2、根据json编译出tsx文件
-                    complier.set_cNodeTree_JSON(json);
+                    const complier = new Complier();
+                    complier.set_cNodeTree_JSON(cNodeTree_JSON);
                     complier.gen_form_edit();
+                    region.RegionHeader && complier.gen_header();
+                    region.RegionSideMenuBar && complier.gen_sideMenuBar();
                     const tsx = complier.getResult();
+                    complier.reset();
                     const data = new Uint8Array(Buffer.from(tsx));
                     await writeFile(filePath_tsx, data);
 
                     // 3、编译tsx，生成html、js、css
-                    // todo 这里应该建一个进程池，对正在运行的进程数量做控制
-                    const assetsFromWebpack = await complie_tsx(filePath_tsx, hash);
+                    const assetsFromWebpack = await complie_tsx(filePath_tsx, cNodeTree_hash);
 
                     // 4、拿到资产，生成manifest
                     // 要在此处生成manifest而不是webpack afterEmit中，因为后者即使报错也会生成中间产物
                     const downloadUrl_manifest = await create_manifest(filePath_manifest, fileName_manifest, fileName_tsx, assetsFromWebpack);
                     const { birthtimeMs } = statSync(filePath_manifest);
-                    this.fetchResApiWrap<I_body_landingCode_gen>({ data: { birthtimeMs, downloadUrl_manifest  } });
+                    this.fetchResApiWrap<I_res_landingCode_gen>({ data: { birthtimeMs, downloadUrl_manifest } });
                 } catch (err) {
                     throw err;
                 }
@@ -220,5 +223,3 @@ export class HandleApi extends HandleBase {
     //     }
     // }
 }
-
-export const handleApi = new HandleApi();

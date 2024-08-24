@@ -1,7 +1,7 @@
 import React from 'react';
 import { cn } from "@/lib/utils";
 import {
-    Select,
+    Select as Select_shadcn,
     SelectContent,
     SelectGroup,
     SelectItem,
@@ -11,11 +11,11 @@ import {
 } from "@/components/ui/select";
 import type { I_Input_cNode_props } from '@/engine/CNodeTree/CNode/Form/Input_CNode.meta';
 
-interface I_Select_gen extends React.HTMLAttributes<HTMLDivElement> {
+interface I_Select extends React.HTMLAttributes<HTMLDivElement> {
     props: I_Input_cNode_props;
 }
 
-export function Select_gen({ props, className }: I_Select_gen) {
+export function Select({ props, className }: I_Select) {
     const { fieldKey, fieldLabel, fieldPlaceholder } = props;
 
     return (
@@ -24,7 +24,7 @@ export function Select_gen({ props, className }: I_Select_gen) {
         )}>
             <div className='flex-grow-0 flex-shrink-1 basis-[100px] flex justify-center items-center break-all'>{fieldLabel}</div>
             <div className='flex-grow-0 flex-shrink-1 basis-[200px]'>
-                <Select>
+                <Select_shadcn>
                     <SelectTrigger>
                         <SelectValue placeholder={fieldPlaceholder} />
                     </SelectTrigger>
@@ -35,7 +35,7 @@ export function Select_gen({ props, className }: I_Select_gen) {
                             <SelectItem value="2">选项2</SelectItem>
                         </SelectGroup>
                     </SelectContent>
-                </Select>
+                </Select_shadcn>
             </div>
         </div>
     )

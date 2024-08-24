@@ -3,7 +3,7 @@ import type { Select_CNode } from './Select_CNode';
 import { CNode_UI_Drag } from '../Wrapper_CNode_UI/CNode_UI_Drag';
 import { CNode_UI_DropAsSibling } from '../Wrapper_CNode_UI/CNode_UI_DropAsSibling';
 import { CNode_UI_Mouse } from '../Wrapper_CNode_UI/CNode_UI_Mouse';
-import { Select_gen } from '@/components/ui_CNode/Select';
+import { Select } from '@/components/ui_CNode/Select';
 
 interface I_Select_CNode_UI {
     cNode: Select_CNode;
@@ -18,7 +18,7 @@ export function Select_CNode_UI({ cNode }: I_Select_CNode_UI) {
             <CNode_UI_Mouse cNode={cNode}>
                 <CNode_UI_DropAsSibling cNode={cNode}>
                     <CNode_UI_Drag cNode={cNode}>
-                        <Select_gen props={{ ...props }} />
+                        <Select props={{ ...props }} />
                     </CNode_UI_Drag>
                 </CNode_UI_DropAsSibling>
             </CNode_UI_Mouse>

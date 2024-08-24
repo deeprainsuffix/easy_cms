@@ -1,13 +1,13 @@
 import React from 'react';
 import { cn } from "@/lib/utils";
-import { Input } from '../ui/input';
+import { Input as Input_Shadcn } from '../ui/input';
 import type { I_Input_cNode_props } from '@/engine/CNodeTree/CNode/Form/Input_CNode.meta';
 
-interface I_Input_gen extends React.HTMLAttributes<HTMLDivElement> {
+interface I_Input extends React.HTMLAttributes<HTMLDivElement> {
     props: I_Input_cNode_props;
 }
 
-export function Input_gen({ props, className }: I_Input_gen) {
+export function Input({ props, className }: I_Input) {
     const { fieldKey, fieldLabel, fieldPlaceholder } = props;
 
     return (
@@ -17,7 +17,7 @@ export function Input_gen({ props, className }: I_Input_gen) {
             , className)}>
             <div className='flex-grow-0 flex-shrink-1 basis-[100px] flex justify-center items-center break-all'>{fieldLabel}</div>
             <div className='flex-grow-0 flex-shrink-1 basis-[200px]'>
-                <Input placeholder={fieldPlaceholder} />
+                <Input_Shadcn placeholder={fieldPlaceholder} />
             </div>
         </div>
     )

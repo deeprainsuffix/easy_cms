@@ -1,3 +1,5 @@
+import type { I_CNode_JSON } from '@/engine/CNodeTree/CNode/index.type';
+import type { RegionHeader, RegionSideMenuBar } from '@/engine/Complier/template';
 import http from 'http';
 
 type T_requestListener = NonNullable<Parameters<typeof http.createServer>[1]>;
@@ -18,7 +20,16 @@ export type T_errMsgOrData<T_data> =
     { errMsg: I_resApiBody<T_data>['errMsg'] }
     ;
 
-export interface I_body_landingCode_gen {
+
+export interface I_req_landingCode_gen {
+    cNodeTree_JSON: I_CNode_JSON,
+    cNodeTree_hash: string;
+    region?: {
+        [RegionHeader]?: boolean;
+        [RegionSideMenuBar]?: boolean;
+    }
+};
+export interface I_res_landingCode_gen {
     birthtimeMs: number;
     downloadUrl_manifest: string;
 };
