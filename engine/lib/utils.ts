@@ -60,8 +60,11 @@ export function deepClone_forHash(source: any, cNode_hashSource: T_cNode_hashSou
 }
 
 export async function digest_cNode_hashSource(input: T_cNode_hashSource) {
+  // https://developer.mozilla.org/zh-CN/docs/Web/API/SubtleCrypto/digest#%E5%B0%86%E6%91%98%E8%A6%81%E8%BD%AC%E6%8D%A2%E4%B8%BA%E5%8D%81%E5%85%AD%E8%BF%9B%E5%88%B6%E5%AD%97%E7%AC%A6%E4%B8%B2
   try {
-    let str = input.join('');
+    // todo 应与一个用户参数耦合
+    const nowTime = +Date.now();
+    let str = input.join('') + nowTime;
     const msgUint8 = new TextEncoder().encode(str); // 编码为（utf-8）Uint8Array
     const hashBuffer = await window.crypto.subtle.digest("SHA-256", msgUint8); // 计算消息的哈希值
     const hashArray = Array.from(new Uint8Array(hashBuffer)); // 将缓冲区转换为字节数组

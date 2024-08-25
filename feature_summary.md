@@ -74,6 +74,8 @@
   * codeGen.worker最关键是要能够计算CNodeTree_json，如果找不到办法，这个这个worker是负作用
   * worker的重启和server端codegen的pool可做可不不做
   * CNodeTree_hash的生成需要加一个用户端的参数，否则会重复[todo]
+  * hash的生成加一个用户参数
+  * 检测到manifest已生成后，要更新manifest的生成时间
 * 预览
   * 方案1: 后端生成代码，访问新的文件，并设置缓存，后续出码节省时间
   <!-- * 方案2: 前端生成代码，访问前端路由 因为打算新开标签页，该方案不合适 -->
@@ -84,12 +86,10 @@
   * tree shaking 必须开启
   * 递归处理(可以不做)
   * json上传处理
-  * CNode的meta提取，打包优化是次要，这个文件必须提出来，作为依赖递归根文件，包括props定义
+  * CNode的meta提取，对于dev的开发，打包优化是还在其次，这个文件必须提出来，作为依赖递归根文件，包括props定义
   * cNodeTree_jsonFiles各项目中通用文件的提取，例如react
 * 网络请求
   * 地址需要区分本地和生产
-* 打包
-  * tsc打包服务端前，先清空文件夹，可能要写个脚本 [todo]
 * 模块解析路径
   * 将所有CNode的meta资源独立成一份文件 [todo]
 
@@ -128,8 +128,6 @@
   * 根据CNode结构生成json，serviceWork
 * day4-5 8.20
   * CodeGen
-    * hash的生成加一个用户参数
-    * 检测到manifest已生成后，要更新manifest的生成时间
     * 改CNodeTree交互
     * 考虑下预览要不要做
   * 根据json生成前端文件

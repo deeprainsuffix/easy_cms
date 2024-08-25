@@ -102,6 +102,8 @@ export class CodeGen implements I_Btn_codeGen {
     }
 
     private codeGen_after(data: Awaited<ReturnType<typeof connector.codeGen>>) {
+        this.cNodeTree_JSON = null;
+        this.cNodeTree_hash = null;
         if (!data) {
             this.state = FAIL;
         } else {
