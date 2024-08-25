@@ -44,6 +44,7 @@
   * CNode_UI_Left可以删除，本想着设计每个组件的独特UI_Left [done]
   * FormBlock组件，需要将内部的FormBlock_CNode_UI区分出来，如果是，则根据其“宽度占比”属性分配x空间 [todo]
   * FormBlock组件的含义不对，应该叫FormRegion [todo]
+  * 功能性的高阶组件改为自定义hook，减少dom层级
 * Action
   * 一次性提交多个命令 [todo]
   * undo/redo 反命令 [todo]

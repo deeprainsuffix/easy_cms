@@ -1,6 +1,6 @@
 import { CNode, lifeCycle_afterDomMounted } from './CNode/index'
 import { testRender } from '../../client'
-import { CNode_collection } from './CNode/CNode_collection';
+import { CNode_collection } from './CNode/CNode.collection';
 import type { I_CNode_JSON, T_ComponentName } from './CNode/index.type';
 import {
   T_ActionCNode,

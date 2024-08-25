@@ -31,7 +31,7 @@ export class Select_CNode extends Category_Form implements I_Select_CNode {
         this.props = {
             [Select_CNode_props_key.fieldKey]: `field-${id}`,
             [Select_CNode_props_key.fieldLabel]: `字段-${id}`,
-            [Select_CNode_props_key.fieldPlaceholder]: '选择一项',
+            [Select_CNode_props_key.fieldPlaceholder]: '请选择',
         };
         this.cssStyle = {};
     }

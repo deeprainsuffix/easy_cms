@@ -1,15 +1,10 @@
-import React, { type DragEventHandler, useCallback } from 'react';
+import { type DragEventHandler, useCallback } from 'react';
 import { ActionCNode_type_move } from '@/engine/ActionController/ActionCNode';
-import { CNode } from '..';
 import { actionController } from '@/engine/ActionController';
 import { ActionTip_type_select_none } from '@/engine/ActionController/ActionTip';
+import type { T_CNode_Concrete } from '../index.type';
 
-interface I_CNode_UI_Drag extends React.InputHTMLAttributes<HTMLDivElement> {
-    cNode: CNode;
-}
-
-export function CNode_UI_Drag(props: I_CNode_UI_Drag) {
-    const { cNode, children, className } = props;
+export function useCNode_UI_Drag(cNode: T_CNode_Concrete) {
     const onDragStart = useCallback<DragEventHandler>((e) => {
         e.dataTransfer.setData('type', ActionCNode_type_move);
         e.dataTransfer.setData('id', cNode.id);
@@ -21,9 +16,5 @@ export function CNode_UI_Drag(props: I_CNode_UI_Drag) {
         });
     }, []);
 
-    return (
-        <div className={className} draggable onDragStart={onDragStart}>
-            {children}
-        </div>
-    )
+    return { onDragStart }
 }

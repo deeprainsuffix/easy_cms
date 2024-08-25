@@ -1,7 +1,7 @@
 import React from 'react';
 import { type FileUpload_CNode } from "./FileUpload_CNode";
 import { Input } from '@/components/ui/input';
-import { useInputOnChange } from '../Wrapper_CNode_UI_Props/useInputOnChange';
+import { useInputOnChange } from '../useCNode_UI_Props/useInputOnChange';
 import { FileUpload_CNode_props_key } from './FileUpload_CNode.meta';
 
 interface I_FileUpload_CNode_UI_Props {
@@ -12,9 +12,9 @@ export function FileUpload_CNode_UI_Props({ cNode }: I_FileUpload_CNode_UI_Props
     const props = cNode.props;
     const { fieldKey, fieldLabel, fieldPlaceholder } = props;
 
-    const onChange_fieldKey = useInputOnChange({ cNode, prop: FileUpload_CNode_props_key.fieldKey });
-    const onChange_fieldLabel = useInputOnChange({ cNode, prop: FileUpload_CNode_props_key.fieldLabel });
-    const onChange_fieldPlaceholder = useInputOnChange({ cNode, prop: FileUpload_CNode_props_key.fieldPlaceholder });
+    const { onChange: onChange_fieldKey } = useInputOnChange(cNode, FileUpload_CNode_props_key.fieldKey);
+    const { onChange: onChange_fieldLabel } = useInputOnChange(cNode, FileUpload_CNode_props_key.fieldLabel);
+    const { onChange: onChange_fieldPlaceholder } = useInputOnChange(cNode, FileUpload_CNode_props_key.fieldPlaceholder);
 
     return (
         <div className='flex flex-col'>

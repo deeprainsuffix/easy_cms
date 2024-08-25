@@ -1,25 +1,18 @@
 import { useCallback } from "react";
-import type { CNode } from "..";
 import { actionController } from '@/engine/ActionController';
 import { ActionCNodeProps_type_update } from '@/engine/ActionController/ActionCNodeProps';
-import type { I_CNode_props } from "../index.type";
+import type { I_CNode_props, T_CNode_Concrete } from "../index.type";
 import type { I_SelectSingle } from "@/components/ui_custom/SelectSingle"
 
-
-interface I_useSelectSingleOnChange {
-    cNode: CNode;
-    prop: keyof I_CNode_props;
-}
-
-export function useSelectSingleOnChange({ cNode, prop }: I_useSelectSingleOnChange) {
-    const onChange: I_SelectSingle['onValueChange'] = (value) => {
+export function useSelectSingleOnChange(cNode: T_CNode_Concrete, prop: keyof I_CNode_props) {
+    const onChange = useCallback<NonNullable<I_SelectSingle['onValueChange']>>((value) => {
         actionController.dispatchAction({
             type: ActionCNodeProps_type_update,
             id: cNode.id,
             prop,
             value,
         });
-    }
+    }, [cNode.id]);
 
-    return useCallback(onChange, [cNode.id]);
+    return { onChange }
 }

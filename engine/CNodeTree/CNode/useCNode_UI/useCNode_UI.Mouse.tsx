@@ -1,19 +1,18 @@
-import React, { type MouseEventHandler, useCallback } from 'react';
-import { CNode } from '..';
+import { type MouseEventHandler, useCallback } from 'react';
 import { actionController } from '@/engine/ActionController';
 import { ActionTip_type_select } from '@/engine/ActionController/ActionTip';
+import type { T_CNode_Concrete } from '../index.type';
 
-interface I_CNode_UI_Mouse extends React.InputHTMLAttributes<HTMLDivElement> {
-    cNode: CNode;
+interface T_option {
     enablePropagation?: boolean;
     enablePrevent?: boolean;
 }
 
-export function CNode_UI_Mouse(props: I_CNode_UI_Mouse) {
-    const {
-        cNode, enablePropagation = false, enablePrevent = false,
-        children, className
-    } = props;
+export function useCNode_UI_Mouse(
+    cNode: T_CNode_Concrete,
+    option: T_option = { enablePropagation: false, enablePrevent: false }
+) {
+    const { enablePropagation, enablePrevent } = option;
     const onClick = useCallback<MouseEventHandler>((e) => {
         !enablePropagation && e.stopPropagation();
         !enablePrevent && e.preventDefault();
@@ -23,9 +22,5 @@ export function CNode_UI_Mouse(props: I_CNode_UI_Mouse) {
         });
     }, []);
 
-    return (
-        <div className={className} onClick={onClick}>
-            {children}
-        </div>
-    )
+    return { onClick }
 }

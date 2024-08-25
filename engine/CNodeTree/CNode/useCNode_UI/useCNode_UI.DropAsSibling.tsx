@@ -1,16 +1,9 @@
 import { actionController } from '@/engine/ActionController';
 import { ActionCNode_type_add, ActionCNode_type_move } from '@/engine/ActionController/ActionCNode';
-import React, { DragEventHandler, useCallback, useRef } from 'react';
-import { type T_ComponentName } from '../index.type';
-import { type CNode } from '..';
+import { DragEventHandler, useCallback, useRef } from 'react';
+import type { T_CNode_Concrete, T_ComponentName } from '../index.type';
 
-interface I_CNode_UI_DropAsSibling extends React.InputHTMLAttributes<HTMLDivElement> {
-    cNode: CNode;
-}
-
-export function CNode_UI_DropAsSibling(props: I_CNode_UI_DropAsSibling) {
-    const { cNode, children, className } = props;
-
+export function useCNode_UI_DropAsSibling(cNode: T_CNode_Concrete) {
     const rectRef = useRef<DOMRect>();
     const dropLeftRef = useRef<boolean>(true); // isDropIn = false时使用
 
@@ -20,6 +13,7 @@ export function CNode_UI_DropAsSibling(props: I_CNode_UI_DropAsSibling) {
         // todo
         rectRef.current = e.currentTarget.getBoundingClientRect();
     }, []);
+
     const onDragOver = useCallback<DragEventHandler>((e) => {
         e.stopPropagation();
         e.preventDefault();
@@ -62,9 +56,5 @@ export function CNode_UI_DropAsSibling(props: I_CNode_UI_DropAsSibling) {
         e.preventDefault();
     }, []);
 
-    return (
-        <div className={className} onDragEnter={onDragEnter} onDragOver={onDragOver} onDrop={onDrop}>
-            {children}
-        </div>
-    )
+    return { onDragEnter, onDragOver, onDrop }
 }
