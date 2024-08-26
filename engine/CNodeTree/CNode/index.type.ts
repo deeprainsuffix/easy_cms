@@ -1,4 +1,4 @@
-import type { CSSProperties, FunctionComponent } from "react";
+import type { CSSProperties, FunctionComponent, RefObject } from "react";
 import type { CNode } from ".";
 
 import type { I_Category_Foundation } from "./Foundation";
@@ -45,15 +45,17 @@ export interface I_CNode_props {
 export interface I_CNode_cssStyle extends CSSProperties { };
 
 export interface I_CNode {
-    // cNode唯一id
-    id: string;
-    // cNode指针结构 和React fiber树节点结构一样 todo 好像因为children的关系next没用了
-    parent: CNode | null;
-    pos: number;
-    children: (CNode | null)[];
-    // 交互相关
+    id: string; // cNode唯一id
+    parent: CNode | null; // 父节点
+    pos: number; // 父节点中children的位置
+    children: (CNode | null)[]; // 子节点
+
     isDraggable: boolean; // 是否可拖拽
     isDroppable: boolean; // 是否可作为drop容器
+    isDropTarget: boolean; // 作为即将被drop的节点 isDroppable=true
+
+    ref: RefObject<HTMLDivElement> // 传递给ref，标记真实DOM，作为实例的具体属性
+    render: any; // 组件刷新句柄，这个属性在react组件生成时添加，作为实例的具体属性
 }
 
 export interface I_CNode_Category extends I_CNode {

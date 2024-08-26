@@ -1,12 +1,13 @@
-import type { RefObject } from 'react';
 import type { I_CNode, I_CNode_cssStyle, I_CNode_props, T_componentCategory, T_ComponentName, T_CNode_Concrete } from './index.type'
 
 export const lifeCycle_afterDomMounted = 'afterDomMounted';
 export const lifeCycle_afterDomUpdated = 'afterDomUpdated';
 
 export abstract class CNode implements I_CNode {
-    public ref: RefObject<HTMLDivElement> // 传递给ref，标记真实DOM，作为实例的具体属性
-    public render: any; // 组件刷新句柄 todo 这里的定义是错的，这个属性在react组件生成时添加，作为实例的具体属性
+    public isDropTarget: I_CNode['isDropTarget'];
+
+    public ref: I_CNode['ref'];
+    public render: I_CNode['render'];
     private afterDomMounted: Function[]; // 在组件Mount之后执行，只执行一次，队列清空，清空工作交给TreePlanting进行
     private afterDomUpdated: Function[]; // 在组件更新之后执行，清空工作交给TreePlanting进行
 
@@ -20,6 +21,8 @@ export abstract class CNode implements I_CNode {
         public id: string, public parent: CNode | null, public pos: number, public children: (CNode | null)[],
         public isDraggable: boolean, public isDroppable: boolean,
     ) {
+        this.isDropTarget = false;
+
         this.ref = { current: null };
         this.afterDomMounted = [];
         this.afterDomUpdated = [];

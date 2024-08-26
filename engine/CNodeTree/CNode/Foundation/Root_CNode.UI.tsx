@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import type { Root_CNode } from './Root_CNode';
 import { useCNode_UI_DropAsChild } from '../useCNode_UI/useCNode_UI.DropAsChild';
+import { WrapperDropAsChild } from '../useCNode_UI/Wrapper.DropAsChild';
 import { useCNode_UI_Mouse } from '../useCNode_UI/useCNode_UI.Mouse';
 import { actionController } from '@/engine/ActionController';
 import { ActionTip_type_select_update } from '@/engine/ActionController/ActionTip';
@@ -32,13 +33,14 @@ export function Root_CNode_UI(props: I_Root_CNode_UI) {
     return (
         <div
             id={cNode.id} ref={cNode.ref}
-            className='h-full bg-s200'
+            className='h-full bg-s200 relative'
             onClick={onClick}
             onDragEnter={onDragEnter} onDragOver={onDragOver} onDrop={onDrop}
         >
             <div id='scrollBox' className='h-full overflow-y-auto'>
                 {children}
             </div>
+            <WrapperDropAsChild isDropTarget={cNode.isDropTarget} />
         </div>
     )
 }

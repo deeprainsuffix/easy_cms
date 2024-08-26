@@ -80,6 +80,9 @@ module.exports = {
         //   DEFAULT: "var(--toast_dom_info)",
         //   foreground: "var(--s900)",
         // }
+        dropTargetTip: {
+          DEFAULT: "var(--dropTargetTip)",
+        }
       },
       borderRadius: {
         lg: "var(--radius)",

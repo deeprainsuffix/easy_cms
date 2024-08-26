@@ -20,7 +20,7 @@ export function CNodeDragLeft() {
                                 <AccordionTrigger className='pt-2.5 hover:no-underline'>{category_title}</AccordionTrigger>
                                 {
                                     components.map(({ componentName, title: component_title }) => {
-                                        const { onDragStart } = useCNode_UI_Left_Drag(componentName);
+                                        const { onDragStart, onDragEnd } = useCNode_UI_Left_Drag(componentName);
                                         const Icon_Left = CNode_UI_Left_Icon_collection[componentName];
 
                                         return (
@@ -28,6 +28,7 @@ export function CNodeDragLeft() {
                                                 key={componentName}
                                                 className='h-10 px-2 flex items-center rounded-md hover:bg-s200 cursor-grab'
                                                 onDragStart={onDragStart} draggable
+                                                onDragEnd={onDragEnd}
                                             >
                                                 <Icon_Left />
                                                 <span>{component_title}</span>

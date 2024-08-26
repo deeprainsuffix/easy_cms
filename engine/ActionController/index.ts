@@ -7,25 +7,12 @@ import { actionCNodeProps_Factory } from "./ActionCNodeProps/factory";
 import { cNodeTree } from "../CNodeTree";
 import { timeTravel } from "../TimeTravel";
 
-// export const
-//     source_TimeTravel = 'TimeTravel',
-//     source_CNodeTree_Left = 'CNodeTree_Left',
-//     source_CNodeTree_Center = 'CNodeTree_Center',
-//     source_Updater_Right = 'Updater_Right',
-//     source_CNode_Sticker = 'CNode_Sticker';
-
 type T_actionRequired =
     T_ActionCNode_Required |
     T_ActionTip_Required |
     T_ActionCNodeProps_Required
     ;
-
-interface T_options { // todo
-    // source: 
-}
-
 interface I_ActionController {
-    dispatchAction: (actionRequired: T_actionRequired, options: T_options) => void;
 }
 
 /**
@@ -59,7 +46,6 @@ export class ActionController implements I_ActionController {
             T_ActionCNode_Required |
             T_ActionTip_Required |
             T_ActionCNodeProps_Required,
-        options?: T_options
     ) {
         let action = {} as T_ActionCNode | T_ActionTip | T_ActionCNodeProps;
 

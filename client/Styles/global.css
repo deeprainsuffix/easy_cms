@@ -41,6 +41,7 @@
     --CNodeSticker-border: #0ea5e9;
     --CNodeSticker-tool: #0ea5e9;
     --toast_dom_info: #6ee7b7;
+    --dropTargetTip: #22c55e;
   }
 
   .dark {
@@ -80,6 +81,7 @@
     --CNodeSticker-border: #0ea5e9;
     --CNodeSticker-tool: #0ea5e9;
     --toast_dom_info: #6ee7b7;
+    --dropTargetTip: #22c55e;
   }
 }
 

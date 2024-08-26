@@ -1,7 +1,7 @@
 import { CNode, lifeCycle_afterDomMounted } from './CNode/index'
 import { testRender } from '../../client'
 import { CNode_collection } from './CNode/CNode.collection';
-import type { I_CNode_JSON, T_ComponentName } from './CNode/index.type';
+import type { I_CNode_JSON, T_CNode_Concrete, T_ComponentName } from './CNode/index.type';
 import {
   T_ActionCNode,
   ActionCNode_type_add, ActionCNode_type_copy, ActionCNode_type_delete, ActionCNode_type_move, ActionCNode_type_re_add,
@@ -9,7 +9,9 @@ import {
 import {
   T_ActionTip,
   ActionTip_type_select, ActionTip_type_select_none,
-  ActionTip_type_select_update
+  ActionTip_type_select_update,
+  ActionTip_type_dropTarget_update,
+  ActionTip_type_dropTarget_none
 } from '../ActionController/ActionTip';
 import {
   T_ActionCNodeProps,
@@ -87,7 +89,7 @@ class CNodeTreeBase {
    * @param cNodeA 
    * @param cNodeB 
    */
-  protected get_isAncestor(cNodeA: CNode, cNodeB: CNode) {
+  protected AisAncestorB(cNodeA: CNode, cNodeB: CNode) {
     let topCNode: CNode | null = cNodeB;
     while (topCNode) {
       if (topCNode === cNodeA) {
@@ -120,6 +122,7 @@ class CNodeTree extends CNodeTreeBase {
   root: Root_CNode; // 节点数的根节点，保证存在
   renderCNodes: CNode[]; // 待render的cNode
   selectedCNode: CNode | null; // 当前选中的节点
+  dropTargetCNode: CNode | null; // 即将被drop的节点
   // selectedCNodeChangeCallbacks: Function[]; // todo selectedCNode更换时触发，这里后续可以再优化，目前直接使用浏览器事件机制，简单
 
   constructor() {
@@ -127,6 +130,7 @@ class CNodeTree extends CNodeTreeBase {
     this.root = {} as Root_CNode;
     this.renderCNodes = [];
     this.selectedCNode = null;
+    this.dropTargetCNode = null;
 
     // this.selectedCNodeChangeCallbacks = [];
 
@@ -177,7 +181,7 @@ class CNodeTree extends CNodeTreeBase {
         const cNode = CNodeTree.getCNode(id),
           // parentFrom = CNodeTree.getCNode(moveFromParentId),
           parentTo = CNodeTree.getCNode(moveToParentId);
-        if (this.get_isAncestor(cNode, parentTo)) {
+        if (this.AisAncestorB(cNode, parentTo)) {
           return
         }
 
@@ -201,7 +205,7 @@ class CNodeTree extends CNodeTreeBase {
 
   public receiveActionTip(action: T_ActionTip) {
     switch (action.type) {
-      case ActionTip_type_select:
+      case ActionTip_type_select: {
         const { id } = action;
         this.selectedCNode = CNodeTree.getCNode(id);
         this.renderCNodes.push(this.selectedCNode);
@@ -211,17 +215,41 @@ class CNodeTree extends CNodeTreeBase {
         // todo 不过后续在render函数逻辑上可以顺成上述过程
         window.dispatchEvent(new CustomEvent(custom_eType_selectedCNodeChange, { detail: { selectedCNode: this.selectedCNode } }));
         this.render();
+      }
         break;
-      case ActionTip_type_select_none:
+      case ActionTip_type_select_none: {
         if (this.selectedCNode) {
           this.renderCNodes.push(this.selectedCNode);
         }
         this.selectedCNode = null;
         window.dispatchEvent(new CustomEvent(custom_eType_selectedCNodeChange, { detail: { selectedCNode: this.selectedCNode } }));
         this.render();
+      }
         break;
-      case ActionTip_type_select_update:
+      case ActionTip_type_select_update: {
         window.dispatchEvent(new CustomEvent(custom_eType_selectedCNodeUpdate, { detail: { selectedCNode: this.selectedCNode } }));
+      }
+        break;
+      case ActionTip_type_dropTarget_update: {
+        const { id } = action;
+        if (this.dropTargetCNode) {
+          this.dropTargetCNode.isDropTarget = false;
+          this.renderCNodes.push(this.dropTargetCNode);
+        }
+        this.dropTargetCNode = CNodeTree.getCNode(id);
+        this.dropTargetCNode.isDropTarget = true;
+        this.renderCNodes.push(this.dropTargetCNode);
+        this.render();
+      }
+        break;
+      case ActionTip_type_dropTarget_none: {
+        if (this.dropTargetCNode) {
+          this.dropTargetCNode.isDropTarget = false;
+          this.renderCNodes.push(this.dropTargetCNode);
+          this.dropTargetCNode = null;
+          this.render();
+        }
+      }
         break;
     }
   }
