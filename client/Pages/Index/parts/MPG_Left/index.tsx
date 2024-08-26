@@ -9,9 +9,9 @@ import {
 import { CNodeDragLeft } from '@/client/Components/CNodeDragLeft';
 const Todo = () => (
     <div>
-        1
+        todo
     </div>
-); // todo
+);
 
 const panel_CNodeDragLeft = 'CNodeDragLeft';
 const panel_CNodeTreeLeft = 'CNodeTreeLeft';

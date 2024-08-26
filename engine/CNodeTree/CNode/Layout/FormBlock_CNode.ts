@@ -35,6 +35,7 @@ export class FormBlock_CNode extends Category_Layout implements I_FormBlock_CNod
             [FormBlock_CNode_props_key.widthRadio_prev]: '100%',
             [FormBlock_CNode_props_key.columnNum]: '2',
             [FormBlock_CNode_props_key.columnNum_prev]: '2',
+            [FormBlock_CNode_props_key.regionName]: `基本信息-${id}`
         };
         this.cssStyle = {};
 

@@ -8,6 +8,7 @@ export const FormBlock_CNode_props_key = {
     widthRadio_prev: 'widthRadio_prev',
     columnNum: 'columnNum',
     columnNum_prev: 'columnNum_prev',
+    regionName: 'regionName',
 } as const;
 
 // props中需要使用固定字段的select的直接在meta把value和text这里定义好就行
@@ -47,4 +48,5 @@ export interface I_FormBlock_cNode_props {
     [FormBlock_CNode_props_key.widthRadio_prev]: typeof FormBlock_CNode_props_select['widthRadio'][number]['value'];
     [FormBlock_CNode_props_key.columnNum]: typeof FormBlock_CNode_props_select['columnNum'][number]['value'];
     [FormBlock_CNode_props_key.columnNum_prev]: typeof FormBlock_CNode_props_select['columnNum'][number]['value'];
+    [FormBlock_CNode_props_key.regionName]: string;
 };

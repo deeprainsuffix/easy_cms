@@ -9,7 +9,7 @@ interface I_Root extends React.HTMLAttributes<HTMLDivElement> {
 
 export function Root({ props, className, children }: I_Root) {
     return (
-        <div className={cn(`w-full h-full flex`
+        <div className={cn(`w-full h-full overflow-y-auto flex flex-wrap`
             , className)}>
             {children}
         </div>

@@ -166,6 +166,7 @@ export class Complier implements I_Complier {
         return this.calculateProps([
             [FormBlock_CNode_props_key.widthRadio, props[FormBlock_CNode_props_key.widthRadio]],
             [FormBlock_CNode_props_key.columnNum, props[FormBlock_CNode_props_key.columnNum]],
+            [FormBlock_CNode_props_key.regionName, props[FormBlock_CNode_props_key.regionName]],
         ])
     }
 

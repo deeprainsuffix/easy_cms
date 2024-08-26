@@ -20,10 +20,10 @@ export function Root_CNode_UI(props: I_Root_CNode_UI) {
             });
         };
         const scrollBox = document.querySelector('#scrollBox') as HTMLDivElement;
-        scrollBox.addEventListener('scroll', handleScroll, false);
+        scrollBox.addEventListener('scroll', handleScroll, { passive: true });
 
         return () => {
-            scrollBox.removeEventListener('scroll', handleScroll, false);
+            scrollBox.removeEventListener('scroll', handleScroll);
         }
     }, []);
 

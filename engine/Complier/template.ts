@@ -81,7 +81,7 @@ function Combine({ isRegionHeader, isRegionSideMenuBar }: I_Combine) {
     return (
         <div className='w-full h-full flex flex-col flex-nowrap'>
             {isRegionHeader && <RegionHeader />}
-            <div className='w-full h-full basis-full flex-shrink flex flex-nowrap'>
+            <div className='w-full h-0 flex-grow flex-shrink flex flex-nowrap'>
                 {isRegionSideMenuBar && <RegionSideMenuBar />}
                 <FormBody />
             </div>

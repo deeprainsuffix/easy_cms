@@ -8,23 +8,31 @@ interface I_FormBlock extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export function FormBlock({ props, className, children }: I_FormBlock) {
-    const widthRadio = props.widthRadio,
-        columnNum = +props.columnNum;
+    const
+        columnNum = +props.columnNum,
+        { widthRadio, regionName } = props;
 
-    const grid = children ? {
+    if (!children) {
+        return null
+    }
+
+    const grid = {
         display: 'grid',
         gridTemplateColumns: `repeat(${columnNum}, ${Math.floor(1 / +columnNum * 100)}%)`,
         gridAutoRows: 'minmax(60px, auto)',
-    } : {};
+    };
 
     return (
-        <div className={cn(``
-            , className)}
-            style={{
-                width: widthRadio,
-                ...grid,
-            }}>
-            {children}
-        </div >
+        <div className='w-full basis-full'>
+            <div className='h-6 leading-6 px-2 mt-2'>{regionName}</div>
+            <div className={cn(``
+                , className)}
+                style={{
+                    width: widthRadio,
+                    ...grid,
+                }}>
+                {children}
+            </div >
+        </div>
     )
 }

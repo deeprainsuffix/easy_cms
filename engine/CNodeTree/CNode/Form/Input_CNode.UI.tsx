@@ -20,7 +20,7 @@ export function Input_CNode_UI({ cNode }: I_Input_CNode_UI) {
     return (
         <div
             id={cNode.id} ref={cNode.ref}
-            className='w-full max-w-[300px] bg-s200 relative'
+            className='max-w-[300px] bg-s200 relative'
             onClick={onClick}
             onDragEnter={onDragEnter} onDragOver={onDragOver} onDrop={onDrop}
             onDragStart={onDragStart} draggable onDragEnd={onDragEnd}
