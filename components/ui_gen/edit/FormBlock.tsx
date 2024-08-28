@@ -1,13 +1,14 @@
 import React from 'react';
 import { cn } from "@/lib/utils";
 import type { I_FormBlock_cNode_props, FormBlock_CNode_props_key } from '@/engine/CNodeTree/CNode/Layout/FormBlock_CNode.meta';
+import type { T_CNode_Concrete } from '@/engine/CNodeTree/CNode/index.type';
 
 interface I_FormBlock extends React.HTMLAttributes<HTMLDivElement> {
     props: Omit<I_FormBlock_cNode_props, typeof FormBlock_CNode_props_key['widthRadio_prev'] | typeof FormBlock_CNode_props_key['columnNum_prev']>;
-    // children: React.JSX.Element[] | null;
+    cssStyle: T_CNode_Concrete['cssStyle'];
 }
 
-export function FormBlock({ props, className, children }: I_FormBlock) {
+export function FormBlock({ props, cssStyle, className, children }: I_FormBlock) {
     const
         columnNum = +props.columnNum,
         { widthRadio, regionName } = props;
@@ -23,7 +24,9 @@ export function FormBlock({ props, className, children }: I_FormBlock) {
     };
 
     return (
-        <div className='w-full basis-full'>
+        <div
+            style={{ ...cssStyle }}
+            className='w-full basis-full'>
             <div className='h-6 leading-6 px-2 mt-2'>{regionName}</div>
             <div className={cn(``
                 , className)}

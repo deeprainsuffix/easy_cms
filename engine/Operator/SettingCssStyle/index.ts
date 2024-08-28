@@ -126,7 +126,6 @@ class SettingCssStyle extends DependOnSelectedCNode {
         }
 
         return `${this.select_id}{\n${(result.join(''))}}`
-        // return `${this.select_id}{\n${(result.join('') || ruleDefault)}}`
     }
 
     // 只寻找selector_id_target的第一层级的css规则

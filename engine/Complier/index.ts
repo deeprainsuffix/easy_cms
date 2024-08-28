@@ -125,7 +125,7 @@ export class Complier implements I_Complier {
         this.result.push(`const Page = () => { return (<Combine ${regionGenerated.join(' ')} />)};\n`);
     }
 
-    private distribute(componentName: T_ComponentName, props: I_CNode_props): string {
+    private distribute_props(componentName: T_ComponentName, props: I_CNode_props): string {
         let result = '';
         switch (componentName) {
             case Root_cNode_meta['componentName']:
@@ -194,6 +194,15 @@ export class Complier implements I_Complier {
         ])
     }
 
+    private gen_cssStyle(cssStyle: I_CNode_JSON['cssStyle']) {
+        const result = [];
+        for (const [rule, value] of Object.entries(cssStyle)) {
+            result.push(rule, ':"', value, '",');
+        }
+
+        return ` cssStyle={{${result.join('')}}}`
+    }
+
     private check() {
         if (!this.cNodeTree_JSON) {
             throw '未调用set_cNodeTree_JSON';
@@ -211,7 +220,13 @@ export class Complier implements I_Complier {
             const { componentName } = json;
             const templateItem = template_CNode[componentName];
             parsed_import.add(templateItem.module_import);
-            parsed_body.push(templateItem['prefix'], ' ', this.distribute(componentName, json.props), templateItem['prefix_close'], '\n');
+            parsed_body.push(
+                templateItem['prefix'], ' ',
+                this.distribute_props(componentName, json.props),
+                this.gen_cssStyle(json.cssStyle),
+                templateItem['prefix_close'],
+                '\n'
+            );
             for (let child of json.children) {
                 parseOne(child);
             }
