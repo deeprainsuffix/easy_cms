@@ -21,7 +21,7 @@ export function HeaderRightBtns() {
 
     return (
         <div className='flex items-center'>
-            <Button disabled={ban_preview} onClick={handle_preview}>预览</Button>
+            {/* <Button disabled={ban_preview} onClick={handle_preview}>预览</Button> */}
             <CodeGen_UI />
         </div>
     )

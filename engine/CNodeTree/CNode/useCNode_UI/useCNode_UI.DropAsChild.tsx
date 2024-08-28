@@ -1,16 +1,26 @@
 import { actionController } from '@/engine/ActionController';
 import { ActionCNode_type_add, ActionCNode_type_move } from '@/engine/ActionController/ActionCNode';
-import { DragEventHandler, useCallback } from 'react';
-import type { T_CNode_Concrete, T_ComponentName } from '../index.type';
+import { DragEventHandler, useCallback, useRef } from 'react';
+import type { T_CNode_Concrete, T_componentCategory, T_ComponentName } from '../index.type';
 import { ActionTip_type_dropTarget_none, ActionTip_type_dropTarget_update } from '@/engine/ActionController/ActionTip';
+import { cNodeTree } from '../..';
 
-export function useCNode_UI_DropAsChild(cNode: T_CNode_Concrete) {
+export type T_condition_dropAsChild = (componentName: T_ComponentName | null, componentCategory: T_componentCategory | null) => boolean;
+export function useCNode_UI_DropAsChild(cNode: T_CNode_Concrete, condition_drop?: T_condition_dropAsChild) {
+    const canDrop = useRef({
+        value: true,
+        checked: false,
+    });
     const onDragEnter = useCallback<DragEventHandler>((e) => {
         e.stopPropagation();
         e.preventDefault();
+        canDrop.current.value = true;
+        canDrop.current.checked = false;
     }, []);
 
     const onDragOver = useCallback<DragEventHandler>((e) => {
+        e.stopPropagation();
+
         if (!cNode.isDropTarget) {
             actionController.dispatchAction({
                 type: ActionTip_type_dropTarget_update,
@@ -18,8 +28,13 @@ export function useCNode_UI_DropAsChild(cNode: T_CNode_Concrete) {
             });
         }
 
-        e.stopPropagation();
-        e.preventDefault();
+        if (!canDrop.current.checked && condition_drop && !condition_drop(cNodeTree.drag_componentName, cNodeTree.drag_componentCategory)) {
+            canDrop.current.value = false;
+            canDrop.current.checked = true;
+        }
+        if (canDrop.current.value) {
+            e.preventDefault();
+        }
     }, []);
 
     const onDrop = useCallback<DragEventHandler>((e) => {
@@ -32,7 +47,7 @@ export function useCNode_UI_DropAsChild(cNode: T_CNode_Concrete) {
                 const componentName = e.dataTransfer.getData('componentName') as T_ComponentName;
                 actionController.dispatchAction({
                     type,
-                    componentName: componentName,
+                    componentName,
                     parentId: cNode.id,
                     pos: cNode.children.length,
                 });
@@ -62,5 +77,5 @@ export function useCNode_UI_DropAsChild(cNode: T_CNode_Concrete) {
         });
     }, []);
 
-    return { onDragEnter, onDragOver, onDrop }
+    return { onDragEnter, onDragOver, onDrop, canDrop }
 }

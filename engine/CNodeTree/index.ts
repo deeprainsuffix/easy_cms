@@ -1,7 +1,7 @@
 import { CNode, lifeCycle_afterDomMounted } from './CNode/index'
 import { testRender } from '../../client'
 import { CNode_collection } from './CNode/CNode.collection';
-import type { I_CNode_JSON, T_CNode_Concrete, T_ComponentName } from './CNode/index.type';
+import type { I_CNode_JSON, T_CNode_Concrete, T_componentCategory, T_ComponentName } from './CNode/index.type';
 import {
   T_ActionCNode,
   ActionCNode_type_add, ActionCNode_type_copy, ActionCNode_type_delete, ActionCNode_type_move, ActionCNode_type_re_add,
@@ -10,8 +10,7 @@ import {
   T_ActionTip,
   ActionTip_type_select, ActionTip_type_select_none,
   ActionTip_type_select_update,
-  ActionTip_type_dropTarget_update,
-  ActionTip_type_dropTarget_none
+  ActionTip_type_drag_start, ActionTip_type_dropTarget_update, ActionTip_type_dropTarget_none,
 } from '../ActionController/ActionTip';
 import {
   T_ActionCNodeProps,
@@ -122,7 +121,9 @@ class CNodeTree extends CNodeTreeBase {
 
   root: Root_CNode; // 节点数的根节点，保证存在
   renderCNodes: CNode[]; // 待render的cNode
-  dropTargetCNode: CNode | null; // 即将被drop的节点
+  drag_componentName: T_ComponentName | null;
+  drag_componentCategory: T_componentCategory | null;
+  drop_target_cNode: CNode | null; // 即将被drop的节点
   selectedCNode: CNode | null; // 当前选中的节点
   // selectedCNodeChangeCallbacks: Function[]; // todo selectedCNode更换时触发，这里后续可以再优化，目前直接使用浏览器事件机制，简单
 
@@ -130,7 +131,9 @@ class CNodeTree extends CNodeTreeBase {
     super();
     this.root = {} as Root_CNode;
     this.renderCNodes = [];
-    this.dropTargetCNode = null;
+    this.drag_componentName = null;
+    this.drag_componentCategory = null;
+    this.drop_target_cNode = null;
     this.selectedCNode = null;
 
     // this.selectedCNodeChangeCallbacks = [];
@@ -233,23 +236,31 @@ class CNodeTree extends CNodeTreeBase {
         window.dispatchEvent(new CustomEvent(custom_eType_selectedCNodeUpdate, { detail: { selectedCNode: this.selectedCNode } }));
       }
         break;
+      case ActionTip_type_drag_start: {
+        const { componentName, componentCategory } = action;
+        this.drag_componentName = componentName;
+        this.drag_componentCategory = componentCategory;
+      }
+        break;
       case ActionTip_type_dropTarget_update: {
         const { id } = action;
-        if (this.dropTargetCNode) {
-          this.dropTargetCNode.isDropTarget = false;
-          this.renderCNodes.push(this.dropTargetCNode);
+        if (this.drop_target_cNode) {
+          this.drop_target_cNode.isDropTarget = false;
+          this.renderCNodes.push(this.drop_target_cNode);
         }
-        this.dropTargetCNode = CNodeTree.getCNode(id);
-        this.dropTargetCNode.isDropTarget = true;
-        this.renderCNodes.push(this.dropTargetCNode);
+        this.drop_target_cNode = CNodeTree.getCNode(id);
+        this.drop_target_cNode.isDropTarget = true;
+        this.renderCNodes.push(this.drop_target_cNode);
         this.render();
       }
         break;
       case ActionTip_type_dropTarget_none: {
-        if (this.dropTargetCNode) {
-          this.dropTargetCNode.isDropTarget = false;
-          this.renderCNodes.push(this.dropTargetCNode);
-          this.dropTargetCNode = null;
+        this.drag_componentName = null;
+        this.drag_componentCategory = null;
+        if (this.drop_target_cNode) {
+          this.drop_target_cNode.isDropTarget = false;
+          this.renderCNodes.push(this.drop_target_cNode);
+          this.drop_target_cNode = null;
           this.render();
         }
       }

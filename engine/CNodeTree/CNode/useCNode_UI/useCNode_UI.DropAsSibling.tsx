@@ -1,22 +1,28 @@
 import { actionController } from '@/engine/ActionController';
 import { ActionCNode_type_add, ActionCNode_type_move } from '@/engine/ActionController/ActionCNode';
 import { DragEventHandler, useCallback, useRef } from 'react';
-import type { T_CNode_Concrete, T_ComponentName } from '../index.type';
+import type { T_CNode_Concrete, T_componentCategory, T_ComponentName } from '../index.type';
 import { ActionTip_type_dropTarget_none, ActionTip_type_dropTarget_update } from '@/engine/ActionController/ActionTip';
+import { cNodeTree } from '../..'; // todo 其实CNodeTree确实需要承接CNode间通信的功能，并且在之前的实现中已经用到了
 
-export function useCNode_UI_DropAsSibling(cNode: T_CNode_Concrete) {
+export type T_condition_dropAsSibling = (componentName: T_ComponentName | null, componentCategory: T_componentCategory | null) => boolean;
+export function useCNode_UI_DropAsSibling(cNode: T_CNode_Concrete, condition_drop?: T_condition_dropAsSibling) {
     const rectRef = useRef<DOMRect>();
-    const dropLeftRef = useRef<boolean>(true); // isDropIn = false时使用
-
+    const canDrop = useRef({
+        value: true,
+        checked: false,
+    });
     const onDragEnter = useCallback<DragEventHandler>((e) => {
         e.stopPropagation();
         e.preventDefault();
         rectRef.current = e.currentTarget.getBoundingClientRect();
+        canDrop.current.value = true;
+        canDrop.current.checked = false;
     }, []);
 
+    const dropLeftRef = useRef<boolean>(true); // 判断是落在左边还是右边
     const onDragOver = useCallback<DragEventHandler>((e) => {
         e.stopPropagation();
-        e.preventDefault();
 
         const { clientX, clientY } = e;
         const { height, width, left, bottom } = rectRef.current!;
@@ -27,6 +33,14 @@ export function useCNode_UI_DropAsSibling(cNode: T_CNode_Concrete) {
                 type: ActionTip_type_dropTarget_update,
                 id: cNode.id,
             });
+        }
+
+        if (!canDrop.current.checked && condition_drop && !condition_drop(cNodeTree.drag_componentName, cNodeTree.drag_componentCategory)) {
+            canDrop.current.value = false;
+            canDrop.current.checked = true;
+        }
+        if (canDrop.current.value) {
+            e.preventDefault();
         }
     }, []);
 
@@ -67,5 +81,5 @@ export function useCNode_UI_DropAsSibling(cNode: T_CNode_Concrete) {
         });
     }, []);
 
-    return { onDragEnter, onDragOver, onDrop, dropLeftRef }
+    return { onDragEnter, onDragOver, onDrop, canDrop, dropLeftRef }
 }

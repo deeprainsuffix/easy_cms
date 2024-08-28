@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import type { Root_CNode } from './Root_CNode';
-import { useCNode_UI_DropAsChild } from '../useCNode_UI/useCNode_UI.DropAsChild';
+import { T_condition_dropAsChild, useCNode_UI_DropAsChild } from '../useCNode_UI/useCNode_UI.DropAsChild';
 import { WrapperDropAsChild } from '../useCNode_UI/Wrapper.DropAsChild';
 import { useCNode_UI_Mouse } from '../useCNode_UI/useCNode_UI.Mouse';
 import { actionController } from '@/engine/ActionController';
@@ -28,7 +28,14 @@ export function Root_CNode_UI({ cNode, children }: I_Root_CNode_UI) {
     }, []);
 
     const { onClick } = useCNode_UI_Mouse(cNode);
-    const { onDragEnter, onDragOver, onDrop } = useCNode_UI_DropAsChild(cNode);
+    const condition_drop = useCallback<T_condition_dropAsChild>((componentName, componentCategory) => {
+        if (componentCategory === 'layout') {
+            return true
+        }
+
+        return false
+    }, []);
+    const { onDragEnter, onDragOver, onDrop, canDrop } = useCNode_UI_DropAsChild(cNode, condition_drop);
 
     return (
         <div
@@ -41,7 +48,7 @@ export function Root_CNode_UI({ cNode, children }: I_Root_CNode_UI) {
             <div id='scrollBox' className='h-full overflow-y-auto'>
                 {children}
             </div>
-            <WrapperDropAsChild isDropTarget={cNode.isDropTarget} />
+            <WrapperDropAsChild isDropTarget={cNode.isDropTarget} canDrop={canDrop.current.value} />
         </div>
     )
 }

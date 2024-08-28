@@ -82,6 +82,7 @@ module.exports = {
         // }
         dropTargetTip: {
           DEFAULT: "var(--dropTargetTip)",
+          ban: "var(dropTargetTip-ban)",
         }
       },
       borderRadius: {

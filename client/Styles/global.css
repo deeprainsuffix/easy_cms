@@ -42,6 +42,7 @@
     --CNodeSticker-tool: #0ea5e9;
     --toast_dom_info: #6ee7b7;
     --dropTargetTip: #22c55e;
+    --dropTargetTip-ban: #dc2626;
   }
 
   .dark {
@@ -82,6 +83,7 @@
     --CNodeSticker-tool: #0ea5e9;
     --toast_dom_info: #6ee7b7;
     --dropTargetTip: #22c55e;
+    --dropTargetTip-ban: #dc2626;
   }
 }
 

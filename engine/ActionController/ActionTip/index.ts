@@ -1,3 +1,5 @@
+import type { T_componentCategory, T_ComponentName } from "@/engine/CNodeTree/CNode/index.type";
+
 /**
  * 选中节点
  */
@@ -48,6 +50,23 @@ export class ActionTip_select_update implements I_ActionTip_select_update {
     }
 }
 
+// 开始drag
+export const ActionTip_type_drag_start = 'drag_start';
+export interface I_ActionTip_drag_start {
+    type: typeof ActionTip_type_drag_start;
+    componentName: T_ComponentName;
+    componentCategory: T_componentCategory;
+}
+export class ActionTip_drag_start implements I_ActionTip_drag_start {
+    type: I_ActionTip_drag_start['type'];
+    constructor(
+        public componentName: I_ActionTip_drag_start['componentName'],
+        public componentCategory: I_ActionTip_drag_start['componentCategory'],
+    ) {
+        this.type = ActionTip_type_drag_start;
+    }
+}
+
 /**
  * 即将出发drop的节点提示
  */
@@ -87,13 +106,13 @@ export class ActionTip_dropTarget_none implements I_ActionTip_dropTarget_none {
 export type T_ActionTip_Required =
     I_ActionTip_select | I_ActionTip_select_none |
     I_ActionTip_select_update |
-    I_ActionTip_dropTarget_update | I_ActionTip_dropTarget_none
+    I_ActionTip_drag_start | I_ActionTip_dropTarget_update | I_ActionTip_dropTarget_none
     ;
 
 export type T_ActionTip =
     ActionTip_select | ActionTip_select_none |
     ActionTip_select_update |
-    ActionTip_dropTarget_update | ActionTip_dropTarget_none
+    I_ActionTip_drag_start | ActionTip_dropTarget_update | ActionTip_dropTarget_none
     ;
 
 /**
@@ -104,5 +123,5 @@ export type T_ActionTip =
 export const ActionTip_collection = {
     [ActionTip_type_select]: ActionTip_select, [ActionTip_type_select_none]: ActionTip_select_none,
     [ActionTip_type_select_update]: ActionTip_select_update,
-    [ActionTip_type_dropTarget_update]: ActionTip_dropTarget_update, [ActionTip_type_dropTarget_none]: ActionTip_dropTarget_none,
+    [ActionTip_type_drag_start]: ActionTip_drag_start, [ActionTip_type_dropTarget_update]: ActionTip_dropTarget_update, [ActionTip_type_dropTarget_none]: ActionTip_dropTarget_none,
 }
