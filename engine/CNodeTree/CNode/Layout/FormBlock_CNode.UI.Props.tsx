@@ -22,7 +22,7 @@ export function FormBlock_CNode_UI_Props({ cNode }: I_FormBlock_CNode_UI_Props) 
         <div className='flex flex-col'>
             <div className='basis-[50px] flex items-center'>
                 <div className='grow-0 shrink-0 basis-20 flex items-center'>
-                    字段key
+                    表单块
                 </div>
                 <Input defaultValue={regionName} onChange={onChange_regionName} />
             </div>

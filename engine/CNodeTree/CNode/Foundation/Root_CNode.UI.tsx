@@ -11,8 +11,8 @@ interface I_Root_CNode_UI {
     children: React.ReactNode[];
 }
 
-export function Root_CNode_UI(props: I_Root_CNode_UI) {
-    const { cNode, children } = props;
+export function Root_CNode_UI({ cNode, children }: I_Root_CNode_UI) {
+    const { cssStyle } = cNode;
     useEffect(() => {
         const handleScroll = () => {
             actionController.dispatchAction({
@@ -33,6 +33,7 @@ export function Root_CNode_UI(props: I_Root_CNode_UI) {
     return (
         <div
             id={cNode.id} ref={cNode.ref}
+            style={{ ...cssStyle }}
             className='h-full bg-s200 relative'
             onClick={onClick}
             onDragEnter={onDragEnter} onDragOver={onDragOver} onDrop={onDrop}

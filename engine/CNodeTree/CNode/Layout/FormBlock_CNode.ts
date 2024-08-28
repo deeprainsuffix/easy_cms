@@ -18,6 +18,7 @@ export class FormBlock_CNode extends Category_Layout implements I_FormBlock_CNod
     title: I_FormBlock_CNode['title'];
     props: I_FormBlock_CNode['props'];
     cssStyle: I_FormBlock_CNode['cssStyle'];
+    cssStyle_default: I_FormBlock_CNode['cssStyle_default'];
 
     constructor(
         id: string, parent: CNode | null, pos: number, children: (CNode | null)[],
@@ -38,6 +39,7 @@ export class FormBlock_CNode extends Category_Layout implements I_FormBlock_CNod
             [FormBlock_CNode_props_key.regionName]: `基本信息-${id}`
         };
         this.cssStyle = {};
+        this.cssStyle_default = { ...this.cssStyle };
 
         this.lifeCycleRegister('afterDomUpdated', () => {
             if (this.props['widthRadio_prev'] !== this.props['widthRadio']) {

@@ -22,6 +22,7 @@ import { deepClone } from '@/lib/utils';
 import { idGenerator } from '../IdGenerator';
 import { deepClone_forHash, digest_cNode_hashSource, type T_cNode_hashSource } from '../lib/utils';
 import type { Root_CNode } from './CNode/Foundation/Root_CNode';
+import { ActionCNodeCssStyle_type_update, T_ActionCNodeCssStyle } from '../ActionController/ActionCNodeCssStyle';
 
 class CNodeTreeBase {
   constructor() {
@@ -121,16 +122,16 @@ class CNodeTree extends CNodeTreeBase {
 
   root: Root_CNode; // 节点数的根节点，保证存在
   renderCNodes: CNode[]; // 待render的cNode
-  selectedCNode: CNode | null; // 当前选中的节点
   dropTargetCNode: CNode | null; // 即将被drop的节点
+  selectedCNode: CNode | null; // 当前选中的节点
   // selectedCNodeChangeCallbacks: Function[]; // todo selectedCNode更换时触发，这里后续可以再优化，目前直接使用浏览器事件机制，简单
 
   constructor() {
     super();
     this.root = {} as Root_CNode;
     this.renderCNodes = [];
-    this.selectedCNode = null;
     this.dropTargetCNode = null;
+    this.selectedCNode = null;
 
     // this.selectedCNodeChangeCallbacks = [];
 
@@ -207,23 +208,25 @@ class CNodeTree extends CNodeTreeBase {
     switch (action.type) {
       case ActionTip_type_select: {
         const { id } = action;
-        this.selectedCNode = CNodeTree.getCNode(id);
+        const curr_selectedCNode = CNodeTree.getCNode(id);
+        if (this.selectedCNode && this.selectedCNode.id === curr_selectedCNode.id) {
+          return
+        }
+        this.selectedCNode = curr_selectedCNode;
         this.renderCNodes.push(this.selectedCNode);
+        this.render();
+
         // todo 这里直接用浏览器的事件机制，方便
         // 虽然这里的数据更新逻辑和视图更新逻辑没有分开，由各自组件进行 dataUpdate1 -> viewRender1 -> dataUpdate2 -> viewRender2 -> ...
         // 但，react会将其改为 dataUpdate1 -> dataUpdate2 => ... -> viewRender1 -> viewRender2 -> ...
         // todo 不过后续在render函数逻辑上可以顺成上述过程
         window.dispatchEvent(new CustomEvent(custom_eType_selectedCNodeChange, { detail: { selectedCNode: this.selectedCNode } }));
-        this.render();
       }
         break;
       case ActionTip_type_select_none: {
-        if (this.selectedCNode) {
-          this.renderCNodes.push(this.selectedCNode);
-        }
         this.selectedCNode = null;
-        window.dispatchEvent(new CustomEvent(custom_eType_selectedCNodeChange, { detail: { selectedCNode: this.selectedCNode } }));
         this.render();
+        window.dispatchEvent(new CustomEvent(custom_eType_selectedCNodeChange, { detail: { selectedCNode: this.selectedCNode } }));
       }
         break;
       case ActionTip_type_select_update: {
@@ -260,6 +263,19 @@ class CNodeTree extends CNodeTreeBase {
         const { id, prop, value } = action;
         const targetNode = CNodeTree.getCNode(id);
         targetNode.props[prop] = value;
+        this.renderCNodes.push(targetNode);
+        break;
+    }
+
+    this.render();
+  }
+
+  public receiveActionCNodeCssStyle(action: T_ActionCNodeCssStyle) {
+    switch (action.type) {
+      case ActionCNodeCssStyle_type_update:
+        const { id, cssStyle } = action;
+        const targetNode = CNodeTree.getCNode(id);
+        targetNode.cssStyle = cssStyle;
         this.renderCNodes.push(targetNode);
         break;
     }

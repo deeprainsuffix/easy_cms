@@ -16,6 +16,7 @@ export class Select_CNode extends Category_Form implements I_Select_CNode {
     title: I_Select_CNode['title'];
     props: I_Select_CNode['props'];
     cssStyle: I_Select_CNode['cssStyle'];
+    cssStyle_default: I_Select_CNode['cssStyle_default'];
 
     constructor(
         id: string, parent: CNode | null, pos: number, children: (CNode | null)[],
@@ -34,6 +35,7 @@ export class Select_CNode extends Category_Form implements I_Select_CNode {
             [Select_CNode_props_key.fieldPlaceholder]: '请选择',
         };
         this.cssStyle = {};
+        this.cssStyle_default = { ...this.cssStyle };
     }
 
     get CNode_UI() {

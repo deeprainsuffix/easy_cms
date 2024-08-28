@@ -1,4 +1,4 @@
-import type { I_CNode, I_CNode_cssStyle, I_CNode_props, T_componentCategory, T_ComponentName, T_CNode_Concrete } from './index.type'
+import type { I_CNode, I_CNode_Concrete } from './index.type'
 
 export const lifeCycle_afterDomMounted = 'afterDomMounted';
 export const lifeCycle_afterDomUpdated = 'afterDomUpdated';
@@ -11,11 +11,12 @@ export abstract class CNode implements I_CNode {
     private afterDomMounted: Function[]; // 在组件Mount之后执行，只执行一次，队列清空，清空工作交给TreePlanting进行
     private afterDomUpdated: Function[]; // 在组件更新之后执行，清空工作交给TreePlanting进行
 
-    abstract componentCategory: T_componentCategory;
-    abstract componentName: T_ComponentName;
-    abstract title: string;
-    abstract props: I_CNode_props;
-    abstract cssStyle: I_CNode_cssStyle;
+    abstract componentCategory: I_CNode_Concrete['componentCategory'];
+    abstract componentName: I_CNode_Concrete['componentName'];
+    abstract title: I_CNode_Concrete['title'];
+    abstract props: I_CNode_Concrete['props'];
+    abstract cssStyle: I_CNode_Concrete['cssStyle'];
+    abstract cssStyle_default: I_CNode_Concrete['cssStyle_default'];
 
     constructor(
         public id: string, public parent: CNode | null, public pos: number, public children: (CNode | null)[],

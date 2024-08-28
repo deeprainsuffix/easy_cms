@@ -16,6 +16,7 @@ export class FileUpload_CNode extends Category_Form implements I_FileUpload_CNod
     title: I_FileUpload_CNode['title'];
     props: I_FileUpload_CNode['props'];
     cssStyle: I_FileUpload_CNode['cssStyle'];
+    cssStyle_default: I_FileUpload_CNode['cssStyle_default'];
 
     constructor(
         id: string, parent: CNode | null, pos: number, children: (CNode | null)[],
@@ -34,6 +35,7 @@ export class FileUpload_CNode extends Category_Form implements I_FileUpload_CNod
             [FileUpload_CNode_props_key.fieldPlaceholder]: '选择文件',
         };
         this.cssStyle = {};
+        this.cssStyle_default = { ...this.cssStyle };
     }
 
     get CNode_UI() {

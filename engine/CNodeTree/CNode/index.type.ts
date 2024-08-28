@@ -42,8 +42,6 @@ export interface I_CNode_props {
     [index: string]: any;
 }; // 每个组件会设置自己的props，这个还需要吗？ todo
 
-export interface I_CNode_cssStyle extends CSSProperties { };
-
 export interface I_CNode {
     id: string; // cNode唯一id
     parent: CNode | null; // 父节点
@@ -53,6 +51,7 @@ export interface I_CNode {
     isDraggable: boolean; // 是否可拖拽
     isDroppable: boolean; // 是否可作为drop容器
     isDropTarget: boolean; // 作为即将被drop的节点 isDroppable=true
+    // isSelected: boolean; // 是否被选中
 
     ref: RefObject<HTMLDivElement> // 传递给ref，标记真实DOM，作为实例的具体属性
     render: any; // 组件刷新句柄，这个属性在react组件生成时添加，作为实例的具体属性
@@ -67,7 +66,9 @@ export interface I_CNode_Concrete extends I_CNode_Category {
     componentName: T_ComponentName; // 组件标识符
     title: string; // 组件名称
     props: I_CNode_props; // 属性
-    cssStyle: I_CNode_cssStyle; // 样式 todo
+    // cssStyle: [keyof CSSProperties, CSSProperties[keyof CSSProperties]][]; // 样式
+    cssStyle: CSSProperties; // 样式
+    cssStyle_default: CSSProperties; // 提供样式重置
     get CNode_UI(): FunctionComponent<any>; // 在画布中展示的UI
     get CNode_UI_Props(): FunctionComponent<any>; // 在SettingProps展示的props
 }

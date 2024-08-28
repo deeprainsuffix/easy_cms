@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { settingRight } from '.';
+import React, { useCallback, useEffect, useState } from 'react';
+import { settingRight, tab_SettingProps, tab_SettingCssStyle, type I_SettingRight } from '.';
 import { SettingProps_UI } from '../SettingProps/UI';
 import { SettingCssStyle_UI } from '../SettingCssStyle/UI';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -10,7 +10,10 @@ export function SettingRight_UI() {
         settingRight.render = () => setState(_ => _ + 1);
     }, []);
 
-    const { selectedCNode } = settingRight;
+    const { selectedCNode, tab } = settingRight;
+    const onChangeTab = useCallback((tab: I_SettingRight['tab']) => () => {
+        settingRight.changeTab(tab);
+    }, []);
 
     if (!selectedCNode) {
         return (
@@ -21,19 +24,20 @@ export function SettingRight_UI() {
     }
 
     return (
-        <div id='settingRight'>
+        <div id='settingRight' className='h-full'>
             <Tabs
-                defaultValue='SettingProps'
+                value={tab}
+                className='h-full flex flex-col'
             >
                 <TabsList
-                    className='w-full shadow-[0px_5px_2px_#94a3b8]'
+                    className='w-full shadow-[0px_5px_2px_#94a3b8] flex-grow-0 flex-shrink-0'
                 >
-                    <TabsTrigger className='flex-grow' value="SettingProps">属性</TabsTrigger>
-                    <TabsTrigger className='flex-grow' value="SettingCssStyle">样式</TabsTrigger>
+                    <TabsTrigger className='flex-grow' value={tab_SettingProps} onClick={onChangeTab(tab_SettingProps)}>属性</TabsTrigger>
+                    <TabsTrigger className='flex-grow' value={tab_SettingCssStyle} onClick={onChangeTab(tab_SettingCssStyle)}>样式</TabsTrigger>
                 </TabsList>
-                <div className='p-3'>
-                    <TabsContent value="SettingProps"><SettingProps_UI /></TabsContent>
-                    <TabsContent value="SettingCssStyle"><SettingCssStyle_UI /></TabsContent>
+                <div className='p-3 flex-1 h-0'>
+                    <TabsContent value={tab_SettingProps}><SettingProps_UI /></TabsContent>
+                    <TabsContent value={tab_SettingCssStyle}><SettingCssStyle_UI /></TabsContent>
                 </div>
             </Tabs>
         </div>

@@ -1,9 +1,9 @@
 import { type I_CNode_props } from "@/engine/CNodeTree/CNode/index.type";
 
 /**
- * 选中节点
+ * 更新节点某个属性值
  */
-export const ActionCNodeProps_type_update = 'update';
+export const ActionCNodeProps_type_update = 'props_update';
 export interface I_ActionCNodeProps_update {
     type: typeof ActionCNodeProps_type_update;
     id: string;

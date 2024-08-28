@@ -16,6 +16,7 @@ export class Input_CNode extends Category_Form implements I_Input_CNode {
     title: I_Input_CNode['title'];
     props: I_Input_CNode['props'];
     cssStyle: I_Input_CNode['cssStyle'];
+    cssStyle_default: I_Input_CNode['cssStyle_default'];
 
     constructor(
         id: string, parent: CNode | null, pos: number, children: (CNode | null)[],
@@ -34,6 +35,7 @@ export class Input_CNode extends Category_Form implements I_Input_CNode {
             [Input_CNode_props_key.fieldPlaceholder]: `${Input_cNode_meta.title}-${id}`,
         };
         this.cssStyle = {};
+        this.cssStyle_default = { ...this.cssStyle };
     }
 
     get CNode_UI() {

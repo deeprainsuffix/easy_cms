@@ -4,13 +4,16 @@ import { ActionTip_collection, T_ActionTip, T_ActionTip_Required } from "./Actio
 import { actionTip_Factory } from "./ActionTip/factory";
 import { ActionCNodeProps_collection, T_ActionCNodeProps, T_ActionCNodeProps_Required } from "./ActionCNodeProps";
 import { actionCNodeProps_Factory } from "./ActionCNodeProps/factory";
+import { ActionCNodeCssStyle_collection, T_ActionCNodeCssStyle, T_ActionCNodeCssStyle_Required } from "./ActionCNodeCssStyle";
+import { actionCNodeCssStyle_Factory } from "./ActionCNodeCssStyle/factory";
 import { cNodeTree } from "../CNodeTree";
 import { timeTravel } from "../TimeTravel";
 
 type T_actionRequired =
     T_ActionCNode_Required |
     T_ActionTip_Required |
-    T_ActionCNodeProps_Required
+    T_ActionCNodeProps_Required |
+    T_ActionCNodeCssStyle_Required
     ;
 interface I_ActionController {
 }
@@ -36,18 +39,17 @@ export class ActionController implements I_ActionController {
         cNodeTree.receiveActionCNodeProps(action);
     }
 
+    private transferActionCNodeCssStyle(action: T_ActionCNodeCssStyle) {
+        cNodeTree.receiveActionCNodeCssStyle(action);
+    }
+
     private notifyTimeTravel() {
         timeTravel.notify(actionCNode_Factory.getUndoStackSize(), actionCNode_Factory.getRedoStackSize());
     }
 
     // 除undo、redo，所有action入口
-    public dispatchAction(
-        actionRequired:
-            T_ActionCNode_Required |
-            T_ActionTip_Required |
-            T_ActionCNodeProps_Required,
-    ) {
-        let action = {} as T_ActionCNode | T_ActionTip | T_ActionCNodeProps;
+    public dispatchAction(actionRequired: T_actionRequired) {
+        let action = {} as T_ActionCNode | T_ActionTip | T_ActionCNodeProps | T_ActionCNodeCssStyle;
 
         if (isActionCNodeRequired(actionRequired)) {
             action = actionCNode_Factory.do(actionRequired);
@@ -58,6 +60,9 @@ export class ActionController implements I_ActionController {
         } else if (isActionCNodePropsRequired(actionRequired)) {
             action = actionCNodeProps_Factory.createActionCNodeProps(actionRequired);
             this.transferActionCNodeProps(action);
+        } else if (isActionCNodeCssStyleRequired(actionRequired)) {
+            action = actionCNodeCssStyle_Factory.createActionCNodeCssStyle(actionRequired);
+            this.transferActionCNodeCssStyle(action);
         }
 
         return
@@ -100,6 +105,14 @@ function isActionTipRequired(actionRequired: T_actionRequired): actionRequired i
 
 function isActionCNodePropsRequired(actionRequired: T_actionRequired): actionRequired is T_ActionCNodeProps_Required {
     if (actionRequired.type in ActionCNodeProps_collection) {
+        return true
+    }
+
+    return false
+}
+
+function isActionCNodeCssStyleRequired(actionRequired: T_actionRequired): actionRequired is T_ActionCNodeCssStyle_Required {
+    if (actionRequired.type in ActionCNodeCssStyle_collection) {
         return true
     }
 

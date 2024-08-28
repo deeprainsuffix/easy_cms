@@ -15,6 +15,7 @@ export class Root_CNode extends Category_Foundation implements I_Root_CNode {
     title: I_Root_CNode['title'];
     props: I_Root_CNode['props'];
     cssStyle: I_Root_CNode['cssStyle'];
+    cssStyle_default: I_Root_CNode['cssStyle_default'];
 
     constructor(
         id: string, parent: CNode | null, pos: number, children: (CNode | null)[],
@@ -29,6 +30,7 @@ export class Root_CNode extends Category_Foundation implements I_Root_CNode {
         this.title = Root_cNode_meta.title;
         this.props = {};
         this.cssStyle = {};
+        this.cssStyle_default = { ...this.cssStyle };
     }
 
     get CNode_UI() {

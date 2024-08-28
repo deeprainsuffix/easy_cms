@@ -11,7 +11,7 @@ interface I_FileUpload_CNode_UI {
 }
 
 export function FileUpload_CNode_UI({ cNode }: I_FileUpload_CNode_UI) {
-    const props = cNode.props;
+    const { props, cssStyle } = cNode;
 
     const { onClick } = useCNode_UI_Mouse(cNode, { enablePrevent: true });
     const { onDragEnter, onDragOver, onDrop, dropLeftRef } = useCNode_UI_DropAsSibling(cNode);
@@ -19,6 +19,7 @@ export function FileUpload_CNode_UI({ cNode }: I_FileUpload_CNode_UI) {
 
     return (
         <div id={cNode.id} ref={cNode.ref}
+            style={{ ...cssStyle }}
             className='max-w-[300px] bg-s200 relative'
             onClick={onClick}
             onDragEnter={onDragEnter} onDragOver={onDragOver} onDrop={onDrop}

@@ -11,9 +11,8 @@ interface I_FormBlock_CNode_UI {
     children: React.JSX.Element[];
 }
 
-export function FormBlock_CNode_UI(props: I_FormBlock_CNode_UI) {
-    const { cNode, children } = props;
-    const { props: { widthRadio, columnNum } } = cNode;
+export function FormBlock_CNode_UI({ cNode, children }: I_FormBlock_CNode_UI) {
+    const { props: { widthRadio, columnNum }, cssStyle } = cNode;
 
     const { onClick } = useCNode_UI_Mouse(cNode);
     const { onDragEnter, onDragOver, onDrop } = useCNode_UI_DropAsChild(cNode);
@@ -21,10 +20,10 @@ export function FormBlock_CNode_UI(props: I_FormBlock_CNode_UI) {
 
     return (
         <div id={cNode.id} ref={cNode.ref}
-            style={{ width: widthRadio, flexBasis: widthRadio }}
+            style={{ width: widthRadio, flexBasis: widthRadio, ...cssStyle }}
             className='my-[4px] first:mt-0 last:mb-0 relative'
             onClick={onClick}
-            onDragEnter={onDragEnter} onDragOver={onDragOver} onDrop={onDrop} 
+            onDragEnter={onDragEnter} onDragOver={onDragOver} onDrop={onDrop}
             onDragStart={onDragStart} draggable onDragEnd={onDragEnd}
         >
             <FormBlock children={children.length ? children : null} props={{ ...cNode.props }} />
