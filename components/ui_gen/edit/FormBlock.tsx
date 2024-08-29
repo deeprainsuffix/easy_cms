@@ -1,11 +1,11 @@
 import React from 'react';
 import { cn } from "@/lib/utils";
 import type { I_FormBlock_cNode_props, FormBlock_CNode_props_key } from '@/engine/CNodeTree/CNode/Layout/FormBlock_CNode.meta';
-import type { T_CNode_Concrete } from '@/engine/CNodeTree/CNode/index.type';
+import type { T_CNode } from '@/engine/CNodeTree/CNode/index.type';
 
 interface I_FormBlock extends React.HTMLAttributes<HTMLDivElement> {
     props: Omit<I_FormBlock_cNode_props, typeof FormBlock_CNode_props_key['widthRadio_prev'] | typeof FormBlock_CNode_props_key['columnNum_prev']>;
-    cssStyle: T_CNode_Concrete['cssStyle'];
+    cssStyle: T_CNode['cssStyle'];
 }
 
 export function FormBlock({ props, cssStyle, className, children }: I_FormBlock) {

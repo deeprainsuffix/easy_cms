@@ -10,11 +10,11 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import type { I_Input_cNode_props } from '@/engine/CNodeTree/CNode/Form/Input_CNode.meta';
-import type { T_CNode_Concrete } from '@/engine/CNodeTree/CNode/index.type';
+import type { T_CNode } from '@/engine/CNodeTree/CNode/index.type';
 
 interface I_Select extends React.HTMLAttributes<HTMLDivElement> {
     props: I_Input_cNode_props;
-    cssStyle: T_CNode_Concrete['cssStyle'];
+    cssStyle: T_CNode['cssStyle'];
 }
 
 export function Select({ props, cssStyle, className }: I_Select) {

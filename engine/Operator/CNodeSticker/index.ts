@@ -3,7 +3,7 @@ import {
     DependOnSelectedCNode, type I_Detail_SelectedCNodeChange,
 } from "../dependOnSelectedCNode";
 import { deepClone } from "@/lib/utils";
-import type { T_CNode_Concrete } from "@/engine/CNodeTree/CNode/index.type";
+import type { T_CNode } from "@/engine/CNodeTree/CNode/index.type";
 
 interface T_positionInfo {
     box: { top: number; left: number; };
@@ -68,7 +68,7 @@ class CNodeSticker extends DependOnSelectedCNode {
         this.display();
     }
 
-    private update(selectedCNode: T_CNode_Concrete) {
+    private update(selectedCNode: T_CNode) {
         this.domRect = selectedCNode.ref.current!.getBoundingClientRect();
         this.positionInfo = deepClone(positionInfo_default);
         this.update_positionInfo();

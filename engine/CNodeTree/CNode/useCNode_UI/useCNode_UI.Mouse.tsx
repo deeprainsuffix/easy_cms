@@ -1,7 +1,7 @@
 import { type MouseEventHandler, useCallback } from 'react';
 import { actionController } from '@/engine/ActionController';
 import { ActionTip_type_select } from '@/engine/ActionController/ActionTip';
-import type { T_CNode_Concrete } from '../index.type';
+import type { T_CNode } from '../index.type';
 
 interface T_option {
     enablePropagation?: boolean;
@@ -9,7 +9,7 @@ interface T_option {
 }
 
 export function useCNode_UI_Mouse(
-    cNode: T_CNode_Concrete,
+    cNode: T_CNode,
     option: T_option = { enablePropagation: false, enablePrevent: false }
 ) {
     const { enablePropagation, enablePrevent } = option;

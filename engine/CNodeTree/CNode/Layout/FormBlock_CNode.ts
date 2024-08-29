@@ -1,13 +1,12 @@
 import { actionController } from "@/engine/ActionController";
 import { Category_Layout } from ".";
-import { CNode } from "..";
-import type { I_CNode_Concrete } from "../index.type";
+import type { I_CNode } from "../index.type";
 import { FormBlock_CNode_UI } from "./FormBlock_CNode.UI";
 import { FormBlock_CNode_UI_Props } from "./FormBlock_CNode.UI.Props";
 import { ActionTip_type_select_update } from "@/engine/ActionController/ActionTip";
 import { type I_FormBlock_cNode_props, FormBlock_cNode_meta, FormBlock_CNode_props_key } from './FormBlock_CNode.meta';
 
-export interface I_FormBlock_CNode extends I_CNode_Concrete {
+export interface I_FormBlock_CNode extends I_CNode {
     componentName: typeof FormBlock_cNode_meta['componentName'];
     title: typeof FormBlock_cNode_meta['title'];
     props: I_FormBlock_cNode_props;
@@ -21,7 +20,7 @@ export class FormBlock_CNode extends Category_Layout implements I_FormBlock_CNod
     cssStyle_default: I_FormBlock_CNode['cssStyle_default'];
 
     constructor(
-        id: string, parent: CNode | null, pos: number, children: (CNode | null)[],
+        id: I_CNode['id'], parent: I_CNode['parent'], pos: I_CNode['pos'], children: I_CNode['children'],
     ) {
         const isDraggable = true, isDroppable = true;
         super(

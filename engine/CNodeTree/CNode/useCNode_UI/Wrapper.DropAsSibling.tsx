@@ -1,8 +1,8 @@
 import React from 'react';
-import type { T_CNode_Concrete } from '../index.type';
+import type { T_CNode } from '../index.type';
 
 interface I_WrapperDropAsSibling extends React.InputHTMLAttributes<HTMLDivElement> {
-    isDropTarget: T_CNode_Concrete['isDropTarget'];
+    isDropTarget: T_CNode['isDropTarget'];
     canDrop: boolean;
     isDropLeft: boolean;
 };

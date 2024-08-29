@@ -2,9 +2,9 @@ import { type DragEventHandler, useCallback } from 'react';
 import { ActionCNode_type_move } from '@/engine/ActionController/ActionCNode';
 import { actionController } from '@/engine/ActionController';
 import { ActionTip_type_drag_start, ActionTip_type_dropTarget_none, ActionTip_type_select_none } from '@/engine/ActionController/ActionTip';
-import type { T_CNode_Concrete } from '../index.type';
+import type { T_CNode } from '../index.type';
 
-export function useCNode_UI_Drag(cNode: T_CNode_Concrete) {
+export function useCNode_UI_Drag(cNode: T_CNode) {
     const onDragStart = useCallback<DragEventHandler>((e) => {
         e.stopPropagation();
         // e.preventDefault();

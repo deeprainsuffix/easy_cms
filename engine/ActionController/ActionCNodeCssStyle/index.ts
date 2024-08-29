@@ -1,4 +1,4 @@
-import type { I_CNode_Concrete } from "@/engine/CNodeTree/CNode/index.type";
+import type { I_CNode } from "@/engine/CNodeTree/CNode/index.type";
 
 /**
  * 更新cssStyle
@@ -7,7 +7,7 @@ export const ActionCNodeCssStyle_type_update = 'css_style_update';
 export interface I_ActionCNodeCssStyle_update {
     type: typeof ActionCNodeCssStyle_type_update;
     id: string;
-    cssStyle: I_CNode_Concrete['cssStyle'];
+    cssStyle: I_CNode['cssStyle'];
 }
 export class ActionCNodeCssStyle_update implements I_ActionCNodeCssStyle_update {
     type: I_ActionCNodeCssStyle_update['type'];

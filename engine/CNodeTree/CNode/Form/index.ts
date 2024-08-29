@@ -1,17 +1,17 @@
-import { CNode } from '..'
-import type { I_CNode_Category } from '../index.type';
+import { CNode_base } from '..'
+import type { I_CNode, I_CNode_Category } from '../index.type';
 import { Category_Form_meta } from './index.meta';
 
 export interface I_Category_Form extends I_CNode_Category {
     componentCategory: typeof Category_Form_meta['componentCategory'];
 }
 
-export abstract class Category_Form extends CNode implements I_Category_Form {
+export abstract class Category_Form extends CNode_base implements I_Category_Form {
     componentCategory: I_Category_Form['componentCategory'];
 
     constructor(
-        id: string, parent: CNode | null, pos: number, children: (CNode | null)[],
-        isDraggable: boolean, isDroppable: boolean,
+        id: I_CNode['id'], parent: I_CNode['parent'], pos: I_CNode['pos'], children: I_CNode['children'],
+        isDraggable: I_CNode['isDraggable'], isDroppable: I_CNode['isDroppable'],
     ) {
         super(
             id, parent, pos, children,

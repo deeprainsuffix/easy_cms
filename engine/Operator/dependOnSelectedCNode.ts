@@ -1,7 +1,7 @@
-import type { T_CNode_Concrete } from "../CNodeTree/CNode/index.type";
+import type { T_CNode } from "../CNodeTree/CNode/index.type";
 
 interface I_DependOnSelectedCNode {
-    selectedCNode: T_CNode_Concrete | null;
+    selectedCNode: T_CNode | null;
 }
 
 /**
@@ -41,7 +41,7 @@ export abstract class DependOnSelectedCNode implements I_DependOnSelectedCNode {
 
 export const custom_eType_selectedCNodeChange = 'selectedCNodeChange';
 export interface I_Detail_SelectedCNodeChange {
-    selectedCNode: T_CNode_Concrete | null;
+    selectedCNode: T_CNode | null;
 }
 
 export const custom_eType_selectedCNodeUpdate = 'selectedCNodeUpdate';

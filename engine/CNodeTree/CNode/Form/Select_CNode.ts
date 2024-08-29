@@ -1,11 +1,10 @@
 import { Category_Form } from ".";
-import { CNode } from "..";
-import type { I_CNode_Concrete } from "../index.type";
+import type { I_CNode } from "../index.type";
 import { Select_CNode_UI } from "./Select_CNode.UI";
 import { Select_CNode_UI_Props } from "./Select_CNode.UI.Props";
 import { type I_Select_cNode_props, Select_CNode_props_key, Select_cNode_meta } from './Select_CNode.meta';
 
-export interface I_Select_CNode extends I_CNode_Concrete {
+export interface I_Select_CNode extends I_CNode {
     componentName: typeof Select_cNode_meta['componentName'];
     title: typeof Select_cNode_meta['title'];
     props: I_Select_cNode_props;
@@ -19,7 +18,7 @@ export class Select_CNode extends Category_Form implements I_Select_CNode {
     cssStyle_default: I_Select_CNode['cssStyle_default'];
 
     constructor(
-        id: string, parent: CNode | null, pos: number, children: (CNode | null)[],
+        id: I_CNode['id'], parent: I_CNode['parent'], pos: I_CNode['pos'], children: I_CNode['children'],
     ) {
         const isDraggable = true, isDroppable = true;
         super(

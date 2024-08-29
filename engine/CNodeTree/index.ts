@@ -1,7 +1,7 @@
-import { CNode, lifeCycle_afterDomMounted } from './CNode/index'
+import { lifeCycle_afterDomMounted } from './CNode/index'
 import { testRender } from '../../client'
 import { CNode_collection } from './CNode/CNode.collection';
-import type { I_CNode_JSON, T_CNode_Concrete, T_componentCategory, T_ComponentName } from './CNode/index.type';
+import type { I_CNode_JSON, T_CNode, T_componentCategory, T_ComponentName } from './CNode/index.type';
 import {
   T_ActionCNode,
   ActionCNode_type_add, ActionCNode_type_copy, ActionCNode_type_delete, ActionCNode_type_move, ActionCNode_type_re_add,
@@ -30,11 +30,11 @@ class CNodeTreeBase {
 
   /**
    * 将cNode添加到parent，根据传入的pos或cNode的的pos
-   * @param cNode CNode
-   * @param parent CNode
+   * @param cNode 
+   * @param parent 
    * @returns parent
    */
-  protected alter_appendAsChild(cNode: CNode, parent: CNode, pos: number = cNode.pos) {
+  protected alter_appendAsChild(cNode: T_CNode, parent: T_CNode, pos: number = cNode.pos) {
     cNode.parent = parent;
     if (pos < 0) {
       parent.children.push(cNode);
@@ -56,27 +56,27 @@ class CNodeTreeBase {
 
   /**
    * 将cNode添加成为refCNode的下一个兄弟节点，返回parent
-   * @param cNode CNode
-   * @param refCNode CNode
+   * @param cNode 
+   * @param refCNode 
    * @returns parent
    */
-  protected alter_appendAsNext(cNode: CNode, refCNode: CNode) {
-    const parent = refCNode.parent as CNode;
+  protected alter_appendAsNext(cNode: T_CNode, refCNode: T_CNode) {
+    const parent = refCNode.parent as T_CNode;
     return this.alter_appendAsChild(cNode, parent, refCNode.pos + 1);
   }
 
   // 将cNode添加成为refCNode的上一个兄弟节点，返回parent
-  protected alter_appendAsPrev(cNode: CNode, refCNode: CNode) {
-    const parent = refCNode.parent as CNode;
+  protected alter_appendAsPrev(cNode: T_CNode, refCNode: T_CNode) {
+    const parent = refCNode.parent as T_CNode;
     return this.alter_appendAsChild(cNode, parent, refCNode.pos);
   }
 
   /**
    * 删除cNode，返回parent，不需要删除cNode与其子节点的联系
-   * @param cNode CNode
+   * @param cNode 
    */
-  protected alter_delete(cNode: CNode) {
-    const parent = cNode.parent as CNode;
+  protected alter_delete(cNode: T_CNode) {
+    const parent = cNode.parent as T_CNode;
     parent.children[cNode.pos] = null;
     cNode.parent = null;
     cNode.pos = -1;
@@ -89,8 +89,8 @@ class CNodeTreeBase {
    * @param cNodeA 
    * @param cNodeB 
    */
-  protected AisAncestorB(cNodeA: CNode, cNodeB: CNode) {
-    let topCNode: CNode | null = cNodeB;
+  protected AisAncestorB(cNodeA: T_CNode, cNodeB: T_CNode) {
+    let topCNode: T_CNode | null = cNodeB;
     while (topCNode) {
       if (topCNode === cNodeA) {
         return true
@@ -110,21 +110,21 @@ class CNodeTreeBase {
  * 2.3 渲染视图(这一步)
  */
 class CNodeTree extends CNodeTreeBase {
-  static cNodeMap = new Map<string, CNode>(); // 这里挂静态属性还是实例属性没啥区别
+  static cNodeMap = new Map<string, T_CNode>(); // 这里挂静态属性还是实例属性没啥区别
   static getCNode(id: string) {
     // 程序逻辑保证这个调用一定返回CNode
     return this.cNodeMap.get(id)!
   }
-  static setCNode(id: string, cNode: CNode) {
+  static setCNode(id: string, cNode: T_CNode) {
     this.cNodeMap.set(id, cNode)
   }
 
   root: Root_CNode; // 节点数的根节点，保证存在
-  renderCNodes: CNode[]; // 待render的cNode
+  renderCNodes: T_CNode[]; // 待render的cNode
   drag_componentName: T_ComponentName | null;
   drag_componentCategory: T_componentCategory | null;
-  drop_target_cNode: CNode | null; // 即将被drop的节点
-  selectedCNode: CNode | null; // 当前选中的节点
+  drop_target_cNode: T_CNode | null; // 即将被drop的节点
+  selectedCNode: T_CNode | null; // 当前选中的节点
   // selectedCNodeChangeCallbacks: Function[]; // todo selectedCNode更换时触发，这里后续可以再优化，目前直接使用浏览器事件机制，简单
 
   constructor() {
@@ -164,7 +164,7 @@ class CNodeTree extends CNodeTreeBase {
         const copyCNode = CNodeTree.getCNode(copyId),
           parent = CNodeTree.getCNode(parentId);
         let startId = +id;
-        const copyDfs = (cNode: CNode, parent: CNode, pos: number) => {
+        const copyDfs = (cNode: T_CNode, parent: T_CNode, pos: number) => {
           const copyedCNode = this.clone(cNode, String(startId++));
           this.alter_appendAsChild(copyedCNode, parent, pos);
           cNode.children.forEach((child, i) => {
@@ -273,6 +273,7 @@ class CNodeTree extends CNodeTreeBase {
       case ActionCNodeProps_type_update:
         const { id, prop, value } = action;
         const targetNode = CNodeTree.getCNode(id);
+        // @ts-ignore 保证
         targetNode.props[prop] = value;
         this.renderCNodes.push(targetNode);
         break;
@@ -318,7 +319,7 @@ class CNodeTree extends CNodeTreeBase {
    * @param cNode 
    * @returns 
    */
-  private clone(cNode: CNode, id: string) {
+  private clone(cNode: T_CNode, id: string) {
     const clonedCNode = this.produce(cNode.componentName, id);
     Object.assign(clonedCNode, {
       componentCategory: cNode.componentCategory, componentName: cNode.componentName,
@@ -340,7 +341,7 @@ class CNodeTree extends CNodeTreeBase {
 
   // 生成cNodeTree_JSON和cNodeTree_hash
   public async getCNodeTreeJSON(): Promise<{ cNodeTree_JSON: I_CNode_JSON, cNodeTree_hash: string }> {
-    const jsonCNode = (cNode: CNode, cNode_hashSource: T_cNode_hashSource): I_CNode_JSON => {
+    const jsonCNode = (cNode: T_CNode, cNode_hashSource: T_cNode_hashSource): I_CNode_JSON => {
       const cNode_JSON = {
         id: cNode.id, pos: cNode.pos,
         componentCategory: cNode.componentCategory, componentName: cNode.componentName,
@@ -356,7 +357,7 @@ class CNodeTree extends CNodeTreeBase {
       cNode_JSON.props = deepClone_forHash(cNode.props, cNode_hashSource);
       cNode_JSON.cssStyle = deepClone_forHash(cNode.cssStyle, cNode_hashSource);
 
-      cNode_JSON.children = cNode.children.filter((c): c is CNode => c !== null).map(c => jsonCNode(c, cNode_hashSource));
+      cNode_JSON.children = cNode.children.filter((c): c is T_CNode => c !== null).map(c => jsonCNode(c, cNode_hashSource));
 
       return cNode_JSON
     }

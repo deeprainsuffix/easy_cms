@@ -1,4 +1,4 @@
-import type { T_CNode_Concrete } from "@/engine/CNodeTree/CNode/index.type";
+import type { T_CNode } from "@/engine/CNodeTree/CNode/index.type";
 import { DependOnSelectedCNode, I_Detail_SelectedCNodeChange } from "../dependOnSelectedCNode";
 import * as monaco from 'monaco-editor'; // 优化打包
 import { actionController } from "@/engine/ActionController";
@@ -8,7 +8,7 @@ import { toast_dom } from "@/lib/utils";
 class SettingCssStyle extends DependOnSelectedCNode {
     render: any;
     select_id: string | null;
-    cssStyle_ori: T_CNode_Concrete['cssStyle'] | null;
+    cssStyle_ori: T_CNode['cssStyle'] | null;
     cssEditor: ReturnType<typeof monaco.editor.create> | null;
     contentFirstChange: boolean;
 
@@ -65,7 +65,7 @@ class SettingCssStyle extends DependOnSelectedCNode {
         }
     }
 
-    private update(selectedCNode: T_CNode_Concrete) {
+    private update(selectedCNode: T_CNode) {
         this.reset();
         this.select_id = '#' + selectedCNode.id;
         this.cssStyle_ori = { ...selectedCNode.cssStyle_default };
@@ -118,7 +118,7 @@ class SettingCssStyle extends DependOnSelectedCNode {
         this.render();
     }
 
-    private cssStyle2str(cssStyle: T_CNode_Concrete['cssStyle']) {
+    private cssStyle2str(cssStyle: T_CNode['cssStyle']) {
         const re = /[A-Z]/;
         const result = [];
         for (const [rule, value] of Object.entries(cssStyle)) {
@@ -201,7 +201,7 @@ class SettingCssStyle extends DependOnSelectedCNode {
             cssStyle[rule] = value;
         }
 
-        return cssStyle as T_CNode_Concrete['cssStyle']
+        return cssStyle as T_CNode['cssStyle']
     }
 }
 

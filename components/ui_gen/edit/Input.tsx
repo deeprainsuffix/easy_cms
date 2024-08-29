@@ -2,11 +2,11 @@ import React from 'react';
 import { cn } from "@/lib/utils";
 import { Input as Input_Shadcn } from '../../ui/input';
 import type { I_Input_cNode_props } from '@/engine/CNodeTree/CNode/Form/Input_CNode.meta';
-import type { T_CNode_Concrete } from '@/engine/CNodeTree/CNode/index.type';
+import type { T_CNode } from '@/engine/CNodeTree/CNode/index.type';
 
 interface I_Input extends React.HTMLAttributes<HTMLDivElement> {
     props: I_Input_cNode_props;
-    cssStyle: T_CNode_Concrete['cssStyle'];
+    cssStyle: T_CNode['cssStyle'];
 }
 
 export function Input({ props, cssStyle, className }: I_Input) {

@@ -1,11 +1,10 @@
 import { Category_Form } from ".";
-import { CNode } from "..";
-import type { I_CNode_Concrete } from "../index.type";
+import type { I_CNode } from "../index.type";
 import { FileUpload_CNode_UI } from "./FileUpload_CNode.UI";
 import { FileUpload_CNode_UI_Props } from "./FileUpload_CNode.UI.Props";
 import { FileUpload_cNode_meta, FileUpload_CNode_props_key, type I_FileUpload_cNode_props } from './FileUpload_CNode.meta';
 
-export interface I_FileUpload_CNode extends I_CNode_Concrete {
+export interface I_FileUpload_CNode extends I_CNode {
     componentName: typeof FileUpload_cNode_meta['componentName'];
     title: typeof FileUpload_cNode_meta['title'];
     props: I_FileUpload_cNode_props;
@@ -19,7 +18,7 @@ export class FileUpload_CNode extends Category_Form implements I_FileUpload_CNod
     cssStyle_default: I_FileUpload_CNode['cssStyle_default'];
 
     constructor(
-        id: string, parent: CNode | null, pos: number, children: (CNode | null)[],
+        id: I_CNode['id'], parent: I_CNode['parent'], pos: I_CNode['pos'], children: I_CNode['children'],
     ) {
         const isDraggable = true, isDroppable = true;
         super(

@@ -3,11 +3,11 @@ import { cn } from "@/lib/utils";
 import { Input } from '@/components/ui/input';
 import { Label } from "@/components/ui/label";
 import type { I_FileUpload_cNode_props } from '@/engine/CNodeTree/CNode/Form/FileUpload_CNode.meta';
-import type { T_CNode_Concrete } from '@/engine/CNodeTree/CNode/index.type';
+import type { T_CNode } from '@/engine/CNodeTree/CNode/index.type';
 
 interface I_FileUpload extends React.HTMLAttributes<HTMLDivElement> {
     props: I_FileUpload_cNode_props;
-    cssStyle: T_CNode_Concrete['cssStyle'];
+    cssStyle: T_CNode['cssStyle'];
 }
 
 export function FileUpload({ props, cssStyle, className }: I_FileUpload) {

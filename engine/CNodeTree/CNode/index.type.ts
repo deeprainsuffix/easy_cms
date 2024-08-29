@@ -1,5 +1,4 @@
 import type { CSSProperties, FunctionComponent, RefObject } from "react";
-import type { CNode } from ".";
 
 import type { I_Category_Foundation } from "./Foundation";
 import type { I_Root_CNode, Root_CNode } from "./Foundation/Root_CNode";
@@ -42,11 +41,11 @@ export interface I_CNode_props {
     [index: string]: any;
 }; // 每个组件会设置自己的props，这个还需要吗？ todo
 
-export interface I_CNode {
+export interface I_CNode_base {
     id: string; // cNode唯一id
-    parent: CNode | null; // 父节点
+    parent: T_CNode | null; // 父节点
     pos: number; // 父节点中children的位置
-    children: (CNode | null)[]; // 子节点
+    children: (T_CNode | null)[]; // 子节点
 
     isDraggable: boolean; // 是否可拖拽
     isDroppable: boolean; // 是否可作为drop容器
@@ -57,16 +56,15 @@ export interface I_CNode {
     render: any; // 组件刷新句柄，这个属性在react组件生成时添加，作为实例的具体属性
 }
 
-export interface I_CNode_Category extends I_CNode {
+export interface I_CNode_Category extends I_CNode_base {
     componentCategory: T_componentCategory; // 组件类别 todo 可能没用
 }
 
 // 最终的节点类型
-export interface I_CNode_Concrete extends I_CNode_Category {
+export interface I_CNode extends I_CNode_Category {
     componentName: T_ComponentName; // 组件标识符
     title: string; // 组件名称
     props: I_CNode_props; // 属性
-    // cssStyle: [keyof CSSProperties, CSSProperties[keyof CSSProperties]][]; // 样式
     cssStyle: CSSProperties; // 样式
     cssStyle_default: CSSProperties; // 提供样式重置
     get CNode_UI(): FunctionComponent<any>; // 在画布中展示的UI
@@ -85,13 +83,15 @@ export type T_CNode_form =
     FileUpload_CNode
     ;
 // 所有节点类型
-export type T_CNode_Concrete =
+export type T_CNode =
     T_CNode_foundation |
     T_CNode_layout |
     T_CNode_form
     ;
 
-export interface I_CNode_JSON extends Omit<I_CNode_Concrete, 'isDraggable' | 'isDroppable' | 'parent' | 'children'> {
+
+type T_exclude = 'isDraggable' | 'isDroppable' | 'isDropTarget' | 'parent' | 'children';
+export interface I_CNode_JSON extends Omit<I_CNode, T_exclude> {
     children: I_CNode_JSON[];
 };
 
