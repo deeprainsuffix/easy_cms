@@ -11,11 +11,9 @@ export abstract class Category_Layout extends CNode_base implements I_Category_L
 
     constructor(
         id: I_CNode['id'], parent: I_CNode['parent'], pos: I_CNode['pos'], children: I_CNode['children'],
-        isDraggable: I_CNode['isDraggable'], isDroppable: I_CNode['isDroppable'],
     ) {
         super(
             id, parent, pos, children,
-            isDraggable, isDroppable,
         );
 
         this.componentCategory = Category_Layout_meta.componentCategory;

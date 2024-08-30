@@ -3,7 +3,7 @@ import { Input_cNode_meta } from "../CNodeTree/CNode/Form/Input_CNode.meta";
 import { Select_cNode_meta } from "../CNodeTree/CNode/Form/Select_CNode.meta";
 import { Root_cNode_meta } from "../CNodeTree/CNode/Foundation/Root_CNode.meta";
 import { FormBlock_cNode_meta } from "../CNodeTree/CNode/Layout/FormBlock_CNode.meta";
-import type { T_ComponentName } from "../CNodeTree/CNode/index.type";
+import type { T_CNode } from "../CNodeTree/CNode/index.type";
 
 type T_template = {
     module_import: string;
@@ -13,7 +13,7 @@ type T_template = {
 }
 
 export type T_template_CNode = {
-    [index in T_ComponentName]: T_template;
+    [index in T_CNode['componentName']]: T_template;
 };
 
 export const template_CNode: T_template_CNode = {

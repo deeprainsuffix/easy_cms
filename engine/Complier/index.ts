@@ -1,4 +1,4 @@
-import { I_CNode_props, T_ComponentName, type I_CNode_JSON } from "../CNodeTree/CNode/index.type";
+import type { T_CNode, I_CNode_JSON } from "../CNodeTree/CNode/index.type";
 import { type T_template_CNode, template_CNode, template_import_essentail, template_exec, template_import_path, RegionHeader, RegionSideMenuBar, template_import_region, template_Combine } from "./template";
 import { Root_cNode_meta, Root_cNode_props_key, type I_Root_cNode_props } from "../CNodeTree/CNode/Foundation/Root_CNode.meta";
 import { FormBlock_cNode_meta, FormBlock_CNode_props_key, type I_FormBlock_cNode_props } from "../CNodeTree/CNode/Layout/FormBlock_CNode.meta";
@@ -125,7 +125,7 @@ export class Complier implements I_Complier {
         this.result.push(`const Page = () => { return (<Combine ${regionGenerated.join(' ')} />)};\n`);
     }
 
-    private distribute_props(componentName: T_ComponentName, props: I_CNode_props): string {
+    private distribute_props(componentName: T_CNode['componentName'], props: T_CNode['props']): string {
         let result = '';
         switch (componentName) {
             case Root_cNode_meta['componentName']:

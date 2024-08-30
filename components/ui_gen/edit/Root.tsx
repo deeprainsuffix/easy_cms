@@ -12,7 +12,7 @@ export function Root({ props, cssStyle, className, children }: I_Root) {
     return (
         <div
             style={{ ...cssStyle }}
-            className={cn(`w-full h-full overflow-y-auto flex flex-wrap`
+            className={cn(`w-full h-full overflow-y-auto flex flex-wrap content-start`
                 , className)}>
             {children}
         </div>

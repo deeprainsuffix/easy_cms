@@ -1,11 +1,11 @@
 import { actionController } from '@/engine/ActionController';
 import { ActionCNode_type_add, ActionCNode_type_move } from '@/engine/ActionController/ActionCNode';
 import { DragEventHandler, useCallback, useRef } from 'react';
-import type { T_CNode, T_componentCategory, T_ComponentName } from '../index.type';
+import type { T_CNode } from '../index.type';
 import { ActionTip_type_dropTarget_none, ActionTip_type_dropTarget_update } from '@/engine/ActionController/ActionTip';
 import { cNodeTree } from '../..'; // todo 其实CNodeTree确实需要承接CNode间通信的功能，并且在之前的实现中已经用到了
 
-export type T_condition_dropAsSibling = (componentName: T_ComponentName | null, componentCategory: T_componentCategory | null) => boolean;
+export type T_condition_dropAsSibling = (componentName: T_CNode['componentName'] | null, componentCategory: T_CNode['componentCategory'] | null) => boolean;
 export function useCNode_UI_DropAsSibling(cNode: T_CNode, condition_drop?: T_condition_dropAsSibling) {
     const rectRef = useRef<DOMRect>();
     const canDrop = useRef({
@@ -35,7 +35,7 @@ export function useCNode_UI_DropAsSibling(cNode: T_CNode, condition_drop?: T_con
             });
         }
 
-        if (!canDrop.current.checked && condition_drop && !condition_drop(cNodeTree.drag_componentName, cNodeTree.drag_componentCategory)) {
+        if (!canDrop.current.checked && condition_drop && !condition_drop(cNodeTree.drag_possible.componentName, cNodeTree.drag_possible.componentCategory)) {
             canDrop.current.value = false;
             canDrop.current.checked = true;
         }
@@ -51,7 +51,7 @@ export function useCNode_UI_DropAsSibling(cNode: T_CNode, condition_drop?: T_con
         const type = e.dataTransfer.getData('type');
         switch (type) {
             case ActionCNode_type_add:
-                const componentName = e.dataTransfer.getData('componentName') as T_ComponentName;
+                const componentName = e.dataTransfer.getData('componentName') as T_CNode['componentName'];
                 actionController.dispatchAction({
                     type,
                     componentName: componentName,
@@ -60,7 +60,7 @@ export function useCNode_UI_DropAsSibling(cNode: T_CNode, condition_drop?: T_con
                 });
                 break;
             case ActionCNode_type_move:
-                const id = e.dataTransfer.getData('id') as T_ComponentName;
+                const id = e.dataTransfer.getData('id') as T_CNode['componentName'];
                 const moveFromParentId = e.dataTransfer.getData('moveFromParentId');
                 const moveFromPos = +e.dataTransfer.getData('moveFromPos');
                 actionController.dispatchAction({

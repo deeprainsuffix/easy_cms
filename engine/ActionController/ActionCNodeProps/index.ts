@@ -1,4 +1,4 @@
-import { type I_CNode_props } from "@/engine/CNodeTree/CNode/index.type";
+import type { I_CNode, T_CNode } from "@/engine/CNodeTree/CNode/index.type";
 
 /**
  * 更新节点某个属性值
@@ -7,7 +7,7 @@ export const ActionCNodeProps_type_update = 'props_update';
 export interface I_ActionCNodeProps_update {
     type: typeof ActionCNodeProps_type_update;
     id: string;
-    prop: keyof I_CNode_props; // todo 这里值来自节点的key
+    prop: keyof I_CNode['props']; // todo 其实应该改成T_CNode['props']，能够从调用方判断出prop
     value: any;
 }
 export class ActionCNodeProps_update implements I_ActionCNodeProps_update {

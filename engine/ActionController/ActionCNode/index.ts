@@ -1,5 +1,5 @@
 
-import type { T_ComponentName } from "../../CNodeTree/CNode/index.type";
+import type { T_CNode } from "../../CNodeTree/CNode/index.type";
 import { idGenerator } from "@/engine/IdGenerator";
 
 /**
@@ -10,7 +10,7 @@ export interface I_ActionCNode_add {
     type: typeof ActionCNode_type_add;
     id: string; // 新生成id
     parentId: string;
-    componentName: T_ComponentName;
+    componentName: T_CNode['componentName'];
     pos: number;
 }
 
@@ -19,7 +19,7 @@ export class ActionCNode_add implements I_ActionCNode_add {
     id: string;
     constructor(
         public parentId: string,
-        public componentName: T_ComponentName,
+        public componentName: T_CNode['componentName'],
         public pos: number,
     ) {
         this.type = ActionCNode_type_add;

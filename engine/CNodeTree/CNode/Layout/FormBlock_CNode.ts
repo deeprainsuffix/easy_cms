@@ -13,21 +13,22 @@ export interface I_FormBlock_CNode extends I_CNode {
 }
 
 export class FormBlock_CNode extends Category_Layout implements I_FormBlock_CNode {
-    componentName: I_FormBlock_CNode['componentName'];
-    title: I_FormBlock_CNode['title'];
-    props: I_FormBlock_CNode['props'];
-    cssStyle: I_FormBlock_CNode['cssStyle'];
-    cssStyle_default: I_FormBlock_CNode['cssStyle_default'];
+    public componentName: I_FormBlock_CNode['componentName'];
+    public title: I_FormBlock_CNode['title'];
+    public isDraggable: I_FormBlock_CNode['isDraggable'];
+    public isDroppable: I_FormBlock_CNode['isDroppable'];
+    public isDropTarget: I_FormBlock_CNode['isDropTarget'];
+    public props: I_FormBlock_CNode['props'];
+    public cssStyle: I_FormBlock_CNode['cssStyle'];
+    public cssStyle_default: I_FormBlock_CNode['cssStyle_default'];
 
     constructor(
         id: I_CNode['id'], parent: I_CNode['parent'], pos: I_CNode['pos'], children: I_CNode['children'],
     ) {
-        const isDraggable = true, isDroppable = true;
-        super(
-            id, parent, pos, children,
-            isDraggable, isDroppable,
-        );
-
+        super(id, parent, pos, children);
+        this.isDraggable = true;
+        this.isDroppable = true;
+        this.isDropTarget = false;
         this.componentName = FormBlock_cNode_meta.componentName;
         this.title = FormBlock_cNode_meta.title;
         this.props = {

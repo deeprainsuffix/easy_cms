@@ -3,7 +3,7 @@ class IdGenerator {
     private id: number;
 
     constructor() {
-        this.id = 0;
+        this.id = -1;
     }
 
     public get() {
@@ -15,13 +15,13 @@ class IdGenerator {
         return this.id
     }
 
-    public update(id: number) {
-        if (id < this.id) {
-            throw 'id过小，已经被使用'
-        }
+    // public update(id: number) {
+    //     if (id < this.id) {
+    //         throw 'id过小，已经被使用'
+    //     }
 
-        this.id = id;
-    }
+    //     this.id = id;
+    // }
 }
 
 export const idGenerator = new IdGenerator();

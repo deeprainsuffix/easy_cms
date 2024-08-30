@@ -4,7 +4,7 @@ const { merge } = require('webpack-merge');
 const config_base = require('./webpack.config.base');
 const config_my = {
     mode: 'development',
-    devtool: 'inline-source-map',
+    devtool: 'eval',
     devServer: {
         static: './dist_client',
         historyApiFallback: true,

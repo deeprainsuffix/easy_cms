@@ -94,8 +94,8 @@ export function CNodeSticker_UI(props: I_CNodeSticker_UI) {
                     style={{ borderBottomWidth: edge_borderWidth, width: edge_bottom.width, height: edge_bottom.height, top: edge_bottom.top, left: edge_bottom.left }}
                 >
                 </div>
-                {// todo 这里的id判断应该改成'1'
-                    selectedCNode.id !== '3' && <div
+                {
+                    selectedCNode.componentName !== 'Root' && <div
                         className={`flex absolute bg-CNodeSticker-tool
                       h-[40px]  p-[4px]`}
                         style={{ top: tool.top, right: tool.right }}

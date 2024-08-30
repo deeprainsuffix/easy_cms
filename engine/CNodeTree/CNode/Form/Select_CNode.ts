@@ -11,21 +11,22 @@ export interface I_Select_CNode extends I_CNode {
 }
 
 export class Select_CNode extends Category_Form implements I_Select_CNode {
-    componentName: I_Select_CNode['componentName'];
-    title: I_Select_CNode['title'];
-    props: I_Select_CNode['props'];
-    cssStyle: I_Select_CNode['cssStyle'];
-    cssStyle_default: I_Select_CNode['cssStyle_default'];
+    public componentName: I_Select_CNode['componentName'];
+    public title: I_Select_CNode['title'];
+    public isDraggable: I_Select_CNode['isDraggable'];
+    public isDroppable: I_Select_CNode['isDroppable'];
+    public isDropTarget: I_Select_CNode['isDropTarget'];
+    public props: I_Select_CNode['props'];
+    public cssStyle: I_Select_CNode['cssStyle'];
+    public cssStyle_default: I_Select_CNode['cssStyle_default'];
 
     constructor(
         id: I_CNode['id'], parent: I_CNode['parent'], pos: I_CNode['pos'], children: I_CNode['children'],
     ) {
-        const isDraggable = true, isDroppable = true;
-        super(
-            id, parent, pos, children,
-            isDraggable, isDroppable,
-        );
-
+        super(id, parent, pos, children);
+        this.isDraggable = true;
+        this.isDroppable = true;
+        this.isDropTarget = false;
         this.componentName = Select_cNode_meta.componentName;
         this.title = Select_cNode_meta.title;
         this.props = {

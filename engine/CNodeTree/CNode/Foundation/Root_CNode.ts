@@ -10,21 +10,22 @@ export interface I_Root_CNode extends I_CNode {
 }
 
 export class Root_CNode extends Category_Foundation implements I_Root_CNode {
-    componentName: I_Root_CNode['componentName'];
-    title: I_Root_CNode['title'];
-    props: I_Root_CNode['props'];
-    cssStyle: I_Root_CNode['cssStyle'];
-    cssStyle_default: I_Root_CNode['cssStyle_default'];
+    public componentName: I_Root_CNode['componentName'];
+    public title: I_Root_CNode['title'];
+    public isDraggable: I_Root_CNode['isDraggable'];
+    public isDroppable: I_Root_CNode['isDroppable'];
+    public isDropTarget: I_Root_CNode['isDropTarget'];
+    public props: I_Root_CNode['props'];
+    public cssStyle: I_Root_CNode['cssStyle'];
+    public cssStyle_default: I_Root_CNode['cssStyle_default'];
 
     constructor(
         id: I_CNode['id'], parent: I_CNode['parent'], pos: I_CNode['pos'], children: I_CNode['children'],
     ) {
-        const isDraggable = false, isDroppable = true;
-        super(
-            id, parent, pos, children,
-            isDraggable, isDroppable,
-        );
-
+        super(id, parent, pos, children);
+        this.isDraggable = false;
+        this.isDroppable = true;
+        this.isDropTarget = false;
         this.componentName = Root_cNode_meta.componentName;
         this.title = Root_cNode_meta.title;
         this.props = {};

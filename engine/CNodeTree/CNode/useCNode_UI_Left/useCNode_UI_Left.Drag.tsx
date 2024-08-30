@@ -1,10 +1,10 @@
 import { type DragEventHandler, useCallback } from 'react';
-import { T_componentCategory, type T_ComponentName } from '../index.type';
+import type { T_CNode } from '../index.type';
 import { actionController } from '@/engine/ActionController';
 import { ActionCNode_type_add } from '@/engine/ActionController/ActionCNode';
 import { ActionTip_type_drag_start, ActionTip_type_dropTarget_none, ActionTip_type_select_none } from '@/engine/ActionController/ActionTip';
 
-export function useCNode_UI_Left_Drag(componentName: T_ComponentName, componentCategory: T_componentCategory) {
+export function useCNode_UI_Left_Drag(componentName: T_CNode['componentName'], componentCategory: T_CNode['componentCategory']) {
     const onDragStart = useCallback<DragEventHandler>((e) => {
         e.stopPropagation();
         // e.preventDefault();

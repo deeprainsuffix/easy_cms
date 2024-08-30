@@ -1,4 +1,4 @@
-import type { T_componentCategory, T_ComponentName } from "@/engine/CNodeTree/CNode/index.type";
+import type { T_CNode } from "@/engine/CNodeTree/CNode/index.type";
 
 /**
  * 选中节点
@@ -54,8 +54,8 @@ export class ActionTip_select_update implements I_ActionTip_select_update {
 export const ActionTip_type_drag_start = 'drag_start';
 export interface I_ActionTip_drag_start {
     type: typeof ActionTip_type_drag_start;
-    componentName: T_ComponentName;
-    componentCategory: T_componentCategory;
+    componentName: T_CNode['componentName'];
+    componentCategory: T_CNode['componentCategory'];
 }
 export class ActionTip_drag_start implements I_ActionTip_drag_start {
     type: I_ActionTip_drag_start['type'];

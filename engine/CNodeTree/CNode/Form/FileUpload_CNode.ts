@@ -11,21 +11,22 @@ export interface I_FileUpload_CNode extends I_CNode {
 }
 
 export class FileUpload_CNode extends Category_Form implements I_FileUpload_CNode {
-    componentName: I_FileUpload_CNode['componentName'];
-    title: I_FileUpload_CNode['title'];
-    props: I_FileUpload_CNode['props'];
-    cssStyle: I_FileUpload_CNode['cssStyle'];
-    cssStyle_default: I_FileUpload_CNode['cssStyle_default'];
+    public componentName: I_FileUpload_CNode['componentName'];
+    public title: I_FileUpload_CNode['title'];
+    public isDraggable: I_FileUpload_CNode['isDraggable'];
+    public isDroppable: I_FileUpload_CNode['isDroppable'];
+    public isDropTarget: I_FileUpload_CNode['isDropTarget'];
+    public props: I_FileUpload_CNode['props'];
+    public cssStyle: I_FileUpload_CNode['cssStyle'];
+    public cssStyle_default: I_FileUpload_CNode['cssStyle_default'];
 
     constructor(
         id: I_CNode['id'], parent: I_CNode['parent'], pos: I_CNode['pos'], children: I_CNode['children'],
     ) {
-        const isDraggable = true, isDroppable = true;
-        super(
-            id, parent, pos, children,
-            isDraggable, isDroppable,
-        );
-
+        super(id, parent, pos, children);
+        this.isDraggable = true;
+        this.isDroppable = true;
+        this.isDropTarget = false;
         this.componentName = FileUpload_cNode_meta.componentName;
         this.title = FileUpload_cNode_meta.title;
         this.props = {
