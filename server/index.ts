@@ -25,6 +25,6 @@ const server = http.createServer(async (req, res) => {
 
 const port = 3000;
 server.listen(port, () => {
-    process.env.HOST = 'http://localhost:3000'; // todo
+    process.env.HOST = process.env.NODE_ENV === 'prod' ? 'https://easy-cms.pages.dev' : 'http://localhost:3000';
     console.log(`启动 正在监听${port}端口`);
 })

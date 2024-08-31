@@ -9,7 +9,9 @@
   "scripts": {
     "dev": "webpack serve --config webpack.config.dev.js --open",
     "build": "webpack --config webpack.config.prod.js",
-    "start": "nodemon --exec ts-node --project server/tsconfig.server.json server/index.ts"
+    "start:dev": "cross-env NODE_ENV=dev nodemon --exec ts-node --project server/tsconfig.server.json server/index.ts",
+    "start:prod": "cross-env NODE_ENV=prod nodemon --exec ts-node --project server/tsconfig.server.json server/index.ts",
+    "deploy": "npm i && npm run build && npm run start:prod"
   },
   "keywords": [
     "ts",
@@ -47,6 +49,7 @@
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "autoprefixer": "^10.4.19",
+    "cross-env": "^7.0.3",
     "css-loader": "^7.1.2",
     "html-webpack-plugin": "^5.6.0",
     "mini-css-extract-plugin": "^2.9.0",
