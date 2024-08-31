@@ -6,6 +6,7 @@ module.exports = {
     entry: {
         index: './engine/CNodeTree/index.ts',
     },
+    cache: false,
     output: {
         filename: '[name].[contenthash].js',
         path: path.resolve(__dirname, 'dist_client'),

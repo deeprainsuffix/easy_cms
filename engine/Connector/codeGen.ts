@@ -201,7 +201,7 @@ export class CodeGen implements I_Btn_codeGen {
         }
 
         this.worker = new Worker(
-           /* webpackChunkName: "CodeGen.worker" */ new URL('./codeGen.worker.ts', import.meta.url), { name: CodeGen.name }
+            new URL('./codeGen.worker.ts', import.meta.url), { name: CodeGen.name, type: 'module' }
         );
         this.worker.onmessage = (({ data }) => {
             this.worker_revieve(data);
