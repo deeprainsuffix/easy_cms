@@ -2,6 +2,7 @@ import { exec as exec_ori } from 'child_process';
 import { promisify } from 'node:util';
 import { writeFile } from 'node:fs/promises';
 import { type I_Assets, type I_AssetsFromWebpack, ASSES_CSS, ASSES_HTML, ASSES_JS, essentialAssets } from '../Handle_assets/index.const';
+import { extname } from 'path';
 
 export async function complie_tsx(filePath_entry: string, cNodeTree_hash: string): Promise<I_AssetsFromWebpack> {
     // 应该需要改变执行路径
@@ -31,7 +32,7 @@ export async function complie_tsx(filePath_entry: string, cNodeTree_hash: string
         }
 
         for (const fileName of stdout_arr) {
-            const ext = fileName.split('.')[1];
+            const ext = extname(fileName);
             switch (ext) {
                 case ASSES_HTML: assets[ASSES_HTML] = fileName; break;
                 case ASSES_JS: assets[ASSES_JS] = fileName; break;

@@ -8,7 +8,6 @@ const config_my = {
     mode: 'production',
     module: {
         rules: [
-            { test: /\.(ts|tsx)$/, loader: "ts-loader", exclude: /node_modules/ },
             { test: /\.(css)$/, use: [MiniCssExtractPlugin.loader, "css-loader", 'postcss-loader'] },
         ]
     },

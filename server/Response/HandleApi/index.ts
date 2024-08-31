@@ -24,6 +24,7 @@ export class HandleApi extends HandleBase {
                 return await this.landingCode_gen();
             default:
                 res.statusCode = 404;
+                res.setHeader('Content-Type', `text/plain;charset=utf-8`);
                 res.end('没有该接口');
         }   return
     }

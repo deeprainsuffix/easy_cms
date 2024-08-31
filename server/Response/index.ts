@@ -2,6 +2,7 @@ import type { T_http_req, T_http_res } from './HandleApi/index.type';
 import { ext2MIME, isValidedExt, type T_ext } from './index.const';
 import { readFile } from 'node:fs/promises';
 import { createReadStream, existsSync } from 'fs';
+import { extname } from 'path';
 
 interface I_HandleBase {
     req: T_http_req;
@@ -21,7 +22,7 @@ export abstract class HandleBase implements I_HandleBase {
         this.req = req;
         this.res = res;
         const url = new URL(req.url || '', process.env.HOST);
-        console.log('收到请求', req.url);
+        // console.log('收到请求', req.url);
         return await this.routerUrl(url)
     }
 
@@ -49,9 +50,9 @@ export abstract class HandleBase implements I_HandleBase {
         const { res } = this, encoding = 'utf-8';
         const MIME = ext2MIME[ext];
         return new Promise<void>((re, rj) => {
-            const readStream = createReadStream(filePath);
             res.statusCode = 206;
             res.setHeader('Content-Type', `${MIME};charset=${encoding}`);
+            const readStream = createReadStream(filePath);
             readStream
                 .on('error', err => rj(err))
                 .on('end', () => re())
@@ -62,9 +63,13 @@ export abstract class HandleBase implements I_HandleBase {
             })
             .catch(err => {
                 res.statusCode = 500;
-                res.end('获取资产文件失败');
+                res.end('获取文件失败');
                 console.log('get_stream出错 -> ', err);
             });
+    }
+
+    protected get_ext(pathname: string) {
+        return extname(pathname)
     }
 
     private check(fileName: string, ext: string | undefined): ext is T_ext {
@@ -79,7 +84,8 @@ export abstract class HandleBase implements I_HandleBase {
         const { res } = this;
         if (!existsSync(filePath)) {
             res.statusCode = 404;
-            res.end('资产文件不存在');
+            res.setHeader('Content-Type', `text/plain;charset=utf-8`);
+            res.end('文件不存在');
             return false;
         }
 
@@ -90,6 +96,7 @@ export abstract class HandleBase implements I_HandleBase {
         const { res } = this;
         if (ext === null || ext === undefined || !Object.hasOwn(ext2MIME, ext)) {
             res.statusCode = 400;
+            res.setHeader('Content-Type', `text/plain;charset=utf-8`);
             res.end('没有此类文件后缀: ' + ext);
             return false
         }

@@ -1,6 +1,6 @@
 import { HandleBase } from '..';
 import { join } from 'path';
-import { dir_root_server } from '@/server/config';
+import { dir_server } from '@/server/config';
 
 
 export class Handle_assets extends HandleBase {
@@ -9,8 +9,8 @@ export class Handle_assets extends HandleBase {
     }
 
     async routerUrl(url: URL): Promise<void> {
-        const filePath = join(dir_root_server, url.pathname);
-        const ext = filePath.split('.').pop();
+        const ext = this.get_ext(url.pathname),
+            filePath = join(dir_server, url.pathname);
 
         return await this.get_plain(filePath, ext)
     }

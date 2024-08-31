@@ -1,9 +1,9 @@
 export const
-    ext_html = 'html',
-    ext_js = 'js',
-    ext_css = 'css',
-    ext_tsx = 'tsx',
-    ext_json = 'json';
+    ext_html = '.html',
+    ext_js = '.js',
+    ext_css = '.css',
+    ext_tsx = '.tsx',
+    ext_json = '.json';
 
 export type T_ext =
     typeof ext_html |

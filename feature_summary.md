@@ -18,6 +18,7 @@
 ## 06.21
 
 * CNodeTree
+  * 大class都是单例，这里不写了
   * CNodeTree后边要优化[todo]
   * CNode
     * 需要实现get、set吗？[todo]
@@ -51,6 +52,7 @@
   * ActionCNodeProps不参与时间旅行 [done]
   * ActionController
   * action需要再加一类，ActionPeripheral，该类不引起cNodeTree的render [todo]，ActionTip_type_select(_none)可能需要移进去
+  * 移动自身不应该生成一个action
 * CNodeSticker
   * 解决CNodeSticker遮挡cNodetree [done]
   * 窗口resize后，要render [todo]
