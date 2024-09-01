@@ -1,4 +1,3 @@
-import { I_CNode_JSON } from '@/engine/CNodeTree/CNode/index.type';
 import { HandleBase } from '..';
 import { valid_cNodeTree_hash_format } from '@/engine/lib/validate';
 import { join } from 'path';
@@ -16,17 +15,19 @@ export class HandleApi extends HandleBase {
         super();
     }
 
-    async routerUrl(url: URL): Promise<void> {
+    async routerUrl(url: URL) {
         const { res } = this;
 
         switch (url.pathname) {
             case httpUrl_landingCode_gen:
-                return await this.landingCode_gen();
+                await this.landingCode_gen();
             default:
                 res.statusCode = 404;
                 res.setHeader('Content-Type', `text/plain;charset=utf-8`);
                 res.end('没有该接口');
-        }   return
+        }
+
+        return res
     }
 
     fetchResApiWrap<T_data = any>(resApiInfo?: T_errMsgOrData<T_data>): void {

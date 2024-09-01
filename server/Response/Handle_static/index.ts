@@ -8,7 +8,8 @@ export class Handle_static extends HandleBase {
         super();
     }
 
-    async routerUrl(url: URL): Promise<void> {
+    async routerUrl(url: URL) {
+        const { res } = this;
         let ext = this.get_ext(url.pathname),
             filePath = join(dir_static, url.pathname);
         if (!ext) {
@@ -16,6 +17,8 @@ export class Handle_static extends HandleBase {
             filePath = join(dir_static, 'index.html');
         }
 
-        return await this.get_plain(filePath, ext)
+        await this.get_plain(filePath, ext);
+
+        return res
     }
 }

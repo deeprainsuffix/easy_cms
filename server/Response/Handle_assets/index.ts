@@ -8,10 +8,13 @@ export class Handle_assets extends HandleBase {
         super();
     }
 
-    async routerUrl(url: URL): Promise<void> {
+    async routerUrl(url: URL) {
+        const { res } = this;
         const ext = this.get_ext(url.pathname),
             filePath = join(dir_server, url.pathname);
 
-        return await this.get_plain(filePath, ext)
+        await this.get_plain(filePath, ext);
+
+        return res
     }
 }

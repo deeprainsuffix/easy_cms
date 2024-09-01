@@ -1,8 +1,12 @@
-import type { T_http_req, T_http_res } from './HandleApi/index.type';
+import http from 'http';
 import { ext2MIME, isValidedExt, type T_ext } from './index.const';
 import { readFile } from 'node:fs/promises';
 import { createReadStream, existsSync } from 'fs';
 import { extname } from 'path';
+
+type T_requestListener = NonNullable<Parameters<typeof http.createServer>[1]>;
+export type T_http_req = Parameters<T_requestListener>[0];
+export type T_http_res = Parameters<T_requestListener>[1];
 
 interface I_HandleBase {
     req: T_http_req;
@@ -26,7 +30,7 @@ export abstract class HandleBase implements I_HandleBase {
         return await this.routerUrl(url)
     }
 
-    abstract routerUrl(url: URL): Promise<void>;
+    abstract routerUrl(url: URL): Promise<I_HandleBase['res']>;
 
     protected async get_plain(filePath: string, ext: string | undefined) {
         if (!this.check(filePath, ext)) {

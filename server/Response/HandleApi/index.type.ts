@@ -1,11 +1,5 @@
 import type { I_CNode_JSON } from '@/engine/CNodeTree/CNode/index.type';
 import type { RegionHeader, RegionSideMenuBar } from '@/engine/Complier/template';
-import http from 'http';
-
-type T_requestListener = NonNullable<Parameters<typeof http.createServer>[1]>;
-export type T_http_req = Parameters<T_requestListener>[0];
-export type T_http_res = Parameters<T_requestListener>[1];
-
 
 // api接口响应体结构
 export interface I_resApiBody<T_data> {
