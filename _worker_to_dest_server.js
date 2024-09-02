@@ -15,9 +15,12 @@ export default {
         }
 
         return env.ASSETS.fetch(request);
+
+
+        // const url = new URL(request.url);
         // if (url.pathname.startsWith('/api/')) {
         //     // TODO: Add your custom /api/* logic here.
-        //     return new Response('Ok');
+        //     return new Response('Ok' + path.join(url.pathname, '收到'));
         //     // return new HandleApi().router(req, res);
         // }
         // // Otherwise, serve the static assets.

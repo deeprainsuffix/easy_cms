@@ -1,12 +1,13 @@
-import { exec as exec_ori } from 'child_process';
+import { exec as exec_ori } from 'node:child_process';
 import { promisify } from 'node:util';
-import { writeFile } from 'node:fs/promises';
+const exec = promisify(exec_ori);
+import fs from 'node:fs';
+const { writeFile } = fs.promises;
 import { type I_Assets, type I_AssetsFromWebpack, ASSES_CSS, ASSES_HTML, ASSES_JS, essentialAssets } from '../Handle_assets/index.const';
-import { extname } from 'path';
+import { extname } from 'node:path';
 
 export async function complie_tsx(filePath_entry: string, cNodeTree_hash: string): Promise<I_AssetsFromWebpack> {
     // 应该需要改变执行路径
-    const exec = promisify(exec_ori);
     try {
         const { stdout, stderr } = await exec(
             `webpack --entry ${filePath_entry} --config webpack.config.project.js --env cNodeTree_hash=${cNodeTree_hash}`,

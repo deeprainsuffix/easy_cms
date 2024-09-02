@@ -1,8 +1,9 @@
 import http from 'http';
 import { ext2MIME, isValidedExt, type T_ext } from './index.const';
-import { readFile } from 'node:fs/promises';
-import { createReadStream, existsSync } from 'fs';
-import { extname } from 'path';
+import fs from 'node:fs';
+const { readFile } = fs.promises;
+import { createReadStream, existsSync } from 'node:fs';
+import { extname } from 'node:path';
 
 type T_requestListener = NonNullable<Parameters<typeof http.createServer>[1]>;
 export type T_http_req = Parameters<T_requestListener>[0];

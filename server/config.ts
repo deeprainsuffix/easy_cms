@@ -1,4 +1,4 @@
-import { resolve, join } from 'path';
+import { resolve, join } from 'node:path';
 
 export const
     dir_root = resolve(__dirname, '..'),

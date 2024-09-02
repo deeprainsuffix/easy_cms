@@ -1,11 +1,11 @@
 import { HandleBase } from '..';
 import { valid_cNodeTree_hash_format } from '@/engine/lib/validate';
-import { join } from 'path';
+import { join } from 'node:path';
 import { dir_landing_project } from '@/server/config';
-import { createWriteStream, existsSync, statSync } from 'fs';
-import { readFile } from 'node:fs/promises';
+import { createWriteStream, existsSync, statSync } from 'node:fs';
+import fs from 'node:fs';
+const { readFile, writeFile } = fs.promises;
 import { Complier } from '@/engine/Complier';
-import { writeFile } from 'node:fs/promises';
 import { complie_tsx, create_manifest } from './landingCode_gen.lib';
 import { httpUrl_landingCode_gen } from '../../http.url';
 import type { I_resApiBody, T_errMsgOrData, I_res_landingCode_gen, I_req_landingCode_gen } from './index.type';
@@ -21,6 +21,7 @@ export class HandleApi extends HandleBase {
         switch (url.pathname) {
             case httpUrl_landingCode_gen:
                 await this.landingCode_gen();
+                break;
             default:
                 res.statusCode = 404;
                 res.setHeader('Content-Type', `text/plain;charset=utf-8`);
