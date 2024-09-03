@@ -8,12 +8,10 @@
   ],
   "scripts": {
     "dev": "webpack serve --config webpack.config.dev.js --open",
-    "dev:wrangler": "npx wrangler pages dev dist_client",
     "build": "webpack --config webpack.config.prod.js",
     "build:server": "rm -rf dist_server && tsc --project server/tsconfig.server.json",
     "start:dev": "cross-env NODE_ENV=dev nodemon --exec ts-node --project server/tsconfig.server.json server/index.ts",
-    "start:prod": "cross-env NODE_ENV=prod nodemon --exec ts-node --project server/tsconfig.server.json server/index.ts",
-    "deploy": "npm run start:prod"
+    "start:prod": "cross-env NODE_ENV=prod nodemon --exec ts-node --project server/tsconfig.server.json server/index.ts"
   },
   "keywords": [
     "ts",
