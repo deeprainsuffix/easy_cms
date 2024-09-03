@@ -1,6 +1,5 @@
 {
     "ignore": [
-        "server/cNodeTree_jsonFiles",
         "server/landing_project"
     ],
     "watch": [

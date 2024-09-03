@@ -1,7 +1,7 @@
 import { readdir, stat, rm } from 'node:fs';
 import { join } from 'node:path';
-import { cNodeTree_json_clearTimeMs, landing_project_clearTimeMs } from '../http.const';
-import { dir_cNodeTree_json, dir_landing_project } from '../config';
+import { landing_project_clearTimeMs } from '../http.const';
+import { dir_landing_project } from '../config';
 
 function clear(dir: string, saveTime: number, errMsg: string) {
     readdir(dir, (err, files) => {
@@ -32,11 +32,6 @@ function clear(dir: string, saveTime: number, errMsg: string) {
         });
     });
 }
-
-// console.log('定时任务启动: 清理cNodeTree_json');
-// setInterval(() => {
-//     clear(dir_cNodeTree_json, cNodeTree_json_clearTimeMs, '清理cNodeTree_json出错 -> ');
-// }, cNodeTree_json_clearTimeMs);
 
 // console.log('定时任务启动: 清理landing_project');
 // setInterval(() => {

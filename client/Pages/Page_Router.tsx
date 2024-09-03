@@ -14,10 +14,6 @@ const router = createBrowserRouter([
         element: <PageIndex />,
         errorElement: <PageError404 />,
     },
-    {
-        path: page_Preview,
-        element: <PagePreview />,
-    },
 ]);
 
 export function Page_Router() {

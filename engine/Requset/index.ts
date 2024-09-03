@@ -1,7 +1,5 @@
-import { httpUrl_cNodeTree_JSON_get_prefix, httpUrl_cNodeTree_JSON_save, httpUrl_landingCode_gen } from "@/server/http.url";
-import { type I_CNode_JSON } from "../CNodeTree/CNode/index.type";
+import { httpUrl_landingCode_gen } from "@/server/http.url";
 import { toast_dom } from "@/lib/utils";
-import { cNodeTree_hash_param, cNodeTree_json_fileName_prefix } from "@/server/http.const";
 import type { I_req_landingCode_gen, I_res_landingCode_gen, I_resApiBody } from "@/server/Response/HandleApi/index.type";
 
 type T_Param_fetch = Parameters<typeof fetch>;
@@ -56,16 +54,6 @@ export async function fetchReqApiWrap<T_data = any>(input: T_Param_fetch[0], ini
     return result
 }
 
-// const
-//     fileType_plain = 'plain',
-//     fileType_json = 'json',
-//     fileType_blob = 'blob';
-
-// type T_fileType =
-//     typeof fileType_plain |
-//     typeof fileType_json |
-//     typeof fileType_blob
-//     ;
 interface I_init_file<T> extends I_init {
     fileType: T;
 };
@@ -127,41 +115,6 @@ export async function fetchReqFileWrap<T extends fileType>(input: T_Param_fetch[
 
     return result
 }
-
-// export async function cNodeTree_JSON_save_req(cNodeTree_JSON: I_CNode_JSON, cNodeTree_hash: string): Promise<string | null> {
-//     try {
-//         const jsonStr = JSON.stringify(cNodeTree_JSON);
-//         const blob = new Blob([jsonStr], { type: 'application/json' });
-//         const { success, data, errMsg } = await fetchReqApiWrap(`${httpUrl_cNodeTree_JSON_save}?${cNodeTree_hash_param}=${cNodeTree_hash}`, {
-//             method: 'POST',
-//             body: blob,
-//         });
-
-//         if (!success) {
-//             throw errMsg;
-//         }
-
-//         return data
-//     } catch (err) {
-//         console.log('cNodeTree_JSON_save_req出错 -> ', err);
-//         return null
-//     }
-// }
-
-// export async function cNodeTree_JSON_get_req(cNodeTree_hash: string): Promise<I_CNode_JSON | null> {
-//     try {
-//         const url = `${httpUrl_cNodeTree_JSON_get_prefix}${cNodeTree_json_fileName_prefix}.${cNodeTree_hash}.json`;
-//         const { success, data, errMsg } = await fetchReqFileWrap(url, { type: 'json' });
-//         if (!success) {
-//             throw errMsg;
-//         }
-
-//         return data
-//     } catch (err) {
-//         console.log('cNodeTree_JSON_get_req出错 -> ', err);
-//         return null
-//     }
-// }
 
 export async function landingCode_gen_req(params: I_req_landingCode_gen): Promise<I_res_landingCode_gen | null> {
     try {

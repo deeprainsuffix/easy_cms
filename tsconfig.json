@@ -1,6 +1,5 @@
 {
   "exclude": [
-    "server/cNodeTree_jsonFiles/*",
     "server/landing_project/*",
   ],
   "compilerOptions": {

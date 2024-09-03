@@ -1,14 +1,3 @@
-import { cNodeTree_json_clearTimeMs } from "@/server/http.const";
-
-export function valid_cNodeTree_hash_fresh(cNodeTree_hash_Birth: number): boolean {
-    if (+new Date() - cNodeTree_hash_Birth > cNodeTree_json_clearTimeMs) {
-        return false
-    }
-
-    return true
-}
-
-
 // todo 应该写一个服务端校验器
 export function valid_cNodeTree_hash_format(cNodeTree_hash: string | null | undefined) {
     if (!cNodeTree_hash) {
