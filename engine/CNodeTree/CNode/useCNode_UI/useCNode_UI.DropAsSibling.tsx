@@ -1,5 +1,5 @@
 import { actionController } from '@/engine/ActionController';
-import { ActionCNode_type_add, ActionCNode_type_move } from '@/engine/ActionController/ActionCNode';
+import { ActionCNode_type_add, ActionCNode_type_move, ActionCNode_type_move_sibling } from '@/engine/ActionController/ActionCNode';
 import { DragEventHandler, useCallback, useRef } from 'react';
 import type { T_CNode } from '../index.type';
 import { ActionTip_type_dropTarget_none, ActionTip_type_dropTarget_update } from '@/engine/ActionController/ActionTip';
@@ -63,14 +63,39 @@ export function useCNode_UI_DropAsSibling(cNode: T_CNode, condition_drop?: T_con
                 const id = e.dataTransfer.getData('id') as T_CNode['componentName'];
                 const moveFromParentId = e.dataTransfer.getData('moveFromParentId');
                 const moveFromPos = +e.dataTransfer.getData('moveFromPos');
-                actionController.dispatchAction({
-                    type,
-                    id,
-                    moveFromParentId,
-                    moveFromPos,
-                    moveToParentId: cNode.parent!.id,
-                    moveToPos: dropLeftRef.current ? cNode.pos : cNode.pos + 1,
-                });
+                const moveToPos = dropLeftRef.current ? cNode.pos : cNode.pos + 1;
+                if (cNode.parent!.id === moveFromParentId) {
+                    // 兄弟间move
+                    if (id === cNode.id) {
+                        return
+                    }
+
+                    if (
+                        (dropLeftRef.current && moveFromPos + 1 === cNode.pos) ||
+                        (!dropLeftRef.current && moveFromPos - 1 === cNode.pos)
+                    ) {
+                        return
+                    }
+
+
+                    actionController.dispatchAction({
+                        type: ActionCNode_type_move_sibling,
+                        id,
+                        parentId: moveFromParentId,
+                        moveFromPos,
+                        moveToPos,
+                    });
+                } else {
+                    // 非兄弟间move
+                    actionController.dispatchAction({
+                        type,
+                        id,
+                        moveFromParentId,
+                        moveFromPos,
+                        moveToParentId: cNode.parent!.id,
+                        moveToPos,
+                    });
+                }
                 break;
             default:
                 console.error('CNode_UI_DropAsSibling中未处理的action type:', type);

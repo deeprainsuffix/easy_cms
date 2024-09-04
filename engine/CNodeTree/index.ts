@@ -1,10 +1,11 @@
 import { lifeCycle_afterDomMounted } from './CNode/index'
-import { testRender } from '../../client'
+import { pageRender } from '../../client'
 import { CNode_collection } from './CNode/CNode.collection';
 import type { I_CNode_JSON, T_CNode } from './CNode/index.type';
 import {
   T_ActionCNode,
   ActionCNode_type_add, ActionCNode_type_copy, ActionCNode_type_delete, ActionCNode_type_move, ActionCNode_type_re_add,
+  ActionCNode_type_move_sibling, ActionCNode_type_re_move_sibling,
 } from '../ActionController/ActionCNode';
 import {
   T_ActionTip,
@@ -125,12 +126,38 @@ abstract class CNodeTree_base {
     return this.alter_appendAsChild(cNode, refCNode.parent, refCNode.pos + 1);
   }
 
-  // 将cNode添加成为refCNode的上一个兄弟节点，返回parent
+  /**
+   * 将cNode添加成为refCNode的上一个兄弟节点，返回parent
+   * @param cNode 
+   * @param refCNode 
+   * @returns 
+   */
   protected alter_appendAsPrev(cNode: T_CNode, refCNode: T_CNode) {
     if (!refCNode.parent) {
       throw 'alter_appendAsPrev出错 -> parent为空'
     }
     return this.alter_appendAsChild(cNode, refCNode.parent, refCNode.pos);
+  }
+
+  /**
+   * 在父节点中，根据moveAsLeft，将cNode移动到target_pos位置左侧，若target_pos越界，则children.length + 1
+   * @param cNode 
+   * @param target_pos 
+   */
+  protected alter_move_sibling(cNode: T_CNode, target_pos: T_CNode['pos']) {
+    const parent = cNode.parent;
+    if (!parent) {
+      throw 'alter_move_sibling出错 -> parent为空'
+    }
+
+    if (target_pos >= parent.children.length) {
+      parent.children[target_pos] = null;
+    }
+
+    this.alter_delete(cNode);
+    this.alter_appendAsChild(cNode, parent, target_pos);
+
+    return parent
   }
 
   /**
@@ -245,6 +272,26 @@ abstract class CNodeTree_action extends CNodeTree_base {
         }
 
         this.toRender(this.alter_delete(cNode), this.alter_appendAsChild(cNode, parentTo, moveToPos));
+        this.render();
+      }
+        break;
+      case ActionCNode_type_move_sibling: {
+        const { id, parentId, moveFromPos, moveToPos } = action;
+        const cNode = CNodeTree.getCNode(id),
+          parent = CNodeTree.getCNode(parentId);
+        if (this.AisAncestorB(cNode, parent)) {
+          return
+        }
+
+        this.toRender(this.alter_move_sibling(cNode, moveToPos));
+        this.render();
+      }
+        break;
+      case ActionCNode_type_re_move_sibling: {
+        const { id, parentId, moveFromPos, moveToPos } = action;
+        const cNode = CNodeTree.getCNode(id);
+
+        this.toRender(this.alter_move_sibling(cNode, moveToPos));
         this.render();
       }
         break;
@@ -409,9 +456,11 @@ class CNodeTree extends CNodeTree_JSON {
 
   public bootstrap() {
     this.create_baseView();
-    testRender(this.root);
+    pageRender(this.root);
   }
 }
 
 export const cNodeTree = new CNodeTree();
 cNodeTree.bootstrap();
+//@ts-ignore
+window.cNodeTree = cNodeTree;

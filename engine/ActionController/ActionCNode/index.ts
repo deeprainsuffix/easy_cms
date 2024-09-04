@@ -78,7 +78,7 @@ export class ActionCNode_copy implements I_ActionCNode_copy {
 
 
 /**
- * 移动节点
+ * 移动节点(非兄弟间)
  */
 export const ActionCNode_type_move = 'move';
 export interface I_ActionCNode_move {
@@ -103,9 +103,54 @@ export class ActionCNode_move implements I_ActionCNode_move {
     }
 }
 
+/**
+ * 移动节点(兄弟间)
+ */
+export const ActionCNode_type_move_sibling = 'move_sibling';
+export interface I_ActionCNode_move_sibling {
+    type: typeof ActionCNode_type_move_sibling;
+    id: T_CNode['id'];
+    parentId: T_CNode['id'];
+    moveFromPos: T_CNode['pos'];
+    moveToPos: T_CNode['pos'];
+}
+export class ActionCNode_move_sibling implements I_ActionCNode_move_sibling {
+    type: I_ActionCNode_move_sibling['type'];
+    constructor(
+        public id: I_ActionCNode_move_sibling['id'],
+        public parentId: I_ActionCNode_move_sibling['parentId'],
+        public moveFromPos: I_ActionCNode_move_sibling['moveFromPos'],
+        public moveToPos: I_ActionCNode_move_sibling['moveToPos'],
+    ) {
+        this.type = ActionCNode_type_move_sibling;
+    }
+}
 
 /**
- * 如果cNode中不含顺序信息，则要保存一个顺序字段 todo
+ * ActionCNode_move_sibling反命令
+ */
+export const ActionCNode_type_re_move_sibling = 're_move_sibling';
+export interface I_ActionCNode_re_move_sibling {
+    type: typeof ActionCNode_type_re_move_sibling;
+    id: T_CNode['id'];
+    parentId: T_CNode['id'];
+    moveFromPos: T_CNode['pos'];
+    moveToPos: T_CNode['pos'];
+}
+export class ActionCNode_move_re_sibling implements I_ActionCNode_re_move_sibling {
+    type: I_ActionCNode_re_move_sibling['type'];
+    constructor(
+        public id: I_ActionCNode_re_move_sibling['id'],
+        public parentId: I_ActionCNode_re_move_sibling['parentId'],
+        public moveFromPos: I_ActionCNode_re_move_sibling['moveFromPos'],
+        public moveToPos: I_ActionCNode_re_move_sibling['moveToPos'],
+    ) {
+        this.type = ActionCNode_type_re_move_sibling;
+    }
+}
+
+/**
+ * 删除节点
  */
 export const ActionCNode_type_delete = 'delete';
 export interface I_ActionCNode_delete {
@@ -143,6 +188,8 @@ export type T_ActionCNode_Required =
     // I_ActionCNode_re_add | // 不需要添加
     I_ActionCNode_copy_Required |
     I_ActionCNode_move |
+    I_ActionCNode_move_sibling |
+    // I_ActionCNode_re_move_sibling
     I_ActionCNode_delete
     ;
 
@@ -151,6 +198,7 @@ export type T_ActionCNode =
     ActionCNode_re_add |
     ActionCNode_copy |
     ActionCNode_move |
+    ActionCNode_move_sibling | ActionCNode_move_re_sibling |
     ActionCNode_delete
     ;
 
@@ -164,6 +212,7 @@ export const ActionCNode_collection = {
     [ActionCNode_type_re_add]: ActionCNode_re_add,
     [ActionCNode_type_copy]: ActionCNode_copy,
     [ActionCNode_type_move]: ActionCNode_move,
+    [ActionCNode_type_move_sibling]: ActionCNode_move_sibling, [ActionCNode_type_re_move_sibling]: ActionCNode_move_re_sibling,
     [ActionCNode_type_delete]: ActionCNode_delete,
 };
 

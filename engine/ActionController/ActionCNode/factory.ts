@@ -2,6 +2,7 @@
 import {
     T_ActionCNode_Required, T_ActionCNode, ActionCNode_collection,
     ActionCNode_type_add, ActionCNode_type_re_add, ActionCNode_type_copy, ActionCNode_type_delete, ActionCNode_type_move,
+    ActionCNode_type_move_sibling, ActionCNode_type_re_move_sibling,
 } from ".";
 
 interface I_ActionCNode_Factory {
@@ -9,7 +10,7 @@ interface I_ActionCNode_Factory {
     // createActionCNode_reverse: (actionCNode: T_ActionCNode) => T_ActionCNode;
     // undoStack: T_ActionCNode[]; redoStack: T_ActionCNode[];
     // do、undo、redo都是同时处理单命令
-    do: (actionRequired: T_ActionCNode_Required) => T_ActionCNode; undo: () => T_ActionCNode | null; redo: () => T_ActionCNode | null;
+    // do: (actionRequired: T_ActionCNode_Required) => T_ActionCNode; undo: () => T_ActionCNode | null; redo: () => T_ActionCNode | null;
 }
 
 class ActionCNode_Factory implements I_ActionCNode_Factory {
@@ -29,6 +30,9 @@ class ActionCNode_Factory implements I_ActionCNode_Factory {
                 break;
             case ActionCNode_type_move:
                 result = new ActionCNode_collection[actionRequired.type](actionRequired.id, actionRequired.moveFromParentId, actionRequired.moveFromPos, actionRequired.moveToParentId, actionRequired.moveToPos);
+                break;
+            case ActionCNode_type_move_sibling:
+                result = new ActionCNode_collection[actionRequired.type](actionRequired.id, actionRequired.parentId, actionRequired.moveFromPos, actionRequired.moveToPos);
                 break;
             case ActionCNode_type_delete:
                 result = new ActionCNode_collection[actionRequired.type](actionRequired.id, actionRequired.prevParentId, actionRequired.pos);
@@ -55,6 +59,12 @@ class ActionCNode_Factory implements I_ActionCNode_Factory {
                 break;
             case ActionCNode_type_move:
                 result = new ActionCNode_collection[ActionCNode_type_move](actionCNode.id, actionCNode.moveToParentId, actionCNode.moveToPos, actionCNode.moveFromParentId, actionCNode.moveFromPos);
+                break;
+            case ActionCNode_type_move_sibling:
+                result = new ActionCNode_collection[ActionCNode_type_re_move_sibling](actionCNode.id, actionCNode.parentId, actionCNode.moveToPos, actionCNode.moveFromPos);
+                break;
+            case ActionCNode_type_re_move_sibling:
+                result = new ActionCNode_collection[ActionCNode_type_move_sibling](actionCNode.id, actionCNode.parentId, actionCNode.moveToPos, actionCNode.moveFromPos);
                 break;
             case ActionCNode_type_delete:
                 result = new ActionCNode_collection[ActionCNode_type_re_add](actionCNode.id, actionCNode.prevParentId, actionCNode.pos);

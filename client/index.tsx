@@ -10,9 +10,7 @@ rootDom.setAttribute('id', 'root');
 document.body.appendChild(rootDom);
 
 const rootReact = createRoot(rootDom);
-export function testRender(cNodeRoot: Root_CNode) { // todelete
-    console.log('节点树', cNodeRoot);
-
+export function pageRender(cNodeRoot: Root_CNode) { // todelete
     rootReact.render(
         <Ctx.Provider value={{ cNodeRoot }}>
             <Page_Router />
