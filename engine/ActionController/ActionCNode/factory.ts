@@ -32,7 +32,7 @@ class ActionCNode_Factory implements I_ActionCNode_Factory {
                 result = new ActionCNode_collection[actionRequired.type](actionRequired.id, actionRequired.moveFromParentId, actionRequired.moveFromPos, actionRequired.moveToParentId, actionRequired.moveToPos);
                 break;
             case ActionCNode_type_move_sibling:
-                result = new ActionCNode_collection[actionRequired.type](actionRequired.id, actionRequired.parentId, actionRequired.moveFromPos, actionRequired.moveToPos);
+                result = new ActionCNode_collection[actionRequired.type](actionRequired.id, actionRequired.parentId, actionRequired.moveFromPos, actionRequired.moveToPos, actionRequired.moveAtLeft);
                 break;
             case ActionCNode_type_delete:
                 result = new ActionCNode_collection[actionRequired.type](actionRequired.id, actionRequired.prevParentId, actionRequired.pos);
@@ -61,10 +61,10 @@ class ActionCNode_Factory implements I_ActionCNode_Factory {
                 result = new ActionCNode_collection[ActionCNode_type_move](actionCNode.id, actionCNode.moveToParentId, actionCNode.moveToPos, actionCNode.moveFromParentId, actionCNode.moveFromPos);
                 break;
             case ActionCNode_type_move_sibling:
-                result = new ActionCNode_collection[ActionCNode_type_re_move_sibling](actionCNode.id, actionCNode.parentId, actionCNode.moveToPos, actionCNode.moveFromPos);
+                result = new ActionCNode_collection[ActionCNode_type_re_move_sibling](actionCNode.id, actionCNode.parentId, actionCNode.moveToPos, actionCNode.moveFromPos, actionCNode.moveAtLeft);
                 break;
             case ActionCNode_type_re_move_sibling:
-                result = new ActionCNode_collection[ActionCNode_type_move_sibling](actionCNode.id, actionCNode.parentId, actionCNode.moveToPos, actionCNode.moveFromPos);
+                result = new ActionCNode_collection[ActionCNode_type_move_sibling](actionCNode.id, actionCNode.parentId, actionCNode.moveToPos, actionCNode.moveFromPos, actionCNode.moveAtLeft);
                 break;
             case ActionCNode_type_delete:
                 result = new ActionCNode_collection[ActionCNode_type_re_add](actionCNode.id, actionCNode.prevParentId, actionCNode.pos);

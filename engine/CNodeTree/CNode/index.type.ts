@@ -45,7 +45,7 @@ export interface I_CNode_base {
     id: string; // cNode唯一id
     parent: T_CNode | null; // 父节点
     pos: number; // 父节点中children的位置
-    children: (T_CNode | null)[]; // 子节点
+    children: T_CNode[] // 子节点
     ref: RefObject<HTMLDivElement> // 传递给ref，标记真实DOM，作为实例的具体属性
     render: any; // 组件刷新句柄，这个属性在react组件生成时添加，作为实例的具体属性
 };

@@ -80,7 +80,7 @@ abstract class CNodeTree_base {
   protected clone_tree(cNode: T_CNode, id?: T_CNode['id']) {
     const copyedCNode = this.clone(cNode, id);
     cNode.children.forEach((child, i) => {
-      copyedCNode.children[i] = child ? this.clone_tree(child) : null;
+      copyedCNode.children[i] = this.clone_tree(child);
     });
 
     return copyedCNode
@@ -140,22 +140,50 @@ abstract class CNodeTree_base {
   }
 
   /**
-   * 在父节点中，根据moveAsLeft，将cNode移动到target_pos位置左侧，若target_pos越界，则children.length + 1
+   * 根据atLeft，将cNode移动到pos位置左侧或右侧
    * @param cNode 
-   * @param target_pos 
+   * @param pos 
+   * @param atLeft 
+   * @returns parent
    */
-  protected alter_move_sibling(cNode: T_CNode, target_pos: T_CNode['pos']) {
+  protected alter_move_sibling(cNode: T_CNode, pos: T_CNode['pos'], atLeft: boolean): T_CNode {
     const parent = cNode.parent;
     if (!parent) {
       throw 'alter_move_sibling出错 -> parent为空'
     }
+    const children = parent.children;
 
-    if (target_pos >= parent.children.length) {
-      parent.children[target_pos] = null;
+    const currPos = cNode.pos;
+    if (currPos === pos) {
+      return parent
     }
 
-    this.alter_delete(cNode);
-    this.alter_appendAsChild(cNode, parent, target_pos);
+    let start = currPos, end = pos;
+    if (currPos < pos) {
+      // 向后移
+      if (atLeft) {
+        end--;
+      }
+      while (start < end) {
+        children[start] = children[start + 1];
+        children[start].pos = start;
+        start++;
+      }
+      children[end] = cNode;
+      cNode.pos = end;
+    } else {
+      // 向左移
+      if (!atLeft) {
+        end++;
+      }
+      while (start > end) {
+        children[start] = children[start - 1];
+        children[start].pos = start;
+        start--;
+      }
+      children[end] = cNode;
+      cNode.pos = end;
+    }
 
     return parent
   }
@@ -164,13 +192,18 @@ abstract class CNodeTree_base {
    * 删除cNode，返回parent，不需要删除cNode与其子节点的联系
    * @param cNode 
    */
-  protected alter_delete(cNode: T_CNode): T_CNode {
+  protected alter_remove(cNode: T_CNode): T_CNode {
     const parent = cNode.parent;
     if (!parent) {
-      throw 'alter_delete出错 -> parent为空'
+      throw 'alter_remove出错 -> parent为空'
     }
-
-    parent.children[cNode.pos] = null;
+    const children = parent.children;
+    const len = children.length - 1;
+    for (let i = cNode.pos; i < len; i++) {
+      children[i] = children[i + 1];
+      children[i].pos = i;
+    }
+    children.length = len;
     cNode.parent = null;
     cNode.pos = -1;
 
@@ -271,34 +304,37 @@ abstract class CNodeTree_action extends CNodeTree_base {
           return
         }
 
-        this.toRender(this.alter_delete(cNode), this.alter_appendAsChild(cNode, parentTo, moveToPos));
+        this.toRender(this.alter_remove(cNode), this.alter_appendAsChild(cNode, parentTo, moveToPos));
         this.render();
       }
         break;
       case ActionCNode_type_move_sibling: {
-        const { id, parentId, moveFromPos, moveToPos } = action;
+        const { id, parentId, moveFromPos, moveToPos, moveAtLeft } = action;
         const cNode = CNodeTree.getCNode(id),
           parent = CNodeTree.getCNode(parentId);
+        if (moveFromPos === moveToPos) {
+          throw '移动位置相同';
+        }
         if (this.AisAncestorB(cNode, parent)) {
-          return
+          throw '不可移动到子层级';
         }
 
-        this.toRender(this.alter_move_sibling(cNode, moveToPos));
+        this.toRender(this.alter_move_sibling(cNode, moveToPos, moveAtLeft));
         this.render();
       }
         break;
       case ActionCNode_type_re_move_sibling: {
-        const { id, parentId, moveFromPos, moveToPos } = action;
+        const { id, parentId, moveFromPos, moveToPos, moveAtLeft } = action;
         const cNode = CNodeTree.getCNode(id);
 
-        this.toRender(this.alter_move_sibling(cNode, moveToPos));
+        this.toRender(this.alter_move_sibling(cNode, moveToPos, moveFromPos > moveToPos ? true : false));
         this.render();
       }
         break;
       case ActionCNode_type_delete: {
         const { id, prevParentId, pos } = action;
         const cNode = CNodeTree.getCNode(id);
-        this.toRender(this.alter_delete(cNode))
+        this.toRender(this.alter_remove(cNode))
         this.receiveActionTip({ type: ActionTip_type_select_none });
         this.render();
       }

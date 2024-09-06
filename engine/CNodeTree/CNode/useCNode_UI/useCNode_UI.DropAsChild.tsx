@@ -56,6 +56,10 @@ export function useCNode_UI_DropAsChild(cNode: T_CNode, condition_drop?: T_condi
                 const id = e.dataTransfer.getData('id') as T_CNode['componentName'];
                 const moveFromParentId = e.dataTransfer.getData('moveFromParentId');
                 const moveFromPos = +e.dataTransfer.getData('moveFromPos');
+                if (moveFromParentId === cNode.id) {
+                    return
+                }
+
                 actionController.dispatchAction({
                     type,
                     id,

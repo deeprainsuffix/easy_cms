@@ -63,7 +63,7 @@ export function useCNode_UI_DropAsSibling(cNode: T_CNode, condition_drop?: T_con
                 const id = e.dataTransfer.getData('id') as T_CNode['componentName'];
                 const moveFromParentId = e.dataTransfer.getData('moveFromParentId');
                 const moveFromPos = +e.dataTransfer.getData('moveFromPos');
-                const moveToPos = dropLeftRef.current ? cNode.pos : cNode.pos + 1;
+
                 if (cNode.parent!.id === moveFromParentId) {
                     // 兄弟间move
                     if (id === cNode.id) {
@@ -77,15 +77,16 @@ export function useCNode_UI_DropAsSibling(cNode: T_CNode, condition_drop?: T_con
                         return
                     }
 
-
                     actionController.dispatchAction({
                         type: ActionCNode_type_move_sibling,
                         id,
                         parentId: moveFromParentId,
                         moveFromPos,
-                        moveToPos,
+                        moveToPos: cNode.pos,
+                        moveAtLeft: dropLeftRef.current,
                     });
                 } else {
+                    const moveToPos = dropLeftRef.current ? cNode.pos : cNode.pos + 1;
                     // 非兄弟间move
                     actionController.dispatchAction({
                         type,

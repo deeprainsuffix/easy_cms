@@ -26,6 +26,7 @@
     * next指针可以删除，改为顺序pos(action_delete)
     * CNode_UI_DropAsSibling中rectRef.current，CNode尺寸信息是否可在生成时初始化？ [todo]
     * move的左右指示tip [todo]
+    * cnode.children 不允许出现null [todo]
     * 实现copy
       * 先实现CNodeSticker组件 [todo]
       * 可能要实现原型模式 [todo]
@@ -114,35 +115,4 @@
 
 ### 后端
 
-### 行程
-
-* day1
-  <!-- * left样式 -->
-  <!-- * CNodeSticker更新 -->
-    <!-- * resize -->
-    <!-- * 复制引起撑开滚动条时 -->
-    <!-- * 滚动 -->
-* day1
-  * [撤销重做](https://www.iconfont.cn/collections/detail?spm=a313x.search_index.0.da5a778a4.2fe83a81dZkbrm&cid=19149)
-  * [表单svg](https://www.iconfont.cn/collections/detail?spm=a313x.search_index.0.da5a778a4.255d3a81BFLqRV&cid=3991)
-  <!-- * 加一个select组件 -->
-  <!-- * 加一个上传文件组件 -->
-<!-- * day4-5 8.15 -->
-  <!-- * 根据CNode结构生成json，serviceWork -->
-<!-- * day4-5 8.20
-  * CodeGen
-    * 改CNodeTree交互
-    * 考虑下预览要不要做
-  * 根据json生成前端文件
-    * PC
-    * m
-  * 根据json生成后端文件 -->
-<!-- * day1 页面预览预览
-  * 生成文件，并缓存，可以节省出码的速度
-  * 新建页面
-  * 详情页面 -->
-* 预览按钮待定
-* day2 屏幕尺寸
-* day2考虑加一个表格
-* day1 组件树
-* 解决todo
+cloudflare pages 不支持操作文件系统，不发布了

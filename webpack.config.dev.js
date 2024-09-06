@@ -4,6 +4,7 @@ const { merge } = require('webpack-merge');
 const config_base = require('./webpack.config.base');
 const config_my = {
     mode: 'development',
+    cache: true,
     devtool: 'eval',
     devServer: {
         static: './dist_client',

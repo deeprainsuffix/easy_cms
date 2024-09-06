@@ -113,6 +113,7 @@ export interface I_ActionCNode_move_sibling {
     parentId: T_CNode['id'];
     moveFromPos: T_CNode['pos'];
     moveToPos: T_CNode['pos'];
+    moveAtLeft: boolean;
 }
 export class ActionCNode_move_sibling implements I_ActionCNode_move_sibling {
     type: I_ActionCNode_move_sibling['type'];
@@ -121,6 +122,7 @@ export class ActionCNode_move_sibling implements I_ActionCNode_move_sibling {
         public parentId: I_ActionCNode_move_sibling['parentId'],
         public moveFromPos: I_ActionCNode_move_sibling['moveFromPos'],
         public moveToPos: I_ActionCNode_move_sibling['moveToPos'],
+        public moveAtLeft: I_ActionCNode_move_sibling['moveAtLeft'],
     ) {
         this.type = ActionCNode_type_move_sibling;
     }
@@ -136,6 +138,7 @@ export interface I_ActionCNode_re_move_sibling {
     parentId: T_CNode['id'];
     moveFromPos: T_CNode['pos'];
     moveToPos: T_CNode['pos'];
+    moveAtLeft: boolean;
 }
 export class ActionCNode_move_re_sibling implements I_ActionCNode_re_move_sibling {
     type: I_ActionCNode_re_move_sibling['type'];
@@ -144,6 +147,7 @@ export class ActionCNode_move_re_sibling implements I_ActionCNode_re_move_siblin
         public parentId: I_ActionCNode_re_move_sibling['parentId'],
         public moveFromPos: I_ActionCNode_re_move_sibling['moveFromPos'],
         public moveToPos: I_ActionCNode_re_move_sibling['moveToPos'],
+        public moveAtLeft: I_ActionCNode_move_sibling['moveAtLeft'],
     ) {
         this.type = ActionCNode_type_re_move_sibling;
     }
