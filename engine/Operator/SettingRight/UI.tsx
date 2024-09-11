@@ -37,7 +37,7 @@ export function SettingRight_UI() {
                 </TabsList>
                 <div className='p-3 flex-1 h-0'>
                     <TabsContent value={tab_SettingProps}><SettingProps_UI /></TabsContent>
-                    <TabsContent value={tab_SettingCssStyle}><SettingCssStyle_UI /></TabsContent>
+                    <TabsContent value={tab_SettingCssStyle} forceMount={true}><SettingCssStyle_UI /></TabsContent>
                 </div>
             </Tabs>
         </div>

@@ -1,19 +1,25 @@
 import type { T_CNode } from "@/engine/CNodeTree/CNode/index.type";
 import { DependOnSelectedCNode, I_Detail_SelectedCNodeChange } from "../dependOnSelectedCNode";
 import * as monaco from 'monaco-editor'; // 优化打包
+type T_monaco_editor = typeof monaco.editor;
 import { actionController } from "@/engine/ActionController";
 import { ActionCNodeCssStyle_type_update } from "@/engine/ActionController/ActionCNodeCssStyle";
 import { toast_dom } from "@/lib/utils";
+import { type T_state, UNDO, DOING, SUCCESS, FAIL } from "@/engine/Requset/index.const";
 
 class SettingCssStyle extends DependOnSelectedCNode {
+    state: T_state; // prod环境，实例首先需要获取amd模块monaco
+    monaco_editor: T_monaco_editor | null;
     render: any;
     select_id: string | null;
     cssStyle_ori: T_CNode['cssStyle'] | null;
-    cssEditor: ReturnType<typeof monaco.editor.create> | null;
+    cssEditor: ReturnType<T_monaco_editor['create']> | null;
     contentFirstChange: boolean;
 
     constructor() {
         super();
+        this.state = UNDO;
+        this.monaco_editor = null;
         this.select_id = null;
         this.cssStyle_ori = null;
         this.cssEditor = null;
@@ -31,14 +37,68 @@ class SettingCssStyle extends DependOnSelectedCNode {
         }
     }
 
-    public cssEditor_create(dom: HTMLElement) {
+    private async init() {
+        if (this.state === DOING || this.state === SUCCESS) {
+            return
+        }
+
+        if (!window.PRODUCTION) {
+            this.state = SUCCESS;
+            this.monaco_editor = monaco.editor;
+            this.render();
+            return
+        }
+
+        return new Promise<T_monaco_editor>((re, rj) => {
+            this.state = DOING;
+            this.render();
+
+            try {
+                // @ts-ignore
+                window.require.config({
+                    paths: {
+                        'vs': 'https://testingcf.jsdelivr.net/npm/monaco-editor@0.51.0/min/vs',
+                    },
+                    waitSeconds: 30,
+                });
+                // @ts-ignore
+                window.require(['vs/editor/editor.main'], (monaco: typeof monaco) => {
+                    re(monaco.editor);
+                }, (err: any) => {
+                    // @ts-ignore
+                    window.require.undef('vs/editor/editor.main');
+                    rj(err);
+                });
+            } catch (err) {
+                throw err;
+            }
+        })
+            .then(editor => {
+                this.state = SUCCESS;
+                this.monaco_editor = editor;
+            })
+            .catch(err => {
+                this.state = FAIL;
+                console.log('加载monaco出错', err);
+            })
+            .finally(() => {
+                this.render();
+            })
+    }
+
+    public async cssEditor_create(dom: HTMLElement) {
         if (!this.selectedCNode) {
+            return
+        }
+
+        await this.init();
+        if (this.state !== SUCCESS) {
             return
         }
 
         this.cssEditor_dispose();
         const cssRulesStr = this.cssStyle2str(this.selectedCNode.cssStyle);
-        this.cssEditor = monaco.editor.create(dom, {
+        this.cssEditor = this.monaco_editor!.create(dom, {
             value: cssRulesStr,
             language: "css",
             automaticLayout: true,
@@ -99,7 +159,7 @@ class SettingCssStyle extends DependOnSelectedCNode {
             return
         }
 
-        if (monaco.editor.getModelMarkers({}).length) {
+        if (this.monaco_editor!.getModelMarkers({}).length) {
             toast_dom('css有语法错误');
             this.contentFirstChange = false;
             this.render();

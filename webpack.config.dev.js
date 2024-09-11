@@ -1,5 +1,3 @@
-const webpack = require('webpack');
-
 const { merge } = require('webpack-merge');
 const config_base = require('./webpack.config.base');
 const config_my = {
@@ -26,5 +24,5 @@ const config_my = {
     },
 };
 
-const config_dev = merge(config_base, config_my);
+const config_dev = merge(config_my, config_base);
 module.exports = config_dev;

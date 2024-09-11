@@ -50,7 +50,6 @@ export async function fetchReqApiWrap<T_data = any>(input: T_Param_fetch[0], ini
         }
     }
 
-    console.log('看下最终的result_api todo', result);
     return result
 }
 

@@ -498,5 +498,16 @@ class CNodeTree extends CNodeTree_JSON {
 
 export const cNodeTree = new CNodeTree();
 cNodeTree.bootstrap();
-//@ts-ignore
-window.cNodeTree = cNodeTree;
+
+/**
+ * from webpack
+ */
+window.PRODUCTION = false;
+try {
+  // @ts-ignore
+  if (PRODUCTION) {
+    window.PRODUCTION = true;
+  }
+} catch (err) {
+
+}

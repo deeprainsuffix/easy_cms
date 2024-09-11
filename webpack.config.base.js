@@ -8,7 +8,7 @@ module.exports = {
     },
     cache: false,
     output: {
-        filename: '[name].[contenthash].js',
+        filename: '[name].[chunkhash].js',
         path: path.resolve(__dirname, 'dist_client'),
         publicPath: '/',
         clean: true,
