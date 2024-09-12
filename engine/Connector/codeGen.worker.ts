@@ -34,6 +34,11 @@ class Zip_Manager implements I_Zip_Manager {
 
             const { manifest: manifest_same, ...assets_other } = manifest;
             for (const fimeName of Object.values(assets_other)) {
+                if (fimeName.includes('.tsx')) {
+                    // todo 暂时不提供entry，因为不完整
+                    continue;
+                }
+
                 this.Zip_downloader.add(fimeName, httpUrl_prefix_assets + fimeName);
             }
 
