@@ -24,5 +24,5 @@ const config_my = {
     },
 };
 
-const config_dev = merge(config_my, config_base);
+const config_dev = merge(config_base, config_my);
 module.exports = config_dev;
