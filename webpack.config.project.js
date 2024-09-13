@@ -5,11 +5,10 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 module.exports = (env, argv) => {
     const cNodeTree_hash = env.cNodeTree_hash || 'noHash';
     return {
-        mode: 'development',
-        // mode: 'production', // todo 这里必须改成生产
+        mode: 'production',
         stats: 'errors-only',
         output: {
-            filename: `${cNodeTree_hash}.js`,
+            filename: `${cNodeTree_hash}.[chunkhash].js`,
             path: path.resolve(__dirname, 'server/landing_project'),
             publicPath: './',
         },
@@ -32,7 +31,7 @@ module.exports = (env, argv) => {
         },
         plugins: [
             new HtmlWebpackPlugin({
-                title: 'easy_cms',
+                title: 'landing_cms',
                 filename: `${cNodeTree_hash}.html`,
             }),
             new MiniCssExtractPlugin({
@@ -40,20 +39,19 @@ module.exports = (env, argv) => {
             }),
             new AssetsSendPlugin()
         ],
-        // todo
-        // optimization: {
-        //     runtimeChunk: 'single',
-        //     splitChunks: {
-        //         cacheGroups: {
-        //             vendor: {
-        //                 test: /[\\/]node_modules[\\/]/,
-        //                 name: 'vendors',
-        //                 chunks: 'all',
-        //             },
-        //         },
-        //     },
-        //     usedExports: true,
-        // },
+        optimization: {
+            runtimeChunk: 'single',
+            splitChunks: {
+                cacheGroups: {
+                    vendor: {
+                        test: /[\\/]node_modules[\\/]/,
+                        name: 'vendors',
+                        chunks: 'all',
+                    },
+                },
+            },
+            usedExports: true,
+        },
     }
 };
 

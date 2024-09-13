@@ -33,13 +33,19 @@ class Zip_Manager implements I_Zip_Manager {
             this.Zip_downloader = new Zip_downloader();
 
             const { manifest: manifest_same, ...assets_other } = manifest;
-            for (const fimeName of Object.values(assets_other)) {
-                if (fimeName.includes('.tsx')) {
-                    // todo 暂时不提供entry，因为不完整
-                    continue;
-                }
+            for (const fileName of Object.values(assets_other)) {
+                if (typeof fileName === 'string') {
+                    if (fileName.includes('.tsx')) {
+                        // todo 暂时不提供entry，因为不完整
+                        continue;
+                    }
 
-                this.Zip_downloader.add(fimeName, httpUrl_prefix_assets + fimeName);
+                    this.Zip_downloader.add(fileName, httpUrl_prefix_assets + fileName);
+                } else {
+                    for (const fileName_item of fileName) {
+                        this.Zip_downloader.add(fileName_item, httpUrl_prefix_assets + fileName_item);
+                    }
+                }
             }
 
             const succes = await this.Zip_downloader.run();

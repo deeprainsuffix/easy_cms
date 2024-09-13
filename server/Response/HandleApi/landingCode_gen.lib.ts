@@ -20,8 +20,8 @@ export async function complie_tsx(filePath_entry: string, cNodeTree_hash: string
         // 检查资源完整性
         const assets: I_AssetsFromWebpack = {
             [ASSES_HTML]: '',
-            [ASSES_JS]: '',
-            [ASSES_CSS]: '',
+            [ASSES_JS]: [],
+            [ASSES_CSS]: [],
         };
 
         if (!stdout) {
@@ -36,12 +36,12 @@ export async function complie_tsx(filePath_entry: string, cNodeTree_hash: string
             const ext = extname(fileName);
             switch (ext) {
                 case ASSES_HTML: assets[ASSES_HTML] = fileName; break;
-                case ASSES_JS: assets[ASSES_JS] = fileName; break;
-                case ASSES_CSS: assets[ASSES_CSS] = fileName; break;
+                case ASSES_JS: assets[ASSES_JS].push(fileName); break;
+                case ASSES_CSS: assets[ASSES_CSS].push(fileName); break;
             }
         }
 
-        const assets_lack = essentialAssets.filter(e => assets[e] === '');
+        const assets_lack = essentialAssets.filter(e => (typeof assets[e] === 'string' && assets[e] === '') || assets[e].length === 0);
         if (assets_lack.length) {
             throw '缺少的资产' + assets_lack.join('、');
         }

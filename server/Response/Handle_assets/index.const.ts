@@ -9,8 +9,8 @@ export const essentialAssets = [
 
 export interface I_AssetsFromWebpack {
     [ASSES_HTML]: string;
-    [ASSES_JS]: string;
-    [ASSES_CSS]: string;
+    [ASSES_JS]: string[];
+    [ASSES_CSS]: string[];
 };
 
 export interface I_Assets extends I_AssetsFromWebpack {
