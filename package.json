@@ -7,11 +7,12 @@
     "**/*.css"
   ],
   "scripts": {
-    "dev": "webpack serve --config webpack.config.dev.js --open",
+    "dev:client": "webpack serve --config webpack.config.dev.js --open",
     "build": "webpack --config webpack.config.prod.js",
     "build:server": "rm -rf dist_server && tsc --project server/tsconfig.server.json",
     "start:dev": "cross-env NODE_ENV=dev nodemon --exec ts-node --project server/tsconfig.server.json server/index.ts",
-    "start:prod": "cross-env NODE_ENV=prod nodemon --exec ts-node --project server/tsconfig.server.json server/index.ts"
+    "start:prod": "cross-env NODE_ENV=prod nodemon --exec ts-node --project server/tsconfig.server.json server/index.ts",
+    "dev": "concurrently \"npm run dev:client\" \"npm run start:dev\""
   },
   "keywords": [
     "ts",
@@ -50,6 +51,7 @@
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "autoprefixer": "^10.4.19",
+    "concurrently": "^9.0.1",
     "cross-env": "^7.0.3",
     "css-loader": "^7.1.2",
     "html-webpack-plugin": "^5.6.0",
