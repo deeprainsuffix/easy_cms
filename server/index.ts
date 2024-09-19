@@ -3,6 +3,14 @@ import { httpUrl_prefix_api, httpUrl_prefix_assets } from './http.url';
 import { HandleApi } from './Response/HandleApi';
 import { Handle_assets } from './Response/Handle_assets';
 import { Handle_static } from './Response/Handle_static';
+import { existsSync, mkdirSync } from 'node:fs';
+import { dir_landing_project } from './config';
+
+function before() {
+    if (!existsSync(dir_landing_project)) {
+        mkdirSync(dir_landing_project);
+    }
+}
 
 const server = http.createServer(async (req, res) => {
     try {
@@ -23,6 +31,7 @@ const server = http.createServer(async (req, res) => {
     }
 });
 
+before();
 const port = 3000;
 server.listen(port, () => {
     process.env.HOST = process.env.NODE_ENV === 'prod' ? 'https://easy-cms.pages.dev' : 'http://localhost:3000';

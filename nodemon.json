@@ -1,6 +1,6 @@
 {
     "ignore": [
-        "server/landing_project"
+        "server/landing_project/**"
     ],
     "watch": [
         "server",
